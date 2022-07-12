@@ -5,6 +5,8 @@ The `alexinoia_raw` folder contains two raw csv files from each participant, one
 
 The raw files contain a lot of irrelevant information. There are four cleaned up dataframes here (one for each experiment) as well as dataframes containing visual and verbal scores (from the Internal Representations Questionnaire) and dataframes containing questionnaire data.
 
+Participants AFFXVHHBUWW4D and A1Q56N80RJLQ7S were excluded from all experiments because they responded randomly. 
+
 ## Column dictionary
 Columns common to all experiments:
 | Column name  | Explanation  |
