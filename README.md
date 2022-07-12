@@ -1,1 +1,2 @@
-# alexinoia
+# Alexinoia
+## Inner speech and cognition
