@@ -24,7 +24,8 @@ Columns common to all experiments:
 |high_low_verbal   |participant recruited as 'high_verbal' or 'low_verbal' |
 
 ### Rhyme judgments
-The following participants were excluded for responding randomly: A1KOBLL83SICGQ, A26BQ33MHKVYFB, A1PUSSRD8P5HHH
+The following participants were excluded for responding randomly: A1KOBLL83SICGQ, A26BQ33MHKVYFB, A1PUSSRD8P5HHH.
+
 The following pairs were excluded for being associated with below chance performance for at least one of the two groups: chin/bin, park/shark, rake/cake, cave/wave, cab/crab.
 
 |Column name   |Explanation   |
