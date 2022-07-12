@@ -1,7 +1,7 @@
 # Alexinoia
 ## Inner speech and cognition
 
-The `alexinoia_raw` folder contains two raw csv files from each participant, one with browser interaction data and one with experiment data. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, reproduction memory for a string of words, and same/different judgments of pictures of cats and dogs.
+The `alexinoia_raw` folder contains two raw csv files from each participant, one with browser interaction data and one with experiment data. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
 
 The raw files contain a lot of irrelevant information. There are four cleaned up dataframes here (one for each experiment) as well as dataframes containing visual and verbal scores (from the Internal Representations Questionnaire) and dataframes containing questionnaire data.
 
@@ -39,3 +39,25 @@ The following pairs were excluded for being associated with below chance perform
 |image_2   |right-positioned image (name of file indicates target word)   |
 |cor_key   |correct response: 'arrowup' (images rhyme) or 'arrowdown' (images do not rhyme)   |
 |type   |'NR' (no rhyme), 'ortho' (orthographic rhyme), 'non-ortho' (non-orthographical rhyme)   |
+
+### Ordered word recall (phonological similarity)
+
+|Column name   |Explanation   |
+|---|---|
+|word_1   |first word presented  |
+|word_2   |second word presented  |
+|word_3  |third word presented  |
+|word_4   |fourth word presented |
+|word_5   |fifth word presented |
+|original_word_set   |'orthoSet' (orthographically similar words), 'phonSet' (phonologically similar words, or 'ctrlSet' (no-similarity words |
+|response_1   |first word produced - if nothing, contains the string 'none'  |
+|response_2   |second word produced - if nothing, contains the string 'none'  |
+|response_3  |third word produced  - if nothing, contains the string 'none' |
+|response_4   |fourth word produced - if nothing, contains the string 'none' |
+|response_5   |fifth word produced - if nothing, contains the string 'none' |
+|score   |how many did they get right in the right position (0-5) |
+|score_any_position   |how many did they get right regardless of position  |
+
+### Same-different judgments (category judgment and physical similarity judgment)
+
+### Task switching (simple arithmetic problems)
