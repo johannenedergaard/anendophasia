@@ -5,7 +5,7 @@ The `alexinoia_raw` folder contains two raw csv files from each participant, one
 
 The raw files contain a lot of irrelevant information. There are four cleaned up dataframes here (one for each experiment) as well as dataframes containing visual and verbal scores (from the Internal Representations Questionnaire) and dataframes containing questionnaire data.
 
-## Column dictionary divided into the different experiments 
+## Column dictionary
 Columns common to all experiments:
 | Column name  | Explanation  |
 |---|---|
@@ -14,6 +14,7 @@ Columns common to all experiments:
 |worker_id   |MTurk worker ID   |
 |start_time   |time participant started experiment series   |
 |experiment_order   |order of the four experiments for that participant   |
+|experiment   |which of the four experiments  |
 |phase   |practice or experiment   |
 |stimulus   |html string of what the participant saw on a given trial   |
 |talk_out_loud   |did you talk to yourself to solve the problems in this experiment? 'yes' or 'no' (required)   |
@@ -23,9 +24,15 @@ Columns common to all experiments:
 |high_low_verbal   |participant recruited as 'high_verbal' or 'low_verbal' |
 
 ### Rhyme judgments
-rt
-correct
-image_1
-image_2
-cor_key
-type
+The following participants were excluded for responding randomly: A1KOBLL83SICGQ, A26BQ33MHKVYFB, A1PUSSRD8P5HHH
+The following pairs were excluded for being associated with below chance performance for at least one of the two groups: chin/bin, park/shark, rake/cake, cave/wave, cab/crab.
+
+|Column name   |Explanation   |
+|---|---|
+|rt   |reaction time (ms) to make the rhyme judgment (max 5000)   |
+|response   |response given: 'arrowup' (images rhyme) or 'arrowdown' (images do not rhyme)   |
+|correct  |whether the judgment was correct (1) or incorrect (0)   |
+|image_1   |left-positioned image (name of file indicates target word)   |
+|image_2   |right-positioned image (name of file indicates target word)   |
+|cor_key   |correct response: 'arrowup' (images rhyme) or 'arrowdown' (images do not rhyme)   |
+|type   |'NR' (no rhyme), 'ortho' (orthographic rhyme), 'non-ortho' (non-orthographical rhyme)   |
