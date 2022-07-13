@@ -61,3 +61,20 @@ The following pairs were excluded for being associated with below chance perform
 ### Same-different judgments (category judgment and physical similarity judgment)
 
 ### Task switching (simple arithmetic problems)
+|Column name   |Explanation   |
+|---|---|
+|condition   |'addition', 'subtraction', 'colorcue', 'symbolcue', 'uncued'  |
+|rt   |reaction time (ms) to complete the individual arithmetic problem   |
+|stimulus  |two-digit number presented  |
+|answer   |answer produced by participant |
+|correct   |strict accuracy (both correct operation and correct arithmetic) |
+|operation   |operation that should be used on a given trial |
+|symbol_cue   |which symbol cue did they see |
+|color_cue   |which color cue did they see  |
+|correct_if_add  |what would be the correct answer if the each problem was addition |
+|correct_if_subtract   |what would be the correct answer if the each problem was subtraction |
+|list_completion   |time (seconds) to complete a given block|
+|operation_used   |which operation did they use (regardless of arithmetic) |
+|correct_operation   |was the operation correct (regardless of correct arithmetic)  |
+|correct_arithmetic   |was the arithmetic correct (regardless of correct operation)  |
+|switching_is_correct   |for the switching block, any failure to switch (repeated operation) counts as an error and any trial with successful switch counts as correct (if arithmetic is also correct |
