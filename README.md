@@ -49,7 +49,7 @@ The following pairs were excluded for being associated with below chance perform
 |word_3  |third word presented  |
 |word_4   |fourth word presented |
 |word_5   |fifth word presented |
-|original_word_set   |'orthoSet' (orthographically similar words), 'phonSet' (phonologically similar words, or 'ctrlSet' (no-similarity words |
+|original_word_set   |'orthoSet' (orthographically similar words), 'phonSet' (phonologically similar words, or 'ctrlSet' (no-similarity words) |
 |response_1   |first word produced - if nothing, contains the string 'none'  |
 |response_2   |second word produced - if nothing, contains the string 'none'  |
 |response_3  |third word produced  - if nothing, contains the string 'none' |
@@ -59,6 +59,30 @@ The following pairs were excluded for being associated with below chance perform
 |score_any_position   |how many did they get right regardless of position  |
 
 ### Same-different judgments (category judgment and physical similarity judgment)
+
+|Column name   |Explanation   |
+|---|---|
+|rt   |reaction time to make decision (cut off less than 200 ms and more than 5000 ms) |
+|response   |'arrowup' (same) or 'arrowdown' (different) |
+|answer  |correct answer: 'different' or 'same'  |
+|correct   |1 or 0 |
+|judgment_type   |'identical_image' or 'categorical_image' |
+|stim_1   |first image presented on a given trial |
+|stim_2   |second image presented on a given trial |
+|inverted   |was one image horizontally inverted?  |
+|true_neg  |correct rejection ('different' response + images are not same)|
+|true_pos   |correct identification ('same' response + images are same) |
+|false_pos   |false alarm ('same' response + images are not same)|
+|false_neg   |false rejection ('different' response + images are same)|
+|block_index   |trial index within each block  |
+|trial_no_ptcpt   |trial index within each participant  |
+|stim_1_animal   |first image presented: 'C04', 'C09', 'C14', 'D07', 'D09', or 'D11'|
+|stim_1_category   |first image presented: 'cat' or 'dog'  |
+|stim_2_animal   |second image presented: 'C04', 'C09', 'C14', 'D07', 'D09', or 'D11' |
+|stim_2_category   |second image presented: 'cat' or 'dog'   |
+|same_category_animal   |'between_category' or 'within_category'|
+|cat_or_dog   |'cat-cat', 'cat-dog', or 'dog-dog'|
+
 
 ### Task switching (simple arithmetic problems)
 |Column name   |Explanation   |
@@ -77,4 +101,4 @@ The following pairs were excluded for being associated with below chance perform
 |operation_used   |which operation did they use (regardless of arithmetic) |
 |correct_operation   |was the operation correct (regardless of correct arithmetic)  |
 |correct_arithmetic   |was the arithmetic correct (regardless of correct operation)  |
-|switching_is_correct   |for the switching block, any failure to switch (repeated operation) counts as an error and any trial with successful switch counts as correct (if arithmetic is also correct |
+|switching_is_correct   |for the switching block, any failure to switch (repeated operation) counts as an error and any trial with successful switch counts as correct (if arithmetic is also correct) |
