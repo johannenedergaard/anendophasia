@@ -1,0 +1,562 @@
+---
+title: "Anendophasia analysis"
+output:
+  html_document:
+    df_print: paged
+    keep_md: true
+---
+
+Excluded 10 participants for responding randomly, missing at least one out of the four experiments, or otherwise not complying with task instructions. This leaves us with 47 high verbal and 46 low verbal. All the plots visualize categorical differences between the two groups while all the statistical models use verbal score as a continuous predictor.
+
+```{r, include=FALSE}
+# read in full browser interaction data
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(kableExtra)
+library(optimx)
+library(ggpubr)
+library(forcats)
+library(corrplot)
+color_palette <- c('#88CCEE', '#44AA99', '#117733', '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499', '#DDDDDD') # Tol_muted from https://zenodo.org/record/3381072#.Y0_5ilJBw-Q
+
+browser_interactions <- read.csv('browser_df_anendophasia_full.csv',row.names = 1)
+irq_scores <- read.csv('irq_scores.csv', row.names = 1)
+```
+
+## Same/different judgments
+
+Prior to this excluded trials above 5 seconds and below 200 ms.
+
+```{r, include=FALSE}
+same_different_trials <- read.csv('same_different_trials_221017.csv',row.names = 1)
+```
+
+#### Descriptive statistics by group: Same/different judgments
+
+```{r, include=FALSE}
+# how many correct
+100-(table(same_different_trials$correct)[1]/table(same_different_trials$correct)[2]*100)
+# how many correct by group
+SD_correct <- same_different_trials %>%
+  dplyr::group_by(high_low_verbal) %>%
+  dplyr::summarise(correct = sum(correct)/n())
+SD_correct
+
+SD_RT <- same_different_trials %>%
+  dplyr::group_by(high_low_verbal) %>%
+  dplyr::summarise(rt = mean(rt,na.rm=T))
+SD_RT
+```
+
+Generally, participants made the correct judgment on `r round(100-(table(same_different_trials$correct)[1]/table(same_different_trials$correct)[2]*100), 2)` % of trials. This did not differ between the high verbal (`r round(SD_correct$correct[1]*100,2)` %) and the low verbal group (`r round(SD_correct$correct[2]*100,2)`. In subsequent analyses and plots, we only include correct trials. See Figure XX below for reaction times between the high verbal and low verbal groups for category ('do these two animals belong to the same category?') or identity ('are these two animals identical?') judgments.
+
+```{r, include=FALSE}
+SD_rt_df <- same_different_trials %>%
+  filter(correct == 1) %>%
+  dplyr::group_by(high_low_verbal, worker_id, judgment_type) %>%
+  dplyr::summarise(mean_rt = mean(rt, na.rm=T))
+
+```
+
+
+
+```{r, echo=FALSE}
+ggplot(SD_rt_df, aes(judgment_type, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='RT', title = 'Judgment types and verbal score', x= 'Category or identity judgments')+
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+
+#### Statistical models: Same/different judgments
+
+```{r, include=FALSE, cache = TRUE}
+category_model <- lmer(log(rt) ~ judgment_type + VerbalScored + (1|worker_id), 
+                        subset(same_different_trials, correct ==1))
+summary(category_model)
+```
+
+We conducted a linear mixed model of verbal score and judgment type predicting log-transformed reaction time including random intercepts per participant. This model indicated  significant main effect of judgment type and a marginally significant effect of verbal score. Identity judgments were faster than category judgments ($\beta$ = `r round(summary(category_model)$coefficients[2,1],2)`, SE = `r round(summary(category_model)$coefficients[2,2],2)`, t = `r round(summary(category_model)$coefficients[2,4],2)`, p < .001), and a higher verbal score was marginally associated with faster reaction times ($\beta$ = `r round(summary(category_model)$coefficients[3,1],2)`, SE = `r round(summary(category_model)$coefficients[3,2],2)`, t = `r round(summary(category_model)$coefficients[3,4],2)`, p = `r round(summary(category_model)$coefficients[3,5],3)`).
+
+The key test for this experiment was whether the two groups behaved differently when giving correct 'DIFFERENT' responses on identity trials when the two images belonged to the same category. That is, we expected high verbal participants to be more susceptible to interference from a same-category distractor.
+
+```{r, include=F}
+SD_rt_df_key_comparison <- same_different_trials %>%
+  filter(judgment_type == 'identical_image' & correct ==1 & answer =='different') %>%
+  dplyr::group_by(high_low_verbal, worker_id, judgment_type, same_category_animal,cat_or_dog) %>%
+  dplyr::summarise(mean_rt = mean(rt, na.rm=T))
+```
+
+```{r}
+ggplot(SD_rt_df_key_comparison, aes(same_category_animal, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='RT', title = 'Latency to correct DIFFERENT response on identity trials', x = 'Between or within category distractor') +
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+
+```{r, include=FALSE, cache = TRUE}
+
+latency_to_different <- lmer(log(rt) ~ VerbalScored * same_category_animal + (1|worker_id),
+                            subset(same_different_trials, judgment_type == 'identical_image' & correct ==1 & answer =='different'))
+summary(latency_to_different)
+```
+A linear mixed model of log-transformed reaction time with verbal score and category membership of the distractor as predictors, including random intercepts per participant, provided evidence that high verbal participants were not particularly affected by the within-category interference (interaction effect: p = `r round(summary(latency_to_different)$coefficients[4,5],3)`). However, there was a significant main effect of category membership of the distractor with within-category distractors being associated with slower reaction times ($\beta$ = `r round(summary(latency_to_different)$coefficients[3,1],2)`, SE = `r round(summary(latency_to_different)$coefficients[3,2],2)`, t = `r round(summary(latency_to_different)$coefficients[3,4],2)`, p = `r round(summary(latency_to_different)$coefficients[3,5],3)`). 
+
+#### Additional analyses: Same/different judgments
+
+We also checked whether the kind of animal made a difference on a within-category distractor trial.
+
+```{r, echo=FALSE}
+ggplot(subset(SD_rt_df_key_comparison, cat_or_dog != 'cat-dog'), aes(cat_or_dog, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='RT', title = 'Latency to correct DIFFERENT response on identity trials', x = 'Image pair') +
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+```{r include=FALSE, cache = TRUE}
+kind_of_animal_model <- lmer(log(rt) ~ cat_or_dog * VerbalScored + (1|worker_id), 
+                              data = subset(same_different_trials, judgment_type =='identical_image' & correct & answer=='same'))
+summary(kind_of_animal_model) 
+```
+A linear mixed model of log-transformed reaction times with verbal score and animal pair (dog-dog or cat-cat) as predictors, including random intercepts per participant, provided evidence that dog-dog trials were faster than cat-cat trials ($\beta$ = `r round(summary(kind_of_animal_model)$coefficients[2,1],2)`, SE = `r round(summary(kind_of_animal_model)$coefficients[2,2],2)`, t = `r round(summary(kind_of_animal_model)$coefficients[2,4],2)`, p < .001). The model corroborated the result that a higher verbal score was associated with faster reaction times ($\beta$ = `r round(summary(kind_of_animal_model)$coefficients[3,1],2)`, SE = `r round(summary(kind_of_animal_model)$coefficients[3,2],2)`, t = `r round(summary(kind_of_animal_model)$coefficients[3,4],2)`, p = `r round(summary(kind_of_animal_model)$coefficients[3,5],3)`). However, this effect of verbal score was less strong when the stimuli were dog-dog than when they were cat-cat as indicated by a significant interaction effect between verbal score and animal pair ($\beta$ = `r round(summary(kind_of_animal_model)$coefficients[4,1],2)`, SE = `r round(summary(kind_of_animal_model)$coefficients[4,2],2)`, t = `r round(summary(kind_of_animal_model)$coefficients[4,4],2)`, p = `r round(summary(kind_of_animal_model)$coefficients[4,5],3)`).
+
+## Rhyme judgments
+
+Excluded five rhyming pairs as they had below-chance performance for at least one group. These were bin/chin, cab/crab, rake/cake, wave/cave, and park/shark. 
+
+```{r, include =FALSE}
+rhyming_trials <- read.csv('rhyming_trials_221017.csv',row.names = 1)
+```
+
+```{r, include=FALSE}
+rhyme_desc_df <- rhyming_trials %>%
+  dplyr::group_by(high_low_verbal, type) %>%
+  dplyr::summarise(mean_rt = mean(rt, na.rm=T), mean_correct = mean(correct))
+rhyme_rt_df <- rhyming_trials %>%
+  filter(correct == 1) %>%
+  dplyr::group_by(high_low_verbal, worker_id, type, talk_out_loud) %>%
+  dplyr::summarise(mean_rt = mean(rt, na.rm=T))
+rhyme_correct_df <- rhyming_trials %>%
+  dplyr::group_by(high_low_verbal, worker_id, type, talk_out_loud) %>%
+  dplyr::summarise(mean_correct = mean(correct, na.rm=T))
+```
+#### Descriptive statistics by group: Rhyme judgments
+
+Here is a table of accuracy and reaction time for the two groups (high and low verbal) across types of rhyming trials.
+
+```{r}
+rhyme_desc_df %>%
+  mutate(mean_correct = mean_correct * 100) %>%
+  kable(digits=2) %>%
+  kable_styling(bootstrap_options = "striped")
+```
+As can be seen in this table, high verbal participants were generally both faster and more accurate than low verbal participants on all three types of trials. See also figures below.
+
+```{r, echo=FALSE}
+ggplot(rhyme_rt_df, aes(type, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Reaction time', title = 'Rhyming')+
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+```{r, echo=FALSE}
+ggplot(rhyme_correct_df, aes(type, mean_correct, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Accuracy', title = 'Rhyming')+
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+
+#### Statistical models: Rhyme judgments
+
+In all the statistical models, we included name agreement for both images as random intercepts (acquired from a separate experiment where 20 participants named all the images). We scaled down to random intercept for just one of the images if the model failed to converge.
+
+```{r, include=FALSE, cache = TRUE}
+
+rhyme_rt_m <- lmer(log(rt) ~ type * VerbalScored + (1|worker_id) + (1|name_agreement_img1),
+                    subset(rhyming_trials, correct ==1))
+summary(rhyme_rt_m) 
+rhyme_acc_m <- glmer(correct ~ type * VerbalScored + (1|worker_id) + (1|name_agreement_img1),
+                     family='binomial',
+                     rhyming_trials,
+                     control = glmerControl(optimizer ='Nelder_Mead'))
+summary(rhyme_acc_m) 
+
+```
+
+A model of verbal score and rhyme type predicting log-transformed reaction time showed no main effect of verbal score, no main effect of rhyme type, and no interaction (all p > `r round(summary(rhyme_rt_m)$coefficients[2,5],3)`. Another model of verbal score and rhyme type predicting accuracy showed that no-rhyme trials were easier than non-orthographic trials ($\beta$ = `r round(summary(rhyme_acc_m)$coefficients[2,1],2)`, SE = `r round(summary(rhyme_acc_m)$coefficients[2,2], 2)`, z = `r round(summary(rhyme_acc_m)$coefficients[2,3],2)`, p = `r round(summary(rhyme_acc_m)$coefficients[2,4],3)`) and that a higher verbal score was associated with a higher likelihood of responding accurately ($\beta$ = `r round(summary(rhyme_acc_m)$coefficients[4,1],2)`, SE = `r round(summary(rhyme_acc_m)$coefficients[4,2], 2)`, z = `r round(summary(rhyme_acc_m)$coefficients[4,3],2)`, p = `r round(summary(rhyme_acc_m)$coefficients[4,4],3)`).
+
+#### Additional analyses: Rhyme judgments
+
+```{r, include=F}
+talk_out_loud_rhyme <- rhyming_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+table(talk_out_loud_rhyme$talk_out_loud)
+tol_rhyme <-talk_out_loud_rhyme %>%
+  group_by(high_low_verbal,talk_out_loud)
+table(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)
+test <- chisq.test(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)
+```
+
+We were interested in whether participants said the words out loud to make the rhyme judgments and so we included this as a question at the end of the rhyming experiment. A chi-squared test showed that there was no significant difference between how many high-verbal participants (23 out of 47) and how many low-verbal participants (21 out of 46) reported that they had said the words out loud ($\chi^2$(1) = `r round(chisq.test(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)$statistic, 2)`, p = `r round(chisq.test(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)$p.value,3)`). Nevertheless, the effect of doing so was interestingly different for the two groups as can be seen in the figure below.
+
+```{r, include=F}
+# does it matter what strategy they used?
+ggplot(rhyme_correct_df, aes(talk_out_loud, mean_correct, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Accuracy', title = 'Rhyming x talking out loud')+
+  scale_color_manual(values = color_palette[c(4,6)])
+
+ggplot(rhyme_rt_df, aes(talk_out_loud, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='RT', title = 'Rhyming x talking out loud')+
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+
+For both reaction time and accuracy, saying the words out loud diminished the difference between the two groups. This suggests that this was the strategy that high-verbal participants used in their heads.
+
+## Verbal working memory
+
+```{r,include=FALSE}
+phon_sim_trials <- read.csv('phon_sim_trials_221017.csv',row.names = 1)
+# include order as a variable for random effect
+phon_sim_trials$presentation_order <- paste(phon_sim_trials$word_1,phon_sim_trials$word_2,phon_sim_trials$word_3,
+                                            phon_sim_trials$word_4, phon_sim_trials$word_5, sep='_')
+```
+
+Participants were tested on recall of three sets of five words. One set contained words that were phonologically similar but not orthographically similar (bought, sort, taut, caught, and wart), one set contained words that were orthographically similar but not phonologically similar (rough, cough, through, dough, bough), and one set was a control set (plea, friend, sleigh, row, board).
+
+#### Descriptive statistics by group: Verbal working memory
+
+```{r, include=FALSE}
+phonsim_desc_df <- phon_sim_trials %>%
+  dplyr::group_by(high_low_verbal, original_word_set) %>%
+  dplyr::summarise(mean_score = mean(score), mean_score_any = mean(score_any_position), 
+                   sd_score = sd(score), sd_score_any = sd(score_any_position))
+phonsim_score_df <- phon_sim_trials %>%
+  dplyr::group_by(high_low_verbal, original_word_set, worker_id,talk_out_loud) %>%
+  dplyr::summarise(cor_word_and_pos = mean(score), cor_word_any_pos = mean(score_any_position))
+phonsim_score_df <- pivot_longer(phonsim_score_df, cols = c('cor_word_and_pos', 'cor_word_any_pos'), names_to='score_type')
+```
+
+High verbal participants generally remembered more words correctly both when the correct position was required and when the words could be in any position (see table and figure below).
+
+```{r, echo=FALSE}
+phonsim_desc_df %>%
+  kable(digits=2) %>%
+  kable_styling(bootstrap_options = "striped")
+```
+```{r, echo=FALSE}
+ggplot(phonsim_score_df, aes(original_word_set, value, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Accuracy (out of 5)', title = 'Verbal working memory')+
+  scale_color_manual(values = color_palette[c(4,6)])+
+  facet_wrap(~score_type)
+```
+
+#### Statistical models: Verbal working memory
+
+```{r, include=FALSE, cache=TRUE}
+# some models
+score_by_verbal_m <- lmer(score ~ original_word_set * VerbalScored + 
+                            (1|worker_id) + (1|presentation_order), phon_sim_trials)
+summary(score_by_verbal_m)
+# phon set more difficult than ctrl set, ortho set not more difficult
+# no interaction with verbalscored
+score_any_by_verbal_m <- lmer(score_any_position ~ original_word_set * VerbalScored + 
+                                (1|worker_id) + (1|presentation_order), phon_sim_trials)
+summary(score_any_by_verbal_m)
+
+```
+
+We conducted two linear mixed models of original word set (phonologically similar, orthographically similar, and control set) and verbal score predicting either memory performance with both correct word and correct position or memory performance with correct word regardless of position. Both models included random intercepts for each participant and for each presentation order of the stimuli.
+
+For memory performance requiring both accurate word and position, the set with phonologically similar words was more difficult than the control set ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[3,1],2)`, SE = `r round(summary(score_by_verbal_m)$coefficients[3,2],2)`, t = `r round(summary(score_by_verbal_m)$coefficients[3,4], 2)`, p =  `r round(summary(score_by_verbal_m)$coefficients[3,5], 3)`) but the orthographically similar set was not ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[2,1],2)`, SE = `r round(summary(score_by_verbal_m)$coefficients[2,2],2)`, t = `r round(summary(score_by_verbal_m)$coefficients[2,4], 2)`, p =  `r round(summary(score_by_verbal_m)$coefficients[2,5], 3)`). A higher verbal score was associated with increased memory performance ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[4,1],2)`, SE = `r round(summary(score_by_verbal_m)$coefficients[4,2],2)`, t = `r round(summary(score_by_verbal_m)$coefficients[4,4], 2)`, p =  `r round(summary(score_by_verbal_m)$coefficients[4,5], 3)`). There was a marginally significant interaction effect ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[5,1],2)`, SE = `r round(summary(score_by_verbal_m)$coefficients[5,2],2)`, t = `r round(summary(score_by_verbal_m)$coefficients[5,4], 2)`, p =  `r round(summary(score_by_verbal_m)$coefficients[5,5], 3)`) which diminished the positive effect of higher verbal score on the orthographically similar set.
+
+The same pattern was found when the correct word in any position counted as correct: The set with phonologically similar words was more difficult than the control set ($\beta$ = `r round(summary(score_any_by_verbal_m)$coefficients[3,1],2)`, SE = `r round(summary(score_any_by_verbal_m)$coefficients[3,2],2)`, t = `r round(summary(score_any_by_verbal_m)$coefficients[3,4], 2)`, p =  `r round(summary(score_any_by_verbal_m)$coefficients[3,5], 3)`) but the orthographically similar set was not ($\beta$ = `r round(summary(score_any_by_verbal_m)$coefficients[2,1],2)`, SE = `r round(summary(score_any_by_verbal_m)$coefficients[2,2],2)`, t = `r round(summary(score_any_by_verbal_m)$coefficients[2,4], 2)`, p =  `r round(summary(score_any_by_verbal_m)$coefficients[2,5], 3)`). A higher verbal score was associated with increased memory performance ($\beta$ = `r round(summary(score_any_by_verbal_m)$coefficients[4,1],2)`, SE = `r round(summary(score_any_by_verbal_m)$coefficients[4,2],2)`, t = `r round(summary(score_any_by_verbal_m)$coefficients[4,4], 2)`, p =  `r round(summary(score_any_by_verbal_m)$coefficients[4,5], 3)`). There was a marginally significant interaction effect ($\beta$ = `r round(summary(score_any_by_verbal_m)$coefficients[5,1],2)`, SE = `r round(summary(score_any_by_verbal_m)$coefficients[5,2],2)`, t = `r round(summary(score_any_by_verbal_m)$coefficients[5,4], 2)`, p =  `r round(summary(score_any_by_verbal_m)$coefficients[5,5], 2)`) which diminished the positive effect of higher verbal score on the orthographically similar set.
+
+#### Additional analyses: Verbal working memory
+
+```{r, include=FALSE}
+talk_out_loud_PS <- phon_sim_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+# participant
+tol_phon_sim <- talk_out_loud_PS %>%
+  group_by(high_low_verbal,talk_out_loud) 
+table(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud)
+chisq.test(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud) #no difference
+```
+As with the rhyming experiment, we were again interested in whether participants said the words out loud to help them remember them. We asked about this at the end of the experiment. A chi-squared test showed that there was no significant difference between how many high-verbal participants (10 out of 47) and how many low-verbal participants (13 out of 46) reported that they had said the words out loud ($\chi^2$(1) = `r round(chisq.test(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud)$statistic, 2)`, p = `r round(chisq.test(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud)$p.value,3)`). Nevertheless, the effect of doing so was interestingly different for the two groups as can be seen in the figure below.
+
+```{r, echo=F}
+# does it matter what strategy they used?
+ggplot(phonsim_score_df, aes(talk_out_loud, value, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Accuracy out of 5', title = 'Verbal working memory x talking out loud')+
+  scale_color_manual(values = color_palette[c(4,6)])+
+  facet_wrap(~score_type)
+```
+The difference between the two groups' memory performance disappears when they report that they said the words out loud to help them remember. Doing so helps low-verbal participants but makes no difference for high-verbal participants.
+
+## Task switching
+
+We excluded trials over 10 seconds. We also recalculated the accuracy measure so that any trial in the three switch conditions where participants in fact switched between adding and subtracting counted as correct (as long as the arithmetic itself was also correct). We did this to prevent a failure to switch once resulting in the remaining trials counting as incorrect.
+
+```{r, include=FALSE}
+task_switch_trials <- read.csv('task_switch_trials_221017.csv',row.names = 1)
+```
+
+#### Descriptive statistics: Task switching
+
+```{r, include=FALSE}
+task_switch_desc_df <- task_switch_trials %>%
+  dplyr::group_by(high_low_verbal, condition) %>%
+  dplyr::summarise(mean_rt = mean(rt, na.rm=T), mean_correct = mean(switching_is_correct))
+task_switch_rt_df <- task_switch_trials %>%
+  filter(correct == 1) %>%
+  dplyr::group_by(high_low_verbal, worker_id, condition, talk_out_loud) %>%
+  dplyr::summarise(mean_rt = mean(rt, na.rm=T))
+task_switch_correct_df <- task_switch_trials %>%
+  dplyr::group_by(high_low_verbal, worker_id, condition, talk_out_loud) %>%
+  dplyr::summarise(mean_correct = mean(switching_is_correct, na.rm=T))
+```
+As can be seen from the table and the figure below, accuracy was generally quite high in all conditions.
+
+```{r}
+task_switch_desc_df %>%
+  mutate(mean_correct = mean_correct*100) %>%
+  kable(digits=2) %>%
+  kable_styling(bootstrap_options = "striped")
+```
+```{r, echo=FALSE}
+task_switch_rt_df$condition <- as.factor(task_switch_rt_df$condition)
+task_switch_rt_df %>% 
+  mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) %>%
+  ggplot(aes(condition, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='RT per problem', title = 'Reaction time for task switching')+
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+```{r, echo=FALSE}
+task_switch_correct_df$condition <- as.factor(task_switch_correct_df$condition)
+task_switch_correct_df %>% 
+  mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) %>%
+  ggplot(aes(condition, mean_correct, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Accuracy (corrected)', title = 'Accuracy for task switching')+
+  scale_color_manual(values = color_palette[c(4,6)])
+```
+
+#### Statistical models: Task switching
+
+```{r, include=FALSE}
+switching_condition_symun_m <- glmer(switching_is_correct ~ condition*VerbalScored + (1|worker_id), 
+                                     subset(task_switch_trials,condition %in% c('symbolcue','uncued')), family='binomial')
+summary(switching_condition_symun_m) # uncued worse than symbolcued
+
+switching_condition_symcol_m <- glmer(switching_is_correct ~ condition*VerbalScored + (1|worker_id), 
+                                      subset(task_switch_trials,condition %in% c('colorcue','symbolcue')), family='binomial')
+summary(switching_condition_symcol_m) # colorcue marginally worse than symbolcued
+
+
+switching_rt_symun_m <- lmer(log(rt) ~ condition*VerbalScored + (1|worker_id), 
+                              subset(task_switch_trials,condition %in% c('symbolcue','uncued') &
+                                       switching_is_correct==1))
+summary(switching_rt_symun_m) # no effects
+
+switching_rt_symcol_m <- lmer(log(rt) ~ condition*VerbalScored + (1|worker_id), 
+                               subset(task_switch_trials,condition %in% c('symbolcue','colorcue') &
+                                        switching_is_correct==1))
+summary(switching_rt_symcol_m) # symbolcue faster than colorcue
+```
+To simplify the comparisons, we only compared the symbol cue and the uncued conditions and the color cue and symbol cue conditions. In all models, participants were modeled as random intercepts. Linear mixed models of condition and verbal score predicting accuracy indicated no effect of verbal score (symbol cued versus uncued: $\beta$ = `r round(summary(switching_condition_symun_m)$coefficients[3,1],2)`, SE = `r round(summary(switching_condition_symun_m)$coefficients[3,2],2)`, z = `r round(summary(switching_condition_symun_m)$coefficients[3,3],2)`, p =  `r round(summary(switching_condition_symun_m)$coefficients[3,4],3)`; color cued versus symbol cued: $\beta$ = `r round(summary(switching_condition_symcol_m)$coefficients[3,1],2)`, SE = `r round(summary(switching_condition_symcol_m)$coefficients[3,2],2)`, z = `r round(summary(switching_condition_symcol_m)$coefficients[3,3],2)`, p =  `r round(summary(switching_condition_symcol_m)$coefficients[3,4],3)`). There were also no interaction effects (both p > `r round(summary(switching_condition_symun_m)$coefficients[4,4],3)`), but uncued trials were less likely to be accurate than symbol cued trials ($\beta$ = `r round(summary(switching_condition_symun_m)$coefficients[2,1],2)`, SE = `r round(summary(switching_condition_symun_m)$coefficients[2,2],2)`, z = `r round(summary(switching_condition_symun_m)$coefficients[2,3],2)`, p =  `r round(summary(switching_condition_symun_m)$coefficients[2,4],3)`).
+
+As for log-transformed reaction time, there were also no effect of verbal score and no interaction effects (all p > `r round(summary(switching_rt_symun_m)$coefficients[4,5],3)`). However, symbol cued trials were marginally faster than color cued trials ($\beta$ = `r round(summary(switching_rt_symcol_m)$coefficients[2,1],2)`, SE = `r round(summary(switching_rt_symcol_m)$coefficients[2,2],2)`, t = `r round(summary(switching_rt_symcol_m)$coefficients[2,4],2)`, p =  `r round(summary(switching_rt_symcol_m)$coefficients[2,5],3)`).
+
+#### Additional analyses
+
+```{r, include=FALSE}
+talk_out_loud_TS <- task_switch_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+tol_task_switch <- talk_out_loud_TS %>%
+  group_by(high_low_verbal,talk_out_loud)
+table(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)
+chisq.test(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)
+```
+
+We once again examined differences associated with talking out loud, despite the fact that there were no general differences in performance between the two groups. A chi-squared test showed that there was no significant difference between how many high-verbal participants (20 out of 47) and how many low-verbal participants (13 out of 46) reported that they had talked to themselves out loud during the task ($\chi^2$(1) = `r round(chisq.test(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)$statistic, 2)`, p = `r round(chisq.test(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)$p.value,3)`). There were not any obvious differences between the effects that talking out loud had on these two groups (see accuracy and reaction time plots below).
+
+```{r, echo=FALSE}
+task_switch_rt_df %>% mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) %>%
+ggplot(aes(condition, mean_rt, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='RT', title = 'Task switching x talking out loud')+
+  scale_color_manual(values = color_palette[c(4,6)])+
+  facet_wrap(~talk_out_loud)
+```
+```{r, echo=FALSE}
+task_switch_correct_df %>% mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) %>%
+ggplot(aes(condition, mean_correct, color=high_low_verbal)) +
+  geom_violin(alpha=0.3)+
+  #stat_summary(geom='line',fun.y='mean',alpha=0.3, aes(group = worker_id, color = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'point', aes(group = high_low_verbal)) +
+  stat_summary(fun.y = mean, geom = 'line', aes(group = high_low_verbal), size = 1)+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.2, aes(group = high_low_verbal)) +
+  theme_bw() +
+  labs(y ='Accuracy (corrected)', title = 'Task switching x talking out loud')+
+  scale_color_manual(values = color_palette[c(4,6)]) +
+  facet_wrap(~talk_out_loud)
+```
+
+## Intertask correlations
+
+We were interested in how performance on the different tasks correlated with each other and whether these correlations were different for the two groups.
+
+```{r, include=FALSE, message=FALSE}
+phonsim_score <- phon_sim_trials %>%
+  group_by(worker_id, original_word_set) %>%
+  dplyr::summarise(phonsim_score = mean(score, na.rm=T), phon_sim_any_pos = mean(score_any_position, na.rm=T))
+phonsim_score <- pivot_wider(phonsim_score, names_from = original_word_set, values_from = c(phonsim_score, phon_sim_any_pos))
+rhyme_score <- rhyming_trials %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_acc = mean(correct, na.rm=T))
+rhyming_rt <- rhyming_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_rt = mean(rt, na.rm=T))
+rhyme_score <- merge(rhyme_score, rhyming_rt, by = c('worker_id', 'type'))
+rhyme_score <- pivot_wider(rhyme_score, names_from = type, values_from = c(rhyming_acc, rhyming_rt))
+# only take rt on correct trials
+same_different_score <- same_different_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, judgment_type, answer) %>%
+  dplyr::summarise(samediff_rt = mean(rt, na.rm=T))
+same_different_score <- pivot_wider(same_different_score, names_from = c(judgment_type, answer), values_from = samediff_rt)
+task_switching_score <- task_switch_trials %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_acc=mean(switching_is_correct, na.rm=T))
+task_switching_rt <- task_switch_trials %>%
+  filter(switching_is_correct ==1) %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_rt=mean(rt, na.rm=T))
+task_switching_score <- merge(task_switching_score, task_switching_rt, 
+                              by = c('worker_id', 'condition'))
+task_switching_score <- pivot_wider(task_switching_score, names_from = condition, values_from = c(task_switch_rt, task_switch_acc))
+
+score_df_list <- list(phonsim_score,rhyme_score,
+                      same_different_score,task_switching_score)
+score_df <- score_df_list %>% reduce(full_join, by='worker_id')
+# put verbal scores in
+score_df <- merge(score_df, irq_scores, by ='worker_id', all.x = T)
+score_df <- distinct(score_df)
+
+```
+
+#### Overall intertask correlations
+
+Colored squares are significant at p < .01.
+
+```{r, echo=FALSE,message=FALSE}
+library(Hmisc)
+correlations <- rcorr(as.matrix(score_df[2:29]))
+cors <- correlations$r
+ps <- cor.mtest(as.matrix(score_df[2:29]))$p
+corrplot(correlations$r, addgrid.col='black',method="color", p.mat=ps, sig.level = 0.01,insig='blank',title = 'Everyone', tl.cex = 0.5)
+
+```
+
+#### Intertask correlations for the *high-verbal group*
+
+Colored squares are significant at p < .01.
+
+```{r, echo=FALSE}
+score_df_high_verbal <- subset(score_df, high_low_verbal =='high_verbal')
+correlations_hv <- rcorr(as.matrix(score_df_high_verbal[2:29]))
+cors_hv <- correlations_hv$r
+ps_hv <- cor.mtest(as.matrix(score_df_high_verbal[2:29]))$p
+corrplot(correlations_hv$r, method="color",addgrid.col='black',p.mat=ps_hv, sig.level = 0.01,insig='blank', tl.cex = 0.5)
+
+```
+
+#### Intertask correlations for the *low-verbal group*
+
+Colored squares are significant at p < .01.
+
+```{r, echo=FALSE}
+score_df_low_verbal <- subset(score_df, high_low_verbal =='low_verbal')
+correlations_lv <- rcorr(as.matrix(score_df_low_verbal[2:29]))
+cors_lv <- correlations_lv$r
+ps_lv <- cor.mtest(as.matrix(score_df_low_verbal[2:29]))$p
+corrplot(correlations_lv$r, method="color", addgrid.col='black',p.mat=ps_lv, sig.level = 0.01,insig='blank', tl.cex = 0.5)
+
+```
+
+
