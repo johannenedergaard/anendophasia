@@ -304,7 +304,7 @@ kable(questionnaire_table, align='l', booktabs = TRUE,
 We used `r cite_r("r-references.bib")` for all our analyses. In all linear mixed models, we modelled participant as random intercepts as well as random intercepts for all within-subjects factors (e.g. condition with repeated measures). For the statistical models predicting reaction time, we log-transformed the dependent variable to prevent issues with non-normal distributions. For the statistical models predicting accuracy, we constructed binomial generalized linear mixed models. All the plots visualize categorical differences between the two groups while all the statistical models use verbal score (average score on the verbal representation items on the Internal Representations Questionnaire) as a continuous predictor.
 
 ### Exclusion criteria 
-We excluded 10 participants for responding randomly, missing at least one out of the four experiments, or otherwise not complying with task instructions. Our final sample included 47 participants with high verbal representation scores on the IRQ and 46 participants with low-verbal representation scores. 
+We excluded 10 participants for responding randomly, missing at least one out of the four experiments, or otherwise not complying with task instructions. Our final sample included 47 participants with high verbal representation scores on the IRQ and 46 participants with low verbal representation scores. 
 
 # Results
 ```{r, include=FALSE}
@@ -637,7 +637,7 @@ rhyme_tol_rt_p <- ggplot(rhyme_rt_df, aes(talk_out_loud, rt, color=high_low_verb
   stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), size = 1, position= pd)+
   theme_bw() +
   theme(axis.title.x=element_text(size=rel(0.7)),strip.text = element_text(size=rel(0.5)))+
-  labs(y ='Reaction time (ms)',x='Did you talk out loud to remember the words?')+
+  labs(y ='Reaction time (ms)',x='Did you talk out loud to make the rhyme judgments?')+
   scale_color_manual('Group',values = color_palette[c(4,6)], labels=c('High-verbal', 'Low-verbal'))+
   facet_wrap(~type, labeller= labeller(type = c("non-ortho" = "Non-orthographical\nrhyme",
       "NR" = "No rhyme",
@@ -650,7 +650,7 @@ rhyme_tol_acc_p <- ggplot(rhyme_correct_df, aes(talk_out_loud, correct, color=hi
   stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), size = 1, position= pd)+
   theme_bw() +
   theme(axis.title.x=element_text(size=rel(0.7)),strip.text = element_text(size=rel(0.5)))+
-  labs(y ='Accuracy', x='Did you talk out loud to remember the words?')+
+  labs(y ='Accuracy', x='Did you talk out loud to make the rhyme judgments?')+
   scale_color_manual('Group',values = color_palette[c(4,6)], labels=c('High-verbal', 'Low-verbal'))+
   facet_wrap(~type, labeller= labeller(type = c("non-ortho" = "Non-orthographical\nrhyme",
       "NR" = "No rhyme",
@@ -708,7 +708,7 @@ task_switch_desc_df <- task_switch_desc_df %>% select(high_low_verbal, condition
 
 task_switch_rt_df <- task_switch_trials %>%
   filter(switching_is_correct == 1) %>%
-  summarySEwithin2(measurevar = 'rt', betweenvars = 'high_low_verbal',
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal', 'talk_out_loud'),
                   withinvars = 'condition',idvar = 'worker_id',na.rm=T)
 task_switch_rt_df_individual <- task_switch_trials %>%
   filter(switching_is_correct == 1) %>%
@@ -846,7 +846,7 @@ ggplot(aes(condition, rt, color=high_low_verbal)) +
   stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd) +
   stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), size = 1, position= pd)+
   theme_bw() +
-  labs(y ='Reaction time (ms)', title = 'Task switching x talking out loud', x='')+
+  labs(y ='Reaction time (ms) per problem', title = 'Task switching x talking out loud', x='')+
   scale_color_manual('Group',values = color_palette[c(4,6)], labels=c('High-verbal', 'Low-verbal'))+
   facet_wrap(~talk_out_loud, labeller = labeller(talk_out_loud = c('No' = 'Reported not talking out loud', 'Yes'='Reported talking out loud'))) +
   scale_x_discrete(labels =c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch'))+
@@ -1333,17 +1333,27 @@ impulsiveness_3_p <- ggplot(questionnaire_text_interest, aes(factor(impulsivenes
 ```
 ```{r, include=FALSE}
 # put all the plots together
-combined_q_plot <- plot_grid(rehearse_question_p, conversation_focus_p, earworms_p, convo_memory_friend_p,convo_memory_self_p, hearing_conversation_p, sing_along_p, sing_along_thinking_p, other_voice_quality_p, thinking_in_ideas_p, express_inner_states_p, stress_IS_p, narrative_IS_p, revise_convo_p, rehearse_convo_p, exp_type_nodding_off_p, impulsiveness_1_p, impulsiveness_2_p, impulsiveness_3_p,
-                             labels = c('A', 'B', 'C', 'D','E', 'F', 'G','H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'),
+combined_q_plot_1 <- plot_grid(rehearse_question_p, conversation_focus_p, earworms_p, convo_memory_friend_p,convo_memory_self_p, hearing_conversation_p, sing_along_p, sing_along_thinking_p, other_voice_quality_p, thinking_in_ideas_p,
+                             labels = c('A', 'B', 'C', 'D','E', 'F', 'G','H', 'I', 'J'),
                              label_size = 12,
-                             nrow=5, ncol=4)
-#ggsave('combined_q_plot.png', combined_q_plot, width = 30, height = 40)
+                             nrow=5, ncol=2)
+combined_q_plot_2 <- plot_grid(express_inner_states_p, stress_IS_p, narrative_IS_p, revise_convo_p, rehearse_convo_p, exp_type_nodding_off_p, impulsiveness_1_p, impulsiveness_2_p, impulsiveness_3_p, 
+                               labels = c('K', 'L', 'M', 'N','O', 'P', 'Q','R', 'S'),
+                               label_size = 12,
+                               nrow=5, ncol = 2)
+#ggsave('combined_q_plot_1.png', combined_q_plot_1, width = 20, height = 30)
+#ggsave('combined_q_plot_2.png', combined_q_plot_2, width = 20, height = 30)
+
 ```
 
-For most of our custom questions, there were notable differences in how participants from the two groups responded (see Figure \@ref(fig:questionnaire)). The questions with the clearest differences concerned rehearsing and revising conversations where the high-verbal group reported doing so much more often than the low-verbal group did.
+For most of our custom questions, there were notable differences in how participants from the two groups responded (see Figures \@ref(fig:questionnaire-1) and \@ref(fig:questionnaire-2)). The questions with the clearest differences concerned rehearsing and revising conversations where the high-verbal group reported doing so much more often than the low-verbal group did.
 
-```{r questionnaire, echo=FALSE, out.width="100%", out.height="100%", fig.cap='Grouped bar plots of our custom questions. Dark blue represents the high-verbal group and dark yellow represents the low-verbal group.'}
-knitr::include_graphics("combined_q_plot.png")
+```{r questionnaire-1, echo=FALSE, out.width="100%", out.height="100%", fig.cap='Grouped bar plots of our custom questions. Dark blue represents the high-verbal group and dark yellow represents the low-verbal group.'}
+knitr::include_graphics("combined_q_plot_1.png")
+```
+
+```{r questionnaire-2, echo=FALSE, out.width="100%", out.height="100%", fig.cap='Grouped bar plots of our custom questions. Dark blue represents the high-verbal group and dark yellow represents the low-verbal group.'}
+knitr::include_graphics("combined_q_plot_2.png")
 ```
 
 # Discussion
