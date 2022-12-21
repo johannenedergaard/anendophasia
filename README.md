@@ -34,6 +34,9 @@ The following pairs were excluded for being associated with below chance perform
 |image_2   |right-positioned image (name of file indicates target word)   |
 |cor_key   |correct response: 'arrowup' (images rhyme) or 'arrowdown' (images do not rhyme)   |
 |type   |'NR' (no rhyme), 'ortho' (orthographic rhyme), 'non-ortho' (non-orthographical rhyme)   |
+|name_agreement_img1| proportion of participants (from a separate experiment) who named image_1 our intended word   |
+|name_agreement_img2| proportion of participants (from a separate experiment) who named image_2 our intended word   |
+
 
 ### Ordered word recall (phonological similarity)
 
