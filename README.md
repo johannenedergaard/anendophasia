@@ -1,7 +1,7 @@
 # Anendophasia
 ## Inner speech and cognition
 
-The `data` folder contains a folder with raw behavioural data (two csv files from each participant, one with browser interaction data and one with experiment data), a folder with survey data, a processing script, and four processed csv files for each of the behavioral experiments. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
+The `data` folder contains a folder with raw behavioural data (two csv files from each participant, one with browser interaction data and one with experiment data), a folder with survey data, a processing script, and a folder with four processed csv files for the four behavioral experiments. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
 
 ## Column dictionary
 Columns common to all experiments:
@@ -22,7 +22,6 @@ Columns common to all experiments:
 |high_low_verbal   |participant recruited as 'high_verbal' or 'low_verbal' |
 
 ### Rhyme judgments
-The following participants were excluded for responding randomly: A1KOBLL83SICGQ, A26BQ33MHKVYFB, A1PUSSRD8P5HHH.
 
 The following pairs were excluded for being associated with below chance performance for at least one of the two groups: chin/bin, park/shark, rake/cake, cave/wave, cab/crab.
 
