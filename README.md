@@ -1,7 +1,7 @@
 # Anendophasia
 ## Inner speech and cognition
 
-The `data` folder contains a folder with raw behavioural data (two csv files from each participant, one with browser interaction data and one with experiment data), a folder with survey data, a processing script, and a folder with four processed csv files for the four behavioral experiments. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
+The `data` folder contains a folder with raw data (experiment data and browser interaction data), a folder with survey data, a processing script, and a folder with four processed csv files for the four behavioral experiments. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
 
 ## Column dictionary
 Columns common to all experiments:
