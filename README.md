@@ -10,7 +10,6 @@ Columns common to all experiments:
 |trial_index   |across the whole series of experiments, when did this trial occur   |
 |time_elapsed  |time (ms) since starting the experiment series   |
 |worker_id   |anonymized participant ID  |
-|start_time   |time participant started experiment series   |
 |experiment_order   |order of the four experiments for that participant   |
 |experiment   |which of the four experiments  |
 |phase   |practice or experiment   |
