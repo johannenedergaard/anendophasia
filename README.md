@@ -1,11 +1,7 @@
 # Anendophasia
 ## Inner speech and cognition
 
-The `alexinoia_raw` folder contains two raw csv files from each participant, one with browser interaction data and one with experiment data. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
-
-The raw files contain a lot of irrelevant information. There are four cleaned up dataframes here (one for each experiment) as well as dataframes containing visual and verbal scores (from the Internal Representations Questionnaire) and dataframes containing questionnaire data.
-
-Participants AFFXVHHBUWW4D and A1Q56N80RJLQ7S were excluded from all experiments because they responded randomly. 
+The `data` folder contains a folder with raw behavioural data (two csv files from each participant, one with browser interaction data and one with experiment data), a folder with survey data, a processing script, and four processed csv files for each of the behavioral experiments. Participants were recruited to participate in four behavioural experiments: rhyme judgments from images, task switching with simple arithmetic problems, recall for a string of words, and same/different judgments of pictures of cats and dogs.
 
 ## Column dictionary
 Columns common to all experiments:
