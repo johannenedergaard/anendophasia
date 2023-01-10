@@ -72,7 +72,7 @@ options(knitr.table.format = "latex")
 It is frequently claimed that everyone has an inner voice, and that most of our waking hours are filled with internal monologue [@chella2020cognitive; @perrone2014little]. Recent evidence - both anecdotal accounts and more systematic investigations - challenge this view. In mass media, the topic has received much attention in viral Twitter threads (e.g., @kyleplantemoji_2020, see Figure \@ref(fig:kyle))  as well as in articles such as ‘What it’s like living without an inner voice’ [@soloducha_2020] and ‘People With No Internal Monologue Explain What It's Like In Their Head’ [@felton_2020]. Recent systematic investigations have focused on auditory imagery as a proxy for inner speech [@Hinwar2021; @dawes2020cognitive] and found that auditory imagery, like visual imagery, varies from entirely absent to ubiquitous across individuals.
 
 ```{r kyle, echo=FALSE, out.width="50%", fig.align= 'center', fig.cap='Viral tweet from @KylePlantEmoji about the presence or absence of inner speech. Screenshot from November 17th 2022.'}
-knitr::include_graphics("figures/kyle_plant_emoji.png")
+knitr::include_graphics("../figures/kyle_plant_emoji.png")
 ```
 
 Judging by these accounts, there are important differences in the extent to which people experience an inner voice. Whether these differences in experience result in differences in behavior is still an open question which we begin to address in the present article.
@@ -118,7 +118,7 @@ We used the same three word sets as @baddeley1966short: One set contained words 
 Participants received the following instructions: ‘During each trial, you will see five words presented in sequence 1 second each. You will have to remember the words and the order they were presented in as you will be asked to reproduce them in the right order afterwards.’ There was a blank screen for 2000 ms between each word presentation. First, participants performed two practice trials with full feedback (correct/incorrect and the stimulus words – drawn from a different set than the ones used in the real experiment – shown in order). Then, participants performed 24 trials with eight trials from each of the three word sets. The order of both set type and words within a trial were randomized. There was no limit to how long participants could spend on reproducing the words on a given trial. See Figure \@ref(fig:verbwm-procedure).
 
 ```{r verbwm-procedure, echo=FALSE,    out.width="100%", fig.cap='A sketch of the procedure in the verbal working memory experiment. In this example, the words are drawn from the phonological similarity set'}
-knitr::include_graphics("figures/verbwm.png")
+knitr::include_graphics("../figures/verbwm.png")
 ```
 
 ## Method: Rhyme judgments
@@ -131,7 +131,7 @@ We constructed a set of rhyme pairs with 20 orthographic pairs (e.g. ‘sock’ 
 Participants received the following instructions: ‘You will see two images at a time and have to judge whether the names of the items rhyme or not. For example, if you see a picture of a LAMP and a picture of a CAMP, you should respond that they rhyme (press UP arrow). If you see a picture of a BEAR and a picture of a CUP, you should respond that they do not rhyme (press DOWN arrow). All the words are short (one syllable). Please make the judgments as quickly and accurately as possible.’ Participants first performed four practice trials with correct/incorrect feedback – they did not receive feedback for the remaining trials. Between each rhyme judgment trial, the screen showed a central fixation cross for either 250, 500, 750, or 1000 ms. It then showed two square black frames for 500 ms to control spatial attention – the two images then appeared simultaneously in the two squares. Participants had 5000 ms to respond to each trial and performed a total of 60 rhyme judgments in randomized order (20 orthographic rhymes, 20 non-orthographic rhymes, and 20 no-rhyme control trials). See Figure \@ref(fig:rhyme-procedure).
 
 ```{r rhyme-procedure, echo=FALSE, out.width="100%", fig.cap="A sketch of a rhyme judgment trial. The stimuli here exemplify an orthographic rhyme – ‘bone’ and ‘cone’ – and the correct answer would therefore be ‘Rhyme’."}
-knitr::include_graphics("figures/rhyme.png")
+knitr::include_graphics("../figures/rhyme.png")
 ```
 
 ## Method: Task switching
@@ -143,7 +143,7 @@ For each of the five experimental conditions, we used 30 randomly selected integ
 There were five conditions in this experiment: (1) blocked addition (2) blocked subtraction, (3) alternating between addition and subtraction with operation marked by color cue (red/blue); (4) alternation marked with a symbol cue (+/-); (5) alternation without external cue requiring participants to remember which operation they just did.. Participants started with either the blocked subtraction or the addition condition (counterbalanced) and then proceeded to the switching conditions (counterbalanced). For each condition, participants first solved 10 problems with correct/incorrect feedback (including feedback specific to whether the arithmetic or the operation or both were incorrect) and then 30 problems without feedback. On a given trial, participants saw a prompt number and had to either add or subtract 3 and type their answer into a text box. In the switching conditions, a response counted as correct if it was the correct arithmetic and if the operation was switched from the previous trial (from addition to subtraction or vice versa). See Figure \@ref(fig:task-switch-procedure).
 
 ```{r task-switch-procedure, echo=FALSE, out.width="100%", fig.cap='A sketch of the three switched conditions in the task switching experiment. Figure A shows four color-cued switch trials with correct answers, Figure B shows four symbol-cued switch trials with correct answers, and Figure C shows four uncued switch trials with correct answers.'}
-knitr::include_graphics("figures/taskswitch.png")
+knitr::include_graphics("../figures/taskswitch.png")
 ```
 
 ##        Method: Same/different judgments
@@ -152,14 +152,14 @@ knitr::include_graphics("figures/taskswitch.png")
 This experiment used three different black silhouettes of cats and three different black silhouettes of dogs (see Figure \@ref(fig:cats-dogs)). 
 
 ```{r cats-dogs, echo=FALSE, out.width="50%",    fig.align= 'center', fig.cap='The black silhouettes of cats and dogs used in the same/different judgment experiment.'}
-knitr::include_graphics("figures/samdiff_figs.png")
+knitr::include_graphics("../figures/samdiff_figs.png")
 ```
 
 ### Procedure
 There were two conditions in the experiment: a category judgment condition and an identity judgment condition. In the category judgment condition, participants were instructed to press the UP arrow key if the two animals belonged to the same category (either cat or dog) and the DOWN arrow key if they did not. In the identity judgment condition, participants were instructed to press the UP arrow key if the two animals were completely identical (e.g., same silhouette of same dog) and the DOWN arrow key if they were not. See Figure \@ref(fig:same-diff-procedure). On each trial, participants first saw a fixation cross for 750 ms, then four empty square frames around the fixation cross for 500 ms to prompt participants’ spatial attention. The silhouette images appeared one at a time with a 300 ms delay between them in two out of four random positions around a fixation cross in the center of the screen. After the keyboard response, the screen was blank for 300 ms. Participants received feedback throughout but only for incorrect trials. They completed 100 trials in the category judgment condition and 100 trials in the identity judgment condition (half ‘same’ and half ‘different’).
 
 ```{r same-diff-procedure, echo=FALSE, out.width="100%",    fig.cap='A sketch of the two conditions of the category judgment experiment. On Figure A, we see a correct category judgment trial where the participant responds that the cat and dog silhouettes represent different animals. On Figure B, we see an incorrect identity judgment trial where the participant responds that the two dogs are identical.'}
-knitr::include_graphics("figures/samedifferent.png")
+knitr::include_graphics("../figures/samedifferent.png")
 ```
 
 ## Method: Questionnaire
@@ -518,6 +518,7 @@ strategies_vwm %>%
   kable_styling(full_width = T)
 
 ```
+
 
 ## Rhyme judgments
 We excluded five rhyming pairs as they had below-chance performance on average for at least one group. These pairs were bin/chin, cab/crab, rake/cake, wave/cave, and park/shark. 
@@ -1102,7 +1103,7 @@ See Figure \@ref(fig:total-cor). Generally, different performance measures corre
 # rownames(ps) <- score_df_names
 # colnames(ps) <- score_df_names
 # corrplot(correlations$r,p.mat=ps, sig.level = 0.01,insig='blank', tl.cex =2, type='lower', tl.col='black')
-knitr::include_graphics("figures/cor_plot_total.png")
+knitr::include_graphics("../figures/cor_plot_total.png")
 
 # this is what works for saving the plot (might have to be outside markdown in normal R script):
 # png(height=1800, width=1800, file="cor_plot_total.png")
@@ -1124,7 +1125,7 @@ See Figure \@ref(fig:high-verbal-cor). For high-verbal participants, reaction ti
 # rownames(ps_hv) <- score_df_names
 # corrplot(correlations_hv$r, p.mat=ps_hv, sig.level = 0.01,insig='blank', tl.cex =1, type='lower', tl.col='black')
 
-knitr::include_graphics("figures/cor_plot_hv.png")
+knitr::include_graphics("../figures/cor_plot_hv.png")
 
 ```
 
@@ -1142,7 +1143,7 @@ See Figure \@ref(fig:low-verbal-cor). For low-verbal participants, there was no 
 # rownames(ps_lv) <- score_df_names
 # corrplot(correlations_lv$r, p.mat=ps_lv,sig.level = 0.01,insig='blank', tl.cex =1, type='lower', tl.col='black')
 
-knitr::include_graphics("figures/cor_plot_lv.png")
+knitr::include_graphics("../figures/cor_plot_lv.png")
 ```
 
 ### Difference between task correlations in *low-verbal group* and *high-verbal group*
@@ -1154,7 +1155,7 @@ See Figure \@ref(fig:subtracted-cor). Note that colored squares do not have any 
 # rownames(cors_subtracted) <- score_df_names
 # corrplot(cors_subtracted, tl.cex =1, type='lower', tl.col='black')
 
-knitr::include_graphics("figures/cor_plot_subtracted.png")
+knitr::include_graphics("../figures/cor_plot_subtracted.png")
 ```
 
 ## Summary of behavioral findings
@@ -1168,8 +1169,8 @@ There were no notable differences between the two groups in the task switching e
 
 ## Questionnaire measures
 ```{r, include=FALSE}
-Q_anendophasia_numeric <- read.csv('survey_data/qualtrics_numeric_anendophasia.csv', row.names = 1)
-Q_anendophasia_text <- read.csv('survey_data/qualtrics_text_anendophasia.csv', row.names = 1)
+Q_anendophasia_numeric <- read.csv('../data/survey_data/qualtrics_numeric_anendophasia.csv')
+Q_anendophasia_text <- read.csv('../data/survey_data/qualtrics_text_anendophasia.csv')
 
 ptcpts_exp <- unique(rhyming_trials$worker_id)
 ptcpts_q <- unique(Q_anendophasia_numeric$worker_id)
@@ -1178,6 +1179,9 @@ length(intersect(ptcpts_exp,ptcpts_q))
 ptcpts_exp[which(!ptcpts_exp %in% ptcpts_q)] # A3KVKK1XLBTSN3 is missing from the questionnaire data? 
 
 table(Q_anendophasia_numeric$high_low_verbal)
+Q_anendophasia_numeric <- merge(Q_anendophasia_numeric, irq_scores, by = 'worker_id', all.x = T)
+Q_anendophasia_text <- merge(Q_anendophasia_text, irq_scores, by = 'worker_id', all.x = T)
+
 ```
 **For some strange reason, we do not have questionnaire data from A3KVKK1XLBTSN3.** We will retain their data from the four behavioral experiments and here report questionnaire data from 47 high-verbal and 45 low-verbal participants.
 ```{r, include=FALSE, cache = TRUE}
@@ -1404,29 +1408,30 @@ impulsiveness_3_p <- ggplot(Q_anendophasia_text, aes(factor(impulsiveness_3, lev
   scale_fill_manual(values = color_palette[c(4,6)])
 
 ```
+
 ```{r, include=FALSE}
 # put all the plots together
-combined_q_plot_1 <- plot_grid(rehearse_question_p, conversation_focus_p, earworms_p, convo_memory_friend_p,convo_memory_self_p, hearing_conversation_p, sing_along_p, sing_along_thinking_p, other_voice_quality_p, thinking_in_ideas_p,
-                             labels = c('A', 'B', 'C', 'D','E', 'F', 'G','H', 'I', 'J'),
-                             label_size = 12,
-                             nrow=5, ncol=2)
-combined_q_plot_2 <- plot_grid(express_inner_states_p, stress_IS_p, narrative_IS_p, revise_convo_p, rehearse_convo_p, exp_type_nodding_off_p, impulsiveness_1_p, impulsiveness_2_p, impulsiveness_3_p, 
-                               labels = c('K', 'L', 'M', 'N','O', 'P', 'Q','R', 'S'),
-                               label_size = 12,
-                               nrow=5, ncol = 2)
-#ggsave('combined_q_plot_1.png', combined_q_plot_1, width = 20, height = 30)
-#ggsave('combined_q_plot_2.png', combined_q_plot_2, width = 20, height = 30)
+# combined_q_plot_1 <- plot_grid(rehearse_question_p, conversation_focus_p, earworms_p, convo_memory_friend_p,convo_memory_self_p, hearing_conversation_p, sing_along_p, sing_along_thinking_p, other_voice_quality_p, thinking_in_ideas_p,
+#                              labels = c('A', 'B', 'C', 'D','E', 'F', 'G','H', 'I', 'J'),
+#                              label_size = 12,
+#                              nrow=5, ncol=2)
+# combined_q_plot_2 <- plot_grid(express_inner_states_p, stress_IS_p, narrative_IS_p, revise_convo_p, rehearse_convo_p, exp_type_nodding_off_p, impulsiveness_1_p, impulsiveness_2_p, impulsiveness_3_p, 
+#                                labels = c('K', 'L', 'M', 'N','O', 'P', 'Q','R', 'S'),
+#                                label_size = 12,
+#                                nrow=5, ncol = 2)
+# ggsave('../figures/combined_q_plot_1.png', combined_q_plot_1, width = 20, height = 30)
+# ggsave('../figures/combined_q_plot_2.png', combined_q_plot_2, width = 20, height = 30)
 
 ```
 
 For most of our custom questions, there were notable differences in how participants from the two groups responded (see Figures \@ref(fig:questionnaire-1) and \@ref(fig:questionnaire-2)). The questions with the clearest differences concerned rehearsing and revising conversations where the high-verbal group reported doing so much more often than the low-verbal group did.
 
 ```{r questionnaire-1, echo=FALSE, out.width="100%", out.height="100%", fig.cap='Grouped bar plots of our custom questions. Dark blue represents the high-verbal group and dark yellow represents the low-verbal group.'}
-knitr::include_graphics("figures/combined_q_plot_1.png")
+knitr::include_graphics("../figures/combined_q_plot_1.png")
 ```
 
 ```{r questionnaire-2, echo=FALSE, out.width="100%", out.height="100%", fig.cap='Grouped bar plots of our custom questions. Dark blue represents the high-verbal group and dark yellow represents the low-verbal group.'}
-knitr::include_graphics("figures/combined_q_plot_2.png")
+knitr::include_graphics("../figures/combined_q_plot_2.png")
 ```
 
 # Discussion
