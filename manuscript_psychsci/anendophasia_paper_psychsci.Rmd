@@ -1,0 +1,1310 @@
+---
+title             : "Not everybody has an inner voice: Behavioral consequences of anendophasia"
+shorttitle        : "Anendophasia"
+
+author: 
+  - name          : "Johanne S. K. Nedergaard"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Emil Holms Kanal 2, 2300 Copenhagen S, Denmark"
+    email         : "jskn@hum.ku.dk"
+  - name          : "Gary Lupyan"
+    affiliation   : "2"
+
+affiliation:
+  - id            : "1"
+    institution   : "Department of Nordic Studies and Linguistics, University of Copenhagen"
+  - id            : "2"
+    institution   : "Department of Psychology, University of Wisconsin-Madison"
+
+authornote: |
+  All experiment data, experiment code, and analysis code are available on GitHub: https://github.com/johannenedergaard/anendophasia. 
+
+abstract: |
+  It is commonly assumed that inner speech – the experience of thought as occurring in a natural language – is both universal and ubiquitous. Recent evidence, however, suggests that similar to other phenomenal experiences like visual imagery, the experience of inner speech varies between people, ranging from constant to non-existent. We propose a name for a lack of the experience of inner speech – anendophasia – and report four studies examining some of its behavioral consequences. We found that people who report low levels of inner speech have lower performance on a verbal working memory task and have more difficulty performing rhyme judgments based on images. Task switching performance, previously linked to endogenous verbal cueing, was unaffected by differences in inner speech. Studies of anendophasia, together with aphantasia, synesthesia, and differences in autobiographical memory are providing glimpses into what may be a large space of hitherto unexplored differences in people’s phenomenal experience.
+
+keywords          : "inner speech, rhyme judgments, categorization, task switching, verbal working memory, individual differences"
+wordcount         : "5823"
+
+bibliography      : "r-references.bib"
+floatsintext      : yes
+header-includes   :
+  - \usepackage{tabu}
+  - \usepackage{float}
+  - \usepackage{caption}
+  - \captionsetup[table]{textfont={it}, labelfont={bf}, singlelinecheck=false, labelsep=newline}
+
+linenumbers       : yes
+draft             : no
+mask              : no
+numbersections    : no  
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man,donotrepeattitle,a4paper"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library('tidyverse')
+library('tufte')
+library('kableExtra')
+r_refs("r-references.bib")
+knitr::opts_chunk$set(fig.pos = "H")
+options(knitr.table.format = "latex")
+```
+
+
+\setcounter{secnumdepth}{5}
+
+# Introduction
+
+Everyone, it is often said, has an inner voice, and most of our waking hours are claimed to be filled with inner speech: ‘Daily, human beings are engaged in a form of inner dialogue, which enables them to high-level cognition, including self-control, self-attention and self-regulation.’: [@chella2020cognitive, p. 287]; ‘We all hear a voice inside our brain, commonly called “inner voice”, “inner speech” or referred to as “verbal thoughts”’ (@perrone2014little, p. 22). Most people do report experiencing inner speech [@alderson2015inner; @morin2018self; @heavey2008phenomena] and because we often assume that our experiences mirror those of others, the majority experience comes to be viewed as universal [@lupyan2023hidden].
+The assumption that everyone has an inner voice has served as a stepping stone for research into the functions of inner speech – if everyone has it, it must be important. Speculations have ranged from the idea that natural language constitutes (at least some types of) thought [@carruthers2002cognitive;  @gauker2011words; @frankish_isnv; @morin_isnv; @bermudez2007thinking; @clark_magicwords] to investigations of connections between inner speech and specific processes such as cognitive control [@emerson2003role; @cragg2010language; @alderson2015inner; @morin2018self].
+But not everyone experiences inner speech. This is attested by personal narratives such as ‘What it’s like living without an inner voice’ [@soloducha_2020]; ‘People With No Internal Monologue Explain What It’s Like In Their Head’ [@felton_2020], as well as more systematic investigations both targeting variation in inner speech [@alderson2018varieties; @brinthaupt2019individual; @Hurlburt2013] and auditory imagery, which has sometimes been used as a proxy for inner speech [@Hinwar2021; @dawes2020cognitive].
+While these data challenge the assumption that inner speech is universal, a natural question is *do such differences in subjectively assessed phenomenology predict differences in objectively assessed behavior?* Both positive and negative findings are informative. A *positive* finding helps us understand the extent to which people’s cognition may be differentially guided by language. For example, in group studies it has been found that interfering with people’s ability to name images (using both noninvasive neural stimulation and verbal interference) disrupts categorization [@lupyan2009extracommunicative; @lupyan2012words; @perry2014role; @perry2017recognising]. This has been taken as evidence that typical categorization is augmented by language [@lupyan2012words]. Although this may be true for a typical group of participants, it is possible that language may not be recruited by all people in the same way. Finding that there is *no* relationship between reported inner speech and behavior can mean one of several things. First, it could indicate that the measure of inner speech is invalid. Perhaps people have different theories about how to respond to questions concerning their inner experiences and rather than capturing actual inner experiences, people’s responses merely tell us how these people think one *ought* to respond to such questions [@schwitzgebel2011perplexities]. Assuming the measures are valid, negative findings could mean that differences in inner speech have no bearing on the task in question. If language is augmenting people’s performance, this is unrelated to consciously experienced inner speech. Lastly, it is possible that people without inner speech may not differ in gross measures like accuracy or speed, but rely on different processes or strategies. Learning this is of immense interest because it helps uncover otherwise hidden variation in task performance [see also @keogh2021visual]. 
+
+##	The Present Study
+
+We recruited participants differing in subjectively reported inner speech and tested them on four behavioral tasks on which performance may vary as a function of inner speech based on prior theoretical claims. The first is a rhyme judgment task: participants see pairs of images and need to indicate whether their names rhyme or not. We reasoned that although participants with low inner speech would have no trouble naming the objects, a lesser reliance on inner speech would make it harder to compare the names in memory – necessary for making a rhyme judgment [@geva2011discrepancy; @langland2015inner]. Just as visual imagery has been predicted (and sometimes found) to be linked to visual memory, we tested whether inner speech predicted memory for verbal material. We focused on memory for sets of words that were either phonologically similar and orthographically different or orthographically similar and phonologically different. Less inner speech was predicted to be associated with poorer overall memory for verbal material, but to the extent that phonological similarity creates memory confusion [@baddeley1966short; @murray1968articulation], less inner speech may be associated with a reduced phonological similarity effect. There is robust evidence that inner speech is often recruited for behavioral control when participants have to switch between different tasks [@emerson2003role; @miyake2004inner; @baddeley2001working]. For example, when asked to switch between adding and subtracting numbers, participants show a selective impairment if they undergo articulatory suppression, but no such impairment is found if the cues are exogenously provided (e.g., a symbol or color cue is used to inform participants whether they should add or subtract)  [see @nedergaard2022verbal for a systematic review of verbal interference effects]. We reasoned that people who do not habitually use inner speech might be selectively impaired when they have to rely on self-generated cues. On the other hand, it is possible that they have learned to rely on other strategies in which case no difference would be found. Our fourth and last task involves examining category effects in perception. There is considerable evidence that language induces more categorical representations from basic perception onward [e.g., @winawer2007russian; @perry2014role; @forder2019hearing]. In a study examining the effects of conceptual categories, @lupyan2010conceptual showed that controlling for visual differences, people’s ability to tell whether two stimuli were physically the same was affected by the categorical status of those stimuli. For example, it took longer to distinguish two cats than an equally visually similar cat and dog. We wondered whether such category effects, insofar as they may be in part induced by feedback from verbal labels, may be reduced in people with less inner speech. 
+
+# Methods
+## Participants
+```{r, include=FALSE}
+library(xtable)
+Q_anendophasia_numeric <- read.csv('../data/survey_data/qualtrics_numeric_anendophasia.csv')
+Q_anendophasia_text <- read.csv('../data/survey_data/qualtrics_text_anendophasia.csv')
+browser_interactions <- read.csv('../data/raw_data/browser_df_anendophasia_anonymized.csv',row.names = 1)
+irq_scores <- read.csv('irq_scores_anonymized.csv', row.names = 1)
+phon_sim_trials <- read.csv('../data/processed_data/phon_sim_trials.csv',row.names = 1)
+
+Q_anendophasia_numeric <- Q_anendophasia_numeric %>%
+  rename(visq_cond_1 = Q63_95, visq_dial_1 = Q63_96, visq_other_voi_1 = Q63_97, visq_other_voi_2 = Q63_98, visq_other_voi_3 = Q63_100, visq_dial_2 = Q63_101, visq_cond_2_rev = Q63_102, visq_cond_3 = Q63_103, visq_eval_1 = Q63_105, visq_dial_3 = Q63_106, visq_eval_2 = Q63_108, visq_other_voi_4 = Q63_109, visq_dial_4 = Q63_111, visq_cond_4 = Q63_112, visq_cond_5_rev = Q63_115, visq_other_voi_5 = Factor2_1...68, visq_eval_3 = Q63_116, visq_eval_4 = Q63_117)
+
+ptcpts_exp <- unique(phon_sim_trials$worker_id)
+ptcpts_q <- unique(Q_anendophasia_numeric$worker_id)
+length(intersect(ptcpts_exp,ptcpts_q))
+
+ptcpts_exp[which(!ptcpts_exp %in% ptcpts_q)] # A3KVKK1XLBTSN3 is missing from the questionnaire data? --> Ny0Ml3uz
+
+Q_anendophasia_numeric <- merge(Q_anendophasia_numeric, irq_scores, by = 'worker_id', all.x = T)
+Q_anendophasia_text <- merge(Q_anendophasia_text, irq_scores, by = 'worker_id', all.x = T)
+Q_anendophasia_numeric <- distinct(Q_anendophasia_numeric)
+Q_anendophasia_text <- distinct(Q_anendophasia_text)
+table(Q_anendophasia_numeric$high_low_verbal)
+
+# TEST FOR DYSLEXIA
+dyslexia_test <- Q_anendophasia_text %>%
+  group_by(high_low_verbal,dyslexia)
+table(dyslexia_test$high_low_verbal, dyslexia_test$dyslexia)
+chisq.test(dyslexia_test$high_low_verbal, dyslexia_test$dyslexia)
+# TEST FOR GENDER
+gender_test <- Q_anendophasia_text %>%
+  group_by(high_low_verbal,Q319)
+table(gender_test$high_low_verbal, gender_test$Q319)
+chisq.test(gender_test$high_low_verbal, gender_test$Q319) #no difference in gender
+# TEST FOR FIRST LANGUAGE
+firstlang_test <- Q_anendophasia_text %>%
+  group_by(high_low_verbal,Q320)
+table(firstlang_test$high_low_verbal, firstlang_test$Q320)
+chisq.test(firstlang_test$high_low_verbal, firstlang_test$Q320) #no difference in first language english -
+# although 0 in high-verbal group and 4 in low verbal group
+# samoan, mandarin, chinese, gujarati & hindi - who are they?
+non_native_speakers <- Q_anendophasia_numeric %>%
+  filter(Q320 == 0) %>%
+  select(worker_id) 
+# try to exclude them from later analyses...
+# TEST FOR AGE/REPORT AGE
+age_test <- Q_anendophasia_text %>%
+  group_by(high_low_verbal,Q323)
+summary(subset(age_test, high_low_verbal == 'high_verbal')$Q323)
+summary(subset(age_test, high_low_verbal == 'low_verbal')$Q323)
+t.test(subset(age_test, high_low_verbal == 'high_verbal')$Q323, subset(age_test, high_low_verbal == 'low_verbal')$Q323)
+# no difference in age
+#  TEST FOR EDUCATION LEVEL
+edu_test <- Q_anendophasia_numeric %>%
+  group_by(high_low_verbal,education_level)
+table(subset(edu_test, high_low_verbal == 'high_verbal')$education_level)
+table(subset(edu_test, high_low_verbal == 'low_verbal')$education_level)
+t.test(subset(edu_test, high_low_verbal == 'high_verbal')$education_level, subset(edu_test, high_low_verbal == 'low_verbal')$education_level)
+
+```
+We recruited participants online who had previously completed the Internal Representations Questionnaire [@roebuck2020internal] as part of unrelated studies, contacting participants with verbal factor scores < 3.5 (bottom 16%-ile) or > 4.25 (top 40%-ile) on the Verbal factor of the questionnaire which is largely centered on propensity to experience and rely on inner speech. For example, one item with a high loading on the Verbal factor was ‘I think about problems in my mind in the form of a conversation with myself’. One item with a high loading on the Visual factor was ‘I often enjoy the use of mental pictures to reminisce’. The percentile cut-offs were asymmetric because it was more difficult to recruit participants reporting low levels of inner speech, and because the distribution in verbal scores on the IRQ is negatively skewed. Recruiting for example the top and bottom quartiles would have resulted in a “low inner speech” group who had moderate amounts of self-stated inner speech. We received ethical approval from [redacted]. Ten participants were excluded for responding randomly, missing at least one experiment, or clearly not complying with task instructions. Our final sample included 47 participants with relatively high verbal factor scores on the IRQ and 46 participants with low verbal factor scores. The two groups were balanced in terms of age, gender, education level, dyslexia, and first language.See Table \@ref(tab:demographics). Because of a technical error, demographic data is missing for one participant with less inner speech.
+
+```{r demographics, echo=FALSE}
+demographics_table <- data.frame(Measure = c('Age', 'Gender', 'Native English-speaker', 'Dyslexia', 'Education level'),
+                                 high_verbal= c('Median = 37;\nrange = 18-67', 
+                                                        '22 female, 25 male', 
+                                                        '47 native speakers,\n0 non-native speakers',
+                                                        '46 non-dyslexic,\n1 self-diagnosed',
+                                                        "12 high school diploma,\n14 some college - no degree,\n6 associate's degree,\n14 bachelor's degree,\n1 master's degree"
+                                                        ),
+                                low_verbal= c('Median = 39;\nrange = 18-70', 
+                                                        '19 female, 26 male', 
+                                                        '41 native speakers,\n4 non-native speakers',
+                                                        '44 non-dyslexic,\n1 self-diagnosed',
+                                                        "1 less than high school,\n14 high school diploma,\n8 some college - no degree,\n7 associate's degree,\n11 bachelor's degree,\n2 master's degree,\n2 PhD, law, or medical degree"),
+                                 diff_test=c('t(88.43) = -0.19; p = .849', 
+                                                         paste0('$\\chi^{2}$', '(1) = 0.05; p = .816'),
+                                                         paste0('$\\chi^{2}$', '(1) = 2.49; p = .114'),
+                                                         paste0('$\\chi^{2}$', '(1) < 0.01; p = 1'),
+                                                         't(84.46) = -0.23; p = .815'
+                                 ))
+kable(demographics_table, align='l', escape = F, booktabs = TRUE,
+  linesep = "", 
+  col.names = c('Measure', 'More inner speech', 'Less inner speech', 'Test for difference'),
+  caption = 'Comparisons of demographic characteristics of the group with more inner speech and the group with less inner speech.') %>%
+  row_spec(row = 0, bold = T) %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+```
+
+## Method: Verbal working memory
+
+### Materials and procedure
+We used word sets from @baddeley1966short because they were designed to be equivalent in other respects than phonological and orthographical similarity. One set contained words that were phonologically similar but not orthographically similar ("bought", "sort", "taut", "caught", and "wart"), one set contained words that were orthographically similar but not phonologically similar ("rough", "cough", "through", "dough", "bough"), and one set was a control set ("plea", "friend", "sleigh", "row", "board"). On a given trial, participants saw five words in random order from one of the sets presented sequentially in writing and were then asked to type them back in the right order. First, participants performed two practice trials with full feedback (correct/incorrect and the stimulus words – drawn from a different set than the ones used in the real experiment – shown in order). Then, participants performed 24 trials in total with eight trials from each of the three word sets. The order of both set type and words within a trial were randomized. There was no limit to how long participants could spend on reproducing the words on a given trial. See Figure \@ref(fig:verbwm-procedure).
+
+\newpage
+
+```{r verbwm-procedure, echo=FALSE,    out.width="100%", fig.cap='A sketch of the procedure in the verbal working memory experiment. In this example, the words are drawn from the phonological similarity set. Participants saw five words on each trial - three words are presented on the figure for ease of interpretation.'}
+knitr::include_graphics("../figures/verbwm.png")
+```
+
+## Method: Rhyme judgments
+
+### Materials and procedure
+We constructed a set of rhyme pairs with 20 orthographic pairs (e.g., "sock" and "clock")  and 20 non-orthographic pairs (e.g., "drawer" and "door"). See Appendix A for the full set of images, associated words, and name agreement scores. The images were selected from the MultiPic database [@dunabeitia2018multipic] and from @rossion2004revisiting because those image sets contained simple images (objects with no background) that had relatively high name agreement and represented the words we selected for the rhyme pairs. Participants first performed four practice trials with correct/incorrect feedback – they did not receive feedback for the remaining trials. Between each rhyme judgment trial, the screen showed a central fixation cross for either 250, 500, 750, or 1000 ms. It then showed two square black frames for 500 ms to control spatial attention – the two images then appeared simultaneously in the two squares. Participants had 5000 ms to respond to each trial and performed a total of 60 rhyme judgments in randomized order (20 orthographic rhymes, 20 non-orthographic rhymes, and 20 no-rhyme control trials). See Figure \@ref(fig:rhyme-procedure). Nameability scores for the images were collected from a separate set of 20 participants who were asked to label all the images. The nameability scores represent the proportion of participants who provided the target label.
+
+\newpage
+
+```{r rhyme-procedure, echo=FALSE, out.width="100%", fig.cap='A sketch of a rhyme judgment trial. The stimuli here exemplify an orthographic rhyme – "bone" and "cone" – and the correct answer would therefore be "Rhyme".'}
+knitr::include_graphics("../figures/rhyme.png")
+```
+
+## Method: Task switching
+
+### Materials and procedure
+On each block, participants were shown 30 randomly selected integers between 13 and 96 and asked to add or subtract 3 from each. All participants completed five blocks beginning with blocked addition or blocked subtraction, followed by (in a counterbalanced order) a block where problems alternated between addition and subtraction with the operation marked by color (red/blue), marked with a symbol (+/-), or not marked. The unmarked block required participants to remember which operation they had just done. For each condition, participants first solved 10 problems with correct/incorrect feedback (including feedback specific to whether the arithmetic or the operation or both were incorrect) and then 30 problems without feedback. In the switching conditions, a response counted as correct if it was the correct arithmetic and if the operation was switched from the previous trial (from addition to subtraction or vice versa). See Figure \@ref(fig:task-switch-procedure).
+
+```{r task-switch-procedure, echo=FALSE, out.width="100%", fig.cap='A sketch of the three switched conditions in the task switching experiment. Figure A shows four color-cued switch trials with correct answers, Figure B shows four symbol-cued switch trials with correct answers, and Figure C shows four un-cued switch trials with correct answers.'}
+knitr::include_graphics("../figures/taskswitch.png")
+```
+
+##	Method: Same/different judgments
+
+### Materials and procedure
+This experiment used three different black silhouettes of cats and three different black silhouettes of dogs (see Figure \@ref(fig:cats-dogs)). 
+```{r cats-dogs, echo=FALSE, out.width="50%",    fig.align= 'center', fig.cap='The black silhouettes of cats and dogs used in the same/different judgment experiment.'}
+knitr::include_graphics("../figures/samdiff_figs.png")
+```
+There were two conditions in the experiment: a category judgment condition and an identity judgment condition. In the category judgment condition, participants were instructed to press the UP arrow key if the two animals belonged to the same category (either cat or dog) and the DOWN arrow key if they did not. In the identity judgment condition, participants were instructed to press the UP arrow key if the two animals were completely identical (e.g., same silhouette of same dog) and the DOWN arrow key if they were not. See Figure \@ref(fig:same-diff-procedure). On each trial, participants first saw a fixation cross for 750 ms, then four empty square frames around the fixation cross for 500 ms to prompt participants’ spatial attention. The silhouette images appeared one at a time with a 300 ms delay between them in two out of four random positions around a fixation cross in the center of the screen. After the keyboard response, the screen was blank for 300 ms. Participants received visual feedback throughout but only for incorrect trials. They completed 100 trials in the category judgment condition and 100 trials in the identity judgment condition (half "same" and half "different").
+
+```{r same-diff-procedure, echo=FALSE, out.width="100%",    fig.cap='A sketch of the two conditions of the category judgment experiment. On Figure A, we see a correct category judgment trial where the participant responds that the cat and dog silhouettes represent different animals. On Figure B, we see an incorrect identity judgment trial where the participant responds that the two dogs are identical.'}
+knitr::include_graphics("../figures/samedifferent.png")
+```
+
+## Method: Questionnaire
+After completing the four experiments, participants answered the following custom questions. They also completed the Varieties of Inner Speech Questionnaire (VISQ) [@alderson2018varieties].
+
+```{r, echo=FALSE}
+questionnaire_table <- data.frame(
+  Question = c('If you have to ask a question in front of an audience, which of these best describes what you typically do?',
+               'How often do you experience trouble focusing on a face-to-face conversation you are having because of a conflicting conversation happening in your mind at the same time?',
+               'How often do you have songs stuck in your head?',
+               'If you had to recall a short conversation about a specific topic that you had yesterday with a friend, how easily can you recall the exact words your friend said?',
+               "If you had to recall a short conversation about a specific topic that you had yesterday with a friend, how easily can you recall the exact words you said?",
+               'When you recall a conversation like the one you were thinking about for the last 2 questions, do you hear the words in your mind?',
+               'Can you "sing along" to music without singing out loud?',
+               'If you can "sing along" to music without singing out loud, to what extent does this feel like regular thinking?',
+               'If you imagine someone else speaking, how do you experience their voice?',
+               'Many people feel that a lot of their thinking, planning, and decision-making takes place in the form of a conversation with themselves. They describe that when they think, they hear words in their mind. Other people don’t have this experience and instead say that they "think in ideas". Is your experience more like the first or the second?',
+               "To what extent do you agree with this statement: 'It is generally difficult
+and takes effort to express in words how I think and feel'.",
+                'Do you think it is stressful and annoying to have an inner monologue?',
+                'In books and movies, we often see characters talking to themselves at length. How much do you think this reflects real life?',
+                'Have you been diagnosed with dyslexia or another reading disorder?',
+                'Do you ever revise past conversations in your mind (i.e. think of a better comeback,
+a way of phrasing what you wanted to say)?',
+                'Do you ever rehearse a conversation before you have it in real life where you
+simulate what you will say and how the other person will respond?',
+                'Imagine you are lying in bed with your eyes closed trying to fall asleep. Is your inner experience then...',
+                'To what extent do you agree with this statement: "I do not know why I do some of the things that I do."',
+                'To what extent do you agree with this statement: “I am a firm believer in thinking things through.”',
+                'To what extent do you agree with this statement: “I like to act on a whim.”',
+                "For each scale, please indicate what percent of people you know you think have each of these three experiences:\n
+-	Experience their thoughts in the form of a conversation with themselves\n
+-	Can see vivid images in their mind's eye\n
+-	Hear words in their mind's ear when they silently read"
+),
+  Options = c("I rehearse in my mind the exact phrasing of what I am going to ask (5)\n
+	I rehearse in my mind some of what I am going to ask before asking it (4)\n
+	I think of a question I want to ask and just ask it (3)\n
+	Other (2)\n
+	I'm never in a position to ask questions in front of an audience (1)",
+	'Never (1)\n
+	Rarely (2)\n
+	Sometimes (3)\n
+	Often (4)\n
+	Always (5)',
+	'	Multiple times a day (5)\n
+	A few times a week (4)\n
+	A few times a month (3)\n
+	A few times a year (2)\n
+	Never (1)',
+	"I can easily recall it. If I wrote it down and matched to a recording of the conversation,
+there'd be an almost perfect match (5)\n
+	I remember the topic and remember much of what was said. If I matched it to a
+recording of the conversation, a lot would match up. (4)\n
+	I remember the topic, but remember only a few of the specific words/sentences. (3)\n
+	I remember the topic, but can't remember any of the specifics. (2)\n
+	Other (1)",
+  "I can easily recall it. If I wrote it down and matched to a recording of the conversation,
+there'd be an almost perfect match (5)\n
+	I remember the topic and remember much of what was said. If I matched it to a
+recording of the conversation, a lot would match up. (4)\n
+	I remember the topic, but remember only a few of the specific words/sentences. (3)\n
+	I remember the topic, but can't remember any of the specifics. (2)\n
+	Other (1)",
+  "It's just like I'm hearing the conversation again. (4)\n
+	I hear a condensed version (e.g. only some words). (3)\n
+	I hear something but I can't describe it. (2)\n
+	I can't hear it, but I can still recall it. Please briefly say something about how you are
+recalling it. (1)",
+  "Yes - definitely (4)\n
+	Yes - somewhat (3)\n
+	No - but I can imagine how others can do it (2)\n
+	No - I can't imagine how anyone could do this (1)",
+  "Not at all (1)\n
+  Mostly different from regular thinking (2)\n
+	Neutral (3)\n
+	Mostly similar to regular thinking (4)\n
+	Exactly like regular thinking (5)\n
+	I can't sing along without singing out loud (6)",
+  "I hear what they say in their voice. (4)\n
+	I hear what they say but in my own voice. (3)\n
+	I hear the words but I can't tell whose voice it is. (2)\n
+	I don’t “hear” anything, I imagine it by... (please specify) (1)",
+  'More like a conversation (2)\n
+	More like "thinking in ideas". Can you elaborate or give an example of what this means to you? (1)',
+  "Strongly agree (1)\n
+	Agree (2)\n
+	Neither agree nor disagree (3)\n
+	Disagree (4)\n
+	Strongly disagree (5)",
+  "Yes, very (3)\n
+	Maybe a little (2)\n
+	No, I don't think so (1)",
+  "It's just for the viewer/reader's benefit (1)\n
+	It might be like real life but mostly for the viewer's/reader's benefit (2)\n
+	It's exactly like real life (3)",
+  "Yes, officially diagnosed (1)\n
+	Yes, self-diagnosed (2)\n
+	No, never (3)",
+  "Never (1)\n
+	Rarely (2)\n
+	Sometimes (3)\n
+	Often (4)\n
+	Very often (5)",
+  "Never (1)\n
+	Rarely (2)\n
+	Sometimes (3)\n
+	Often (4)\n
+	Very often (5)",
+  'Primarily verbal (you "hear" or "speak" words and sentences in your mind) (1)\n
+	Primarily visual (you "see" situations, objects, people etc. in your mind) (2)\n
+	Primarily about sensory awareness (what you are hearing, smelling, and feeling in the
+  moment) (3)\n
+	Primarily emotional (4)\n
+	An even mix of verbal, visual, sensory, and emotional (5)\n
+	My inner experience in that situation does not have a specific "format" (6)',
+  "Strongly disagree (1)\n
+	Disagree (2)\n
+	Neither agree nor disagree (3)\n
+	Agree (4)\n
+	Strongly agree (5)",
+  "Strongly disagree (1)\n
+	Disagree (2)\n
+	Neither agree nor disagree (3)\n
+	Agree (4)\n
+	Strongly agree (5)",
+  "Strongly disagree (1)\n
+	Disagree (2)\n
+	Neither agree nor disagree (3)\n
+	Agree (4)\n
+	Strongly agree (5)",
+"No one (0%) to Everyone (100%)"
+	)
+)
+kable(questionnaire_table, align='l', booktabs = TRUE,
+  longtable = TRUE, linesep = "") %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+  
+```
+
+## Data analysis
+All analyses were conducted in R version 4.1.3 [@R-base]. Participants and items (where appropriate) were modeled as random intercepts; random slopes were included for within-subject factors unless it prevented convergence. All predictors were centered. Reaction times were log-transformed to yield a more normal distribution. Accuracies were modeled using logistic regression. For ease of interpretation, the figures show the two inner speech groups as distinct but all the statistical models use verbal score (average score on the verbal representation items on the Internal Representations Questionnaire) as a continuous predictor. Error bars on all figures represent 95% confidence intervals around the mean (adjusted for repeated measures). All four experiments were conducted using custom-written software with the JavaScript package jsPsych version 6 [@de2015jspsych], and data and code can be found at https://github.com/johannenedergaard/anendophasia.
+
+# Results
+```{r, include=FALSE}
+# read in full browser interaction data
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(kableExtra)
+library(optimx)
+library(ggpubr)
+library(forcats)
+library(corrplot)
+library(cowplot)
+library(grid)
+library(ggforce)
+library(rstatix)
+#library(Rmisc)
+source("summarySEwithin_imp.R")
+color_palette <- c('#88CCEE', '#44AA99', '#117733', '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499', '#DDDDDD') # Tol_muted from https://zenodo.org/record/3381072#.Y0_5ilJBw-Q
+myCenter= function(x) {
+        if (is.numeric(x)) { return(x - mean(x, na.rm=T)) }
+        if (is.factor(x)) {
+                x= as.numeric(x)
+                return(x - mean(x, na.rm=T))
+        }
+        if (is.data.frame(x) || is.matrix(x)) {
+                m= matrix(nrow=nrow(x), ncol=ncol(x))
+                colnames(m)= paste("c", colnames(x), sep="")
+                for (i in 1:ncol(x)) {
+                        m[,i]= myCenter(x[,i])
+                }
+                return(as.data.frame(m))
+        }
+}
+logit2prob <- function(logit){
+  odds <- exp(logit)
+  prob <- odds / (1 + odds)
+  return(prob)
+}
+
+```
+
+## Verbal working memory
+```{r,include=FALSE}
+# center predictors
+phon_sim_trials$original_word_set_c <- ifelse(phon_sim_trials$original_word_set == "ctrlSet", -1,
+         ifelse(phon_sim_trials$original_word_set == "orthoSet", 0,
+                ifelse(phon_sim_trials$original_word_set == "phonSet", 1, phon_sim_trials$original_word_set)))
+phon_sim_trials$VerbalScored_c <- scale(phon_sim_trials$VerbalScored)
+
+```
+
+### Descriptive statistics by group: Verbal working memory
+```{r, include=FALSE}
+phonsim_desc_df_score <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score', betweenvars = c('high_low_verbal'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_desc_df_any_pos <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score_any_position', betweenvars = c('high_low_verbal'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_desc_df <- cbind(phonsim_desc_df_score, phonsim_desc_df_any_pos)
+colnames(phonsim_desc_df) <- make.names(colnames(phonsim_desc_df), unique = T)
+phonsim_desc_df <- phonsim_desc_df %>% select(high_low_verbal, original_word_set,
+                                              score, ci, score_any_position, ci.1)
+colnames(phonsim_desc_df)[4] <- 'ci_score'
+colnames(phonsim_desc_df)[6] <- 'ci_score_any_position'
+
+phonsim_score_df_individual_score <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score', betweenvars = c('high_low_verbal','worker_id'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_score_df_individual_score_any <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score_any_position', betweenvars = c('high_low_verbal','worker_id'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_desc_df_individual <- cbind(phonsim_score_df_individual_score, phonsim_score_df_individual_score_any)
+colnames(phonsim_desc_df_individual) <- make.names(colnames(phonsim_desc_df_individual), unique = T)
+phonsim_desc_df_individual <- phonsim_desc_df_individual %>% select(high_low_verbal, original_word_set,  score, ci, score_any_position, ci.1, worker_id)
+colnames(phonsim_desc_df_individual)[4] <- 'ci_score'
+colnames(phonsim_desc_df_individual)[6] <- 'ci_score_any_position'
+
+phonsim_desc_df_individual <- pivot_longer(phonsim_desc_df_individual, cols = c('score', 'score_any_position'), names_to='score_type')
+```
+Participants with more inner speech recalled more words correctly. This advantage was evident both when we scored only correctly ordered responses as correct as well as when we scored correctly recalled items regardless of their position (see Table \@ref(tab:phonsim-desc-table) and Figure \@ref(fig:phonsim-score-desc)).
+
+```{r phonsim-desc-table, echo=FALSE}
+levels(phonsim_desc_df$high_low_verbal) <- c('More inner speech', 'Less inner speech')
+levels(phonsim_desc_df$original_word_set) <- c('Control set', 'Orthographic similarity set', 'Phonological similarity set')
+phonsim_desc_df %>%
+  kable(digits=2, booktabs = TRUE,
+        caption = 'Descriptive statistics by group in the verbal working memory experiment.',
+        col.names = c("Group",
+                           "Word set",
+                           "Score (item and position)",
+                           "95% CI score (item and position)",
+                            "Score (position indifferent)",
+                            "95% CI score (position indifferent)")) %>%
+  row_spec(row = 0, bold = T) %>%
+  kable_styling(font_size = 8, full_width = T)
+# phonsim_desc_df %>%
+#   group_by(original_word_set) %>%
+#   summarise(score = mean(score))
+```
+
+
+```{r phonsim-score-desc, echo=FALSE, fig.cap='Score on the verbal working memory task by word set.'}
+# word and position correct
+pd <- position_dodge(width = 0.2)
+VWM_score_p <- ggplot(phonsim_desc_df_score, aes(original_word_set, score, color=high_low_verbal)) +
+  #geom_sina(data= phonsim_score_df_individual_score, aes(original_word_set, score,group=worker_id), alpha=0.3)+
+  geom_line(data= phonsim_score_df_individual_score, aes(original_word_set, score, group=worker_id), alpha=0.2)+
+  geom_errorbar(aes(ymin=score-ci, ymax=score+ci), width=.2, position= pd,size=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd, size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), size=1.5, position= pd)+
+  theme_bw() +
+  theme(legend.position= 'none')+
+  scale_x_discrete(labels=c('Control set', 'Orthographic\nsimilarity set', 'Phonological\nsimilarity set'))+
+  #theme(legend.position = 'none')+
+  labs(y ='Accuracy (out of 5)', title = 'Correct word in correct position', x='')+
+  scale_color_manual(values = color_palette[c(4,7)])+
+  annotate('label',label='More inner speech', x=2.5, y=4.2, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=1.5, y=3.1, color=color_palette[7], fontface=2)
+
+
+# correct word regardless of position
+WRM_score_any_pos_p <- ggplot(phonsim_desc_df_any_pos, aes(original_word_set, score_any_position, color=high_low_verbal)) +
+  #geom_sina(data= phonsim_score_df_individual_score_any, aes(original_word_set, score_any_position), alpha=0.3)+
+  geom_line(data= phonsim_score_df_individual_score_any, aes(original_word_set, score_any_position, group=worker_id), alpha=0.2)+
+  geom_errorbar(aes(ymin=score_any_position-ci, ymax=score_any_position+ci), width=.2, position= pd,size=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  theme(legend.position = 'none')+
+  scale_x_discrete(labels=c('Control set', 'Orthographic\nsimilarity set', 'Phonological\nsimilarity set'))+
+ # theme(legend.position = 'none')+
+  labs(y ='Accuracy (out of 5 in any position)', title = 'Correct word regardless of position',x='')+
+  scale_color_manual(values = color_palette[c(4,7)])+
+  annotate('label',label='More inner speech', x=2.5, y=4.5, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=1.5, y=3.8, color=color_palette[7], fontface=2)
+ggarrange(VWM_score_p, WRM_score_any_pos_p)
+```
+
+### Statistical models: Verbal working memory
+```{r, include=FALSE, cache=TRUE}
+# some models
+score_by_verbal_m <- lmer(score ~ original_word_set_c * VerbalScored_c + 
+                            (original_word_set_c|worker_id), phon_sim_trials)
+summary(score_by_verbal_m)
+# phon set more difficult than ctrl set, ortho set not more difficult
+# no interaction with verbalscored
+score_any_by_verbal_m <- lmer(score_any_position ~ original_word_set_c * VerbalScored_c + 
+                                (original_word_set_c|worker_id), phon_sim_trials)
+summary(score_any_by_verbal_m)
+
+```
+Participants remembered phonologically similar words significantly worse (M = 3.22) than orthographically-similar words (M = 3.62) ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[3,1],2)`; SE = `r round(summary(score_by_verbal_m)$coefficients[3,2],2)`; t = `r round(summary(score_by_verbal_m)$coefficients[3,4], 2)`; p < .001) which were in turn remembered worse than the dissimilar words (M = 3.94) ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[2,1],2)`; SE = `r round(summary(score_by_verbal_m)$coefficients[2,2],2)`; t = `r round(summary(score_by_verbal_m)$coefficients[2,4], 2)`; p < .001). Collapsing across the three types of word lists, greater inner speech was associated with better performance ($\beta$ = `r round(summary(score_by_verbal_m)$coefficients[4,1],2)`; SE = `r round(summary(score_by_verbal_m)$coefficients[4,2],2)`; t = `r round(summary(score_by_verbal_m)$coefficients[4,4], 2)`; p = .011). This effect remained significant if we disregarded the order in which participants responded, counting only whether they recalled the correct words ($\beta$ = `r round(summary(score_any_by_verbal_m)$coefficients[4,1],2)`; SE = `r round(summary(score_any_by_verbal_m)$coefficients[4,2],2)`; t = `r round(summary(score_any_by_verbal_m)$coefficients[4,4], 2)`; p = .012). There were no interaction effects (all p > .104), although numerically, the difference was smallest for orthographically similar words (see Figure \@ref(fig:phonsim-score-desc)).
+
+### Strategies: Verbal working memory
+```{r, include=FALSE}
+talk_out_loud_PS <- phon_sim_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+# participant
+tol_phon_sim <- talk_out_loud_PS %>%
+  group_by(high_low_verbal,talk_out_loud) 
+table(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud)
+chisq.test(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud) #no difference
+```
+
+```{r phon-sim-TOL-fig, echo=F,   fig.cap='Verbal working memory performance by whether participants reported talking out loud to help them remember or not.'}
+# does it matter what strategy they used?
+phonsim_desc_df_score_TOL <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score', betweenvars = c('high_low_verbal', 'talk_out_loud'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_desc_df_any_pos_TOL <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score_any_position', betweenvars = c('high_low_verbal', 'talk_out_loud'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_desc_df_TOL <- cbind(phonsim_desc_df_score_TOL, phonsim_desc_df_any_pos_TOL)
+colnames(phonsim_desc_df_TOL) <- make.names(colnames(phonsim_desc_df_TOL), unique = T)
+phonsim_desc_df_TOL <- phonsim_desc_df_TOL %>% select(high_low_verbal, original_word_set,
+                                              score, ci, score_any_position, ci.1,talk_out_loud)
+colnames(phonsim_desc_df_TOL)[4] <- 'ci_score'
+colnames(phonsim_desc_df_TOL)[6] <- 'ci_score_any_position'
+
+phonsim_score_df_individual_score <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score', betweenvars = c('high_low_verbal','worker_id', 'talk_out_loud'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_score_df_individual_score_any <- phon_sim_trials %>%
+  summarySEwithin2(measurevar = 'score_any_position', betweenvars = c('high_low_verbal','worker_id', 'talk_out_loud'),
+                  withinvars = 'original_word_set', idvar='worker_id', na.rm=T)
+phonsim_desc_df_individual <- cbind(phonsim_score_df_individual_score, phonsim_score_df_individual_score_any)
+colnames(phonsim_desc_df_individual) <- make.names(colnames(phonsim_desc_df_individual), unique = T)
+phonsim_desc_df_individual <- phonsim_desc_df_individual %>% select(high_low_verbal, original_word_set,  score, ci, score_any_position, ci.1, worker_id, talk_out_loud)
+colnames(phonsim_desc_df_individual)[4] <- 'ci_score'
+colnames(phonsim_desc_df_individual)[6] <- 'ci_score_any_position'
+
+ggplot(phonsim_desc_df_TOL, aes(talk_out_loud, score, color=high_low_verbal,shape=high_low_verbal)) +
+  geom_sina(data= phonsim_score_df_individual_score, aes(talk_out_loud, score), alpha=0.2,size=3)+
+  geom_errorbar(aes(ymin=score-ci_score, ymax=score+ci_score), width=.2, position= pd, size=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal),linewidth=1.5, position= pd) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw()+
+  theme(legend.position = 'top',legend.text = element_text(size=14), axis.title.x = element_text(size=14))+
+  labs(y ='Accuracy out of 5', x='Did you talk out loud to remember the words?')+
+  scale_color_manual('',values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech'))+
+  scale_shape_manual('',values = c(17,19), labels=c('More inner speech', 'Less inner speech'))+
+  guides(shape = guide_legend(override.aes = list(alpha=1)))+
+  facet_wrap(~original_word_set, labeller= labeller(original_word_set = c("ctrlSet" = "Control set",
+      "orthoSet" = "Orthographic\nsimilarity set",
+      "phonSet" = "Phonological\nsimilarity set")))
+
+```
+```{r, include=FALSE}
+phon_sim_trials$talk_out_loud_c <- ifelse(phon_sim_trials$talk_out_loud == "No", -0.5, 0.5)
+score_by_tol_m <- lmer(score ~ talk_out_loud_c * VerbalScored_c + 
+                            (1|worker_id) + (1|original_word_set_c), phon_sim_trials)
+summary(score_by_tol_m)
+```
+
+There was no difference in reported talk-out-loud strategy between the group with more inner speech (10 out of 47) and the group with less inner speech (13 out of 46) ($\chi^2$(1) = `r round(chisq.test(tol_phon_sim$high_low_verbal, tol_phon_sim$talk_out_loud)$statistic, 2)`, p = .589). Nevertheless, the effect of doing so was interestingly different for the two groups as can be seen in Figure \@ref(fig:phon-sim-TOL-fig). The difference between the two groups’ memory performance disappeared when they reported that they said the words out loud to help them remember. Participants reporting more inner speech remembered the words better, but this effect was canceled out when participants reported talking out loud to solve the task (interaction effect: $\beta$ = `r round(summary(score_by_tol_m)$coefficients[4,1],2)`; SE = `r round(summary(score_by_tol_m)$coefficients[4,2],2)`; t = `r round(summary(score_by_tol_m)$coefficients[4,4],2)`; p = .031). 
+
+## Rhyme judgments
+```{r, include=FALSE}
+chance_pairs <- c('bin.png','chin.png', 'cab.png', 'crab.png', 'rake.png', 'cake.png', 'wave.png', 'cave.png', 'park.png', 'shark.png')
+rhyme_agreement <- read.csv('rhyming_image_agreement.csv', row.names = 1)
+rhyme_agreement <- rhyme_agreement %>% separate(image, c("visual", "image"), "/") %>%
+  select(-visual)
+rhyme_agreement %>%
+  filter(image %in% chance_pairs) %>%
+  summarise(agree = mean(name_agreement_target), summary = summary(name_agreement_target))
+```
+
+We excluded five rhyming pairs as they had below-chance performance on average for at least one group. These pairs were bin/chin, cab/crab, rake/cake, wave/cave, and park/shark. The below-chance performance was likely due to the low name agreement of at least one image in each pair (mean agreement rating for these 10 images = 0.58; range = 0.05 to 1).
+```{r, include =FALSE}
+rhyming_trials <- read.csv('../data/processed_data/rhyming_trials.csv',row.names = 1)
+# center predictors
+rhyming_trials$type_c <- ifelse(rhyming_trials$type == "NR", -1,
+         ifelse(rhyming_trials$type  == "ortho", 0,
+                ifelse(rhyming_trials$type  == "non-ortho", 1, rhyming_trials$type)))
+rhyming_trials$VerbalScored_c <- scale(rhyming_trials$VerbalScored)
+rhyming_trials$name_agreement_img1_c <- scale(rhyming_trials$name_agreement_img1)
+rhyming_trials <- rhyming_trials %>% mutate(stim_pair = paste(pmax(as.character(image_1),as.character(image_2)),pmin(as.character(image_1), as.character(image_2))))
+
+```
+```{r, include=FALSE}
+rhyme_desc_df_rt <- rhyming_trials %>%
+  summarySEwithin2(measurevar = c('rt'), betweenvars = 'high_low_verbal',
+                  withinvars = 'type', idvar='worker_id', na.rm=T)
+rhyme_desc_df_correct <- rhyming_trials %>%
+  summarySEwithin2(measurevar = 'correct', betweenvars = 'high_low_verbal',
+                  withinvars = 'type', idvar='worker_id')
+rhyme_desc_df <- cbind(rhyme_desc_df_rt, rhyme_desc_df_correct)
+colnames(rhyme_desc_df) <- make.names(colnames(rhyme_desc_df),unique = T)
+colnames(rhyme_desc_df)[8] <- 'ci_rt'
+colnames(rhyme_desc_df)[16] <- 'ci_accuracy'
+rhyme_desc_df <- rhyme_desc_df %>% select(high_low_verbal, type, rt,ci_rt, correct,ci_accuracy) 
+
+rhyme_rt_df <- rhyming_trials %>%
+  filter(correct == 1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal','talk_out_loud'),
+                  withinvars = c('type'),idvar = 'worker_id',na.rm=T)
+rhyme_rt_df_individual <- rhyming_trials %>%
+  filter(correct == 1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal', 'worker_id', 'talk_out_loud'),
+                  withinvars = c('type'),idvar = 'worker_id', na.rm = T)
+rhyme_correct_df <- rhyming_trials %>%
+  summarySEwithin2(measurevar = 'correct', betweenvars = c('high_low_verbal', 'talk_out_loud'), withinvars = c('type'),idvar = 'worker_id')
+rhyme_correct_df_individual <- rhyming_trials %>%
+  summarySEwithin2(measurevar = 'correct', betweenvars = c('high_low_verbal', 'worker_id', 'talk_out_loud'),  withinvars = c('type'),idvar = 'worker_id')
+```
+### Descriptive statistics by group: Rhyme judgments
+As can be seen in Table \@ref(tab:rhyme-desc-table), participants with more inner speech were generally both faster and more accurate than participants with less inner speech on all three types of trials. See also Figure \@ref(fig:rhyme-desc).
+
+```{r rhyme-desc-table, echo=FALSE}
+levels(rhyme_desc_df$high_low_verbal) <- c('More inner speech', 'Less inner speech')
+levels(rhyme_desc_df$type) <- c('Non-orthographic rhyme', 'No rhyme','Orthographic rhyme')
+rhyme_desc_df %>%
+  dplyr::mutate(correct = correct * 100, ci_accuracy = ci_accuracy*100, rt = round(rt), ci_rt = round(ci_rt)) %>%
+  kable(digits=2, caption = 'Descriptive statistics on rhyming accuracy and reaction time by group and by rhyme type.', booktabs=T,
+  col.names = c("Group",
+                           "Type of rhyme trial",
+                           "Reaction time (ms)",
+                           "95% CI (reaction time)",
+                            "Accuracy",
+                            "95% CI (accuracy)")) %>%
+  row_spec(row = 0, bold = T) %>%
+  kable_styling(full_width = T, font_size = 8)
+
+```
+
+```{r rhyme-desc, echo=FALSE,   fig.cap='Reaction time and accuracy across groups by rhyme type.'}
+rhyme_desc_df_rt$type <- as.factor(rhyme_desc_df_rt$type)
+rhyme_desc_df_rt <- rhyme_desc_df_rt %>%
+  dplyr::mutate(type = fct_relevel(type, 
+            "NR", "ortho", "non-ortho")) 
+rhyme_rt_df_individual$type <- as.factor(rhyme_rt_df_individual$type)
+rhyme_rt_df_individual <- rhyme_rt_df_individual %>%
+  dplyr::mutate(type = fct_relevel(type, 
+            "NR", "ortho", "non-ortho")) 
+rhyme_desc_df_correct$type <- as.factor(rhyme_desc_df_correct$type)
+rhyme_desc_df_correct <-rhyme_desc_df_correct %>%
+  dplyr::mutate(type = fct_relevel(type, 
+            "NR", "ortho", "non-ortho")) 
+rhyme_correct_df_individual$type <- as.factor(rhyme_correct_df_individual$type)
+rhyme_correct_df_individual <-rhyme_correct_df_individual %>%
+  dplyr::mutate(type = fct_relevel(type, 
+            "NR", "ortho", "non-ortho")) 
+rhyme_rt_p <- ggplot(rhyme_desc_df_rt, aes(type, rt, color=high_low_verbal)) +
+  #geom_sina(data= rhyme_rt_df_individual, aes(type, rt), alpha=0.3)+
+  geom_line(data= rhyme_rt_df_individual, aes(type, rt, group=worker_id), alpha=0.2)+
+  geom_errorbar(aes(ymin=rt-ci, ymax=rt+ci), width=.2, position= pd,linewidth = 1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size = 1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1, position= pd)+
+  theme_bw() +
+  theme(legend.position = 'none')+
+  theme(axis.text.x=element_text(size=rel(0.9)))+
+  scale_x_discrete(labels=c('No rhyme','Orthographic\nrhyme','Non-orthographic\nrhyme'))+
+  labs(y ='Reaction time (ms)', x='')+
+  scale_color_manual('Group: Color',values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech')) +
+  annotate('label',label='More inner speech', x=1.5, y=1500, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=2.5, y=2200, color=color_palette[7], fontface=2)
+
+rhyme_acc_p <- ggplot(rhyme_desc_df_correct, aes(type, correct, color=high_low_verbal)) +
+  #geom_sina(data= rhyme_correct_df_individual, aes(type, correct), alpha=0.3)+
+  geom_line(data= rhyme_correct_df_individual, aes(type, correct, group=worker_id), alpha=0.1)+
+  geom_errorbar(aes(ymin=correct-ci, ymax=correct+ci), width=.2, position= pd,linewidth = 1.5) + 
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal),  position= pd,size = 1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5,  position= pd)+
+  theme_bw() +
+  theme(legend.position = 'none')+
+  theme(axis.text.x=element_text(size=rel(0.9)))+
+  scale_x_discrete(labels=c('No rhyme','Orthographic\nrhyme','Non-orthographic\nrhyme'))+
+  labs(y ='Accuracy', x='')+
+  scale_color_manual('Group: Color',values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech'))+
+  annotate('label',label='More inner speech', x=2.70, y=1, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=1.9, y=0.75, color=color_palette[7], fontface=2)
+
+ggarrange(rhyme_rt_p, rhyme_acc_p)
+```
+
+### Statistical models: Rhyme judgments
+```{r, include=FALSE, cache = TRUE}
+rhyming_trials %>%
+  group_by(type) %>%
+  filter(correct == 1) %>%
+  summarise(rt = mean(rt, na.rm=T))
+rhyming_trials %>%
+  group_by(type) %>%
+  summarise(correct = mean(correct))
+rhyming_trials$type <- as.factor(rhyming_trials$type)
+rhyme_rt_m <- lmer(log(rt) ~ relevel(type,ref="ortho") * VerbalScored_c + name_agreement_img1_c + (1|worker_id) + (1|stim_pair),subset(rhyming_trials, correct ==1))
+summary(rhyme_rt_m) 
+
+rhyme_acc_m <- glmer(correct ~ relevel(type,ref="ortho") * VerbalScored_c +
+                       name_agreement_img1_c + 
+                       (1|worker_id) +
+                       (1|stim_pair),
+                     family='binomial',
+                     rhyming_trials,
+                     control = glmerControl(optimizer ='bobyqa', optCtrl=list(maxfun=2e5)))
+summary(rhyme_acc_m) 
+# for interpreting regression coefficient: exp(coef) = multiplied intercept (e.g. 1.10 means 10 % higher than intercept)
+```
+
+Participants took longer to make rhyme judgments on no-rhyme trials (M = 1981 ms) compared with orthographic trials (M = 1730 ms) ($\beta$ = `r round(summary(rhyme_rt_m)$coefficients[3,1],2)`; SE = `r round(summary(rhyme_rt_m)$coefficients[3,2], 2)`; t = `r round(summary(rhyme_rt_m)$coefficients[3,4],2)`; p = .005). This means that no-rhyme trials took 13% longer than orthographic trials ($e^{0.12}$ = 1.13). Non-orthographic trials (M = 1821 ms) did not differ significantly from orthographic trials  ($\beta$ = `r round(summary(rhyme_rt_m)$coefficients[2,1],2)`; SE = `r round(summary(rhyme_rt_m)$coefficients[2,2], 2)`; t = `r round(summary(rhyme_rt_m)$coefficients[2,4],2)`; p = .272). Trials where the presented images had higher name agreement were also faster ($\beta$ = `r round(summary(rhyme_rt_m)$coefficients[5,1],2)`; SE = `r round(summary(rhyme_rt_m)$coefficients[5,2], 2)`; t = `r round(summary(rhyme_rt_m)$coefficients[5,4],2)`; p = .029). Reported inner speech had no effect on speed of rhyme judgments ($\beta$ = `r round(summary(rhyme_rt_m)$coefficients[4,1],2)`; SE = `r round(summary(rhyme_rt_m)$coefficients[4,2], 2)`; t = `r round(summary(rhyme_rt_m)$coefficients[4,4],2)`; p = .422), and there were no interactions between rhyme type and verbal score (both p > .298). Verbal score and name agreement also did not interact (p > .975). 
+
+Participants were more accurate on no-rhyme judgments (M = 95.7%) than on orthographic rhyme judgments (M = 87.5%) ($\beta$ = `r round(summary(rhyme_acc_m)$coefficients[3,1],2)`; SE = `r round(summary(rhyme_acc_m)$coefficients[3,2], 2)`; z = `r round(summary(rhyme_acc_m)$coefficients[3,3],2)`; p < .001) and less accurate on non-orthographic rhyme judgments (M = 79.5%) than on orthographic rhyme judgments ($\beta$ = `r round(summary(rhyme_acc_m)$coefficients[2,1],2)`; SE = `r round(summary(rhyme_acc_m)$coefficients[2,2], 2)`; z = `r round(summary(rhyme_acc_m)$coefficients[2,3],2)`; p = .029). A higher verbal score was associated with a higher likelihood of responding accurately ($\beta$ = `r round(summary(rhyme_acc_m)$coefficients[4,1],2)`; SE = `r round(summary(rhyme_acc_m)$coefficients[4,2], 2)`; z = `r round(summary(rhyme_acc_m)$coefficients[4,3],2)`; p = .010). Trials with images with higher name agreement were not significantly easier (p < .139). There was no significant interaction between rhyme type and verbal score (both p > .311) or between verbal score and name agreement (p = .324).
+
+### Strategies: Rhyme judgments
+```{r, include=F}
+talk_out_loud_rhyme <- rhyming_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+table(talk_out_loud_rhyme$talk_out_loud)
+tol_rhyme <-talk_out_loud_rhyme %>%
+  group_by(high_low_verbal,talk_out_loud)
+table(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)
+chisq.test(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)
+```
+
+```{r, include=FALSE, cache=T}
+rhyming_trials$talk_out_loud_c <- ifelse(rhyming_trials$talk_out_loud == "No", -0.5, 0.5)
+rhyme_by_tol_m <- glmer(correct ~ talk_out_loud_c * VerbalScored_c * relevel(type,ref="NR") + 
+                            (1|worker_id) + (1|stim_pair), rhyming_trials,family='binomial')
+summary(rhyme_by_tol_m)
+rhyme_rt_by_tol_m <- lmer(log(rt) ~ talk_out_loud_c * VerbalScored_c * relevel(type,ref="NR") + 
+                            (1|worker_id) + (1|stim_pair), rhyming_trials)
+summary(rhyme_rt_by_tol_m) # no interaction effects for rt
+```
+
+There was no significant difference between how many participants with more inner speech (23 out of 47) and how many participants with less inner speech (21 out of 46) reported that they had said the words out loud ($\chi^2$(1) = `r round(chisq.test(tol_rhyme$high_low_verbal, tol_rhyme$talk_out_loud)$statistic, 2)`, p = .913). Nevertheless, the effect of doing so was interestingly different for the two groups as can be seen in Figure \@ref(fig:rhyme-TOL). Saying the words out loud diminished the accuracy advantage associated with a higher verbal score for non-orthographic rhymes ($\beta$ = `r round(summary(rhyme_by_tol_m)$coefficients[11,1],2)`; SE = `r round(summary(rhyme_by_tol_m)$coefficients[11,2],2)`; z = `r round(summary(rhyme_by_tol_m)$coefficients[11,3],2)`; p = .012) and orthographic rhymes ($\beta$ = `r round(summary(rhyme_by_tol_m)$coefficients[12,1],2)`; SE = `r round(summary(rhyme_by_tol_m)$coefficients[12,2],2)`; z = `r round(summary(rhyme_by_tol_m)$coefficients[12,3],2)`; p = .024) compared with no-rhyme trials. This suggests that this was the strategy that participants with more inner speech used covertly.
+
+```{r rhyme-TOL, echo=FALSE, fig.cap= 'Reaction time and accuracy by whether participants indicated that they had talked out loud to make the rhyme judgments.'}
+# does it matter what strategy they used?
+rhyme_tol_rt_p <- ggplot(rhyme_rt_df, aes(talk_out_loud, rt, color=high_low_verbal, shape=high_low_verbal)) +
+  geom_sina(data= rhyme_rt_df_individual, aes(talk_out_loud, rt), alpha=0.2,size=3)+
+  geom_errorbar(aes(ymin=rt-ci, ymax=rt+ci), width=.2, position= pd,linewidth = 1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size = 1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  theme(axis.title.x=element_text(size=rel(0.7)),strip.text = element_text(size=rel(0.5)))+
+  labs(y ='Reaction time (ms)',x='')+
+  scale_color_manual('',values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech'))+
+  scale_shape_manual('',values = c(17,19), labels=c('More inner speech', 'Less inner speech'))+
+  guides(shape = guide_legend(override.aes = list(alpha=1)))+
+  facet_wrap(~type, labeller= labeller(type = c("non-ortho" = "Non-orthographic\nrhyme",
+      "NR" = "No rhyme",
+      "ortho" = "Orthographic\nrhyme")))
+# don't include RT plot
+rhyme_tol_acc_p <- ggplot(rhyme_correct_df, aes(talk_out_loud, correct, color=high_low_verbal, shape=high_low_verbal)) +
+  geom_sina(data= rhyme_correct_df_individual, aes(talk_out_loud, correct), alpha=0.2,size=3)+
+  geom_errorbar(aes(ymin=correct-ci, ymax=correct+ci), width=.2, position= pd,linewidth = 1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size = 1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  theme(strip.text = element_text(size=rel(0.9)),legend.position = 'top', legend.text = element_text(size=14),
+        axis.title.x = element_text(size=14))+
+  labs(y ='Accuracy', x='Did you talk out loud to make the rhyme judgments?')+
+  scale_color_manual('',values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech'))+
+  scale_shape_manual('',values = c(17,19), labels=c('More inner speech', 'Less inner speech'))+
+  guides(shape = guide_legend(override.aes = list(alpha=1)))+
+  facet_wrap(~type, labeller= labeller(type = c("non-ortho" = "Non-orthographic\nrhyme",
+      "NR" = "No rhyme",
+      "ortho" = "Orthographic\nrhyme")))
+rhyme_tol_acc_p
+
+```
+
+## Task switching
+We excluded trials over 10 seconds (0.5 % of trials). We also recalculated the accuracy measure so that any trial in the three switch conditions where participants in fact switched between adding and subtracting counted as correct (as long as the arithmetic itself was also correct). We did this to prevent a failure to switch once resulting in the remaining trials counting as incorrect.
+
+```{r, include=FALSE}
+task_switch_trials <- read.csv('../data/processed_data/task_switch_trials.csv',row.names = 1)
+# center predictors
+task_switch_trials$condition_c <- ifelse(task_switch_trials$condition == "addition", -1,
+         ifelse(task_switch_trials$condition == "subtraction", -0.5,
+                ifelse(task_switch_trials$condition == "symbolcue", 0,
+                       ifelse(task_switch_trials$condition == "colorcue", 0.5,
+                            ifelse(task_switch_trials$condition == "uncued", 1, task_switch_trials$condition)))))
+task_switch_trials$VerbalScored_c <- scale(task_switch_trials$VerbalScored)
+# calculate switch cost (like Emerson & Miyake):
+# 1. average speed on addition and subtraction
+# 2. average speed on three switching conditions
+# 3. subtract switching speed from simple operation speed
+task_switch_trials$VerbalScored_c <- as.numeric(task_switch_trials$VerbalScored_c)
+simple_operation <- task_switch_trials %>%
+  filter(condition %in% c('addition', 'subtraction')) %>%
+  group_by(worker_id, high_low_verbal, VerbalScored, VerbalScored_c) %>%
+  summarise(mean_rt_simple = mean(rt), mean_accuracy_simple = mean(switching_is_correct))
+switching <- task_switch_trials %>%
+  filter(!condition %in% c('addition', 'subtraction')) %>%
+  group_by(worker_id,condition,high_low_verbal, VerbalScored, VerbalScored_c) %>%
+  summarise(mean_rt_complex = mean(rt), mean_accuracy_complex = mean(switching_is_correct))
+switch_costs <- merge(switching, simple_operation, by = c('worker_id', 'VerbalScored', 'high_low_verbal', 'VerbalScored_c'), all.x = T)
+switch_costs$switch_cost_rt <- switch_costs$mean_rt_complex - switch_costs$mean_rt_simple
+switch_costs$switch_cost_acc <- switch_costs$mean_accuracy_simple - switch_costs$mean_accuracy_complex
+
+```
+### Descriptive statistics: Task switching
+```{r, include=FALSE}
+task_switch_desc_df_rt <- task_switch_trials %>%
+  filter(switching_is_correct==1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = 'high_low_verbal',
+                  withinvars = 'condition', idvar='worker_id', na.rm=T)
+task_switch_desc_df_acc <- task_switch_trials %>%
+  summarySEwithin2(measurevar = 'switching_is_correct', betweenvars = 'high_low_verbal', withinvars = 'condition', idvar='worker_id', na.rm=T)
+task_switch_desc_df <- cbind(task_switch_desc_df_rt,task_switch_desc_df_acc)
+colnames(task_switch_desc_df) <- make.names(colnames(task_switch_desc_df),unique = T)
+colnames(task_switch_desc_df)[8] <- 'ci_rt'
+colnames(task_switch_desc_df)[16] <- 'ci_accuracy'
+task_switch_desc_df <- task_switch_desc_df %>% select(high_low_verbal, condition, rt,ci_rt, switching_is_correct,ci_accuracy) 
+
+task_switch_rt_df <- task_switch_trials %>%
+  filter(switching_is_correct == 1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal', 'talk_out_loud'),
+                  withinvars = 'condition',idvar = 'worker_id',na.rm=T)
+task_switch_rt_df_individual <- task_switch_trials %>%
+  filter(switching_is_correct == 1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal', 'worker_id', 'talk_out_loud'),
+                  withinvars = 'condition',idvar = 'worker_id', na.rm = T)
+task_switch_correct_df <- task_switch_trials %>%
+  summarySEwithin2(measurevar = 'switching_is_correct', betweenvars = c('high_low_verbal', 'talk_out_loud'), withinvars = 'condition',idvar = 'worker_id')
+task_switch_correct_df_individual <- task_switch_trials %>%
+  summarySEwithin2(measurevar = 'switching_is_correct', betweenvars = c('high_low_verbal', 'worker_id', 'talk_out_loud'),  withinvars = 'condition',idvar = 'worker_id')
+```
+As can be seen from Table \@ref(tab:task-switch-desc-table) and Figure \@ref(fig:task-switch-desc-fig), accuracy was generally quite high in all conditions, and reaction times were comparable across the two groups of participants.
+```{r task-switch-desc-table, echo=FALSE}
+task_switch_desc_df <- task_switch_desc_df %>%
+  dplyr::mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) 
+levels(task_switch_desc_df$high_low_verbal)<- c('More inner speech','Less inner speech')
+levels(task_switch_desc_df$condition) <- c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch')
+task_switch_desc_df %>%
+  dplyr::mutate(switching_is_correct = switching_is_correct*100, ci_accuracy=ci_accuracy*100, rt = round(rt), ci_rt = round(ci_rt)) %>% 
+  kable(digits=2, caption = 'Descriptive statistics of reaction time and accuracy on the task switching experiment.',booktabs=T,
+        col.names = c("Group",
+                           "Condition",
+                           "Reaction time (ms)",
+                           "95% CI (reaction time)",
+                            "Accuracy",
+                            "95% CI (Accuracy)")) %>%
+  row_spec(row = 0, bold = T) %>%
+  kable_styling(full_width = T,latex_options = c("hold_position"),font_size = 8)
+```
+
+```{r task-switch-desc-fig, echo=FALSE, fig.cap='Reaction time and accuracy across conditions in the task switching experiment.'}
+# reaction time
+task_switch_rt_df$condition <- as.factor(task_switch_rt_df$condition)
+task_switch_desc_df_rt <- task_switch_desc_df_rt %>%
+  dplyr::mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) 
+task_switch_rt_df_individual <- task_switch_rt_df_individual %>%
+  dplyr::mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) 
+task_switch_rt_desc_p <- task_switch_desc_df_rt %>% 
+  ggplot(aes(condition, rt, color=high_low_verbal)) +
+  #geom_sina(data= task_switch_rt_df_individual, aes(condition, rt), alpha=0.3)+
+  geom_line(data= task_switch_rt_df_individual, aes(condition, rt, group=worker_id), alpha=0.2)+
+  geom_errorbar(aes(ymin=rt-ci, ymax=rt+ci), width=.2, position= pd, linewidth=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  theme(axis.text.x = element_text(size=rel(0.7)), legend.position = 'none')+
+  labs(y ='Reaction time (ms) per problem', title = '',x='')+
+  scale_x_discrete(labels =c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch'))+
+  scale_color_manual(values = color_palette[c(4,7)])+
+  annotate('label',label='More inner speech', x=3, y=2000, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=2, y=3000, color=color_palette[7], fontface=2)
+
+# accuracy 
+task_switch_desc_df_acc$condition <- as.factor(task_switch_desc_df_acc$condition)
+task_switch_desc_df_acc <- task_switch_desc_df_acc %>%
+  dplyr::mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) 
+task_switch_correct_df_individual <- task_switch_correct_df_individual %>%
+  dplyr::mutate(condition = fct_relevel(condition, 
+            "addition", "subtraction", "symbolcue", 
+            "colorcue", "uncued")) 
+task_switch_acc_desc_p <- task_switch_desc_df_acc %>% 
+  ggplot(aes(condition, switching_is_correct, color=high_low_verbal)) +
+  #geom_sina(data= task_switch_correct_df_individual, aes(condition, switching_is_correct), alpha=0.3)+
+  geom_line(data= task_switch_correct_df_individual, aes(condition, switching_is_correct, group=worker_id), alpha=0.1)+
+  geom_errorbar(aes(ymin=switching_is_correct-ci, ymax=switching_is_correct+ci), width=.2, position= pd,linewidth=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  theme(axis.text.x = element_text(size=rel(0.7)), legend.position = 'none')+
+  labs(y ='Accuracy (corrected)', title = '',x='')+
+  scale_x_discrete(labels =c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch'))+
+  scale_color_manual(values = color_palette[c(4,7)])+
+  annotate('label',label='More inner speech', x=4.1, y=1.01, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=2, y=0.93, color=color_palette[7], fontface=2)
+
+ggarrange(task_switch_rt_desc_p, task_switch_acc_desc_p)
+
+```
+
+### Statistical models: Task switching
+```{r, include=FALSE, cache=T}
+task_switch_trials %>%
+  group_by(condition) %>%
+  summarise(correct = mean(switching_is_correct))
+task_switch_trials %>%
+  group_by(condition) %>%
+  filter(switching_is_correct == 1) %>%
+  summarise(rt = mean(rt, na.rm=T))
+task_switch_trials$condition_c <- as.factor(task_switch_trials$condition_c)
+switching_condition_acc_m <- glmer(switching_is_correct ~ relevel(condition_c,ref="-1")*VerbalScored_c + 
+                                       (1|worker_id) + (1|stimulus), 
+                                   control = glmerControl(optimizer ='bobyqa', optCtrl=list(maxfun=2e5)),
+                                     task_switch_trials, family='binomial')
+summary(switching_condition_acc_m) 
+
+switching_rt_m <- lmer(log(rt) ~  relevel(condition_c,ref="-1")*VerbalScored_c + (condition_c|worker_id), 
+                              subset(task_switch_trials, switching_is_correct==1))
+summary(switching_rt_m) 
+
+# switch cost models
+switch_costs$condition_c <- ifelse(switch_costs$condition == 'uncued', -1,
+                                   ifelse(switch_costs$condition == 'colorcue', 0,
+                                          ifelse(switch_costs$condition == 'symbolcue', 1, switch_costs$condition)))
+switch_costs$condition_c <- as.factor(switch_costs$condition_c)
+switch_cost_acc_m <- lmer(switch_cost_acc ~ relevel(condition_c,ref="-1") * VerbalScored_c + (1|worker_id), switch_costs)
+summary(switch_cost_acc_m)
+switch_cost_rt_m <- lmer(switch_cost_rt ~ relevel(condition_c,ref="-1") * VerbalScored_c + (1|worker_id), switch_costs)
+summary(switch_cost_rt_m)
+summary(switch_cost_acc_m)
+```
+Participants responded less accurately in the symbol-cued switch condition (M = 97.2%), in the color-cued switch condition (M = 95.4%), and in the un-cued switch condition (M = 93.9%) compared with the blocked addition condition (M = 98.1%) (addition versus symbol-cue: $\beta$ = `r round(summary(switching_condition_acc_m)$coefficients[3,1],2)`; SE = `r round(summary(switching_condition_acc_m)$coefficients[3,2],2)`; z = `r round(summary(switching_condition_acc_m)$coefficients[3,3],2)`; p = .020; addition versus color-cue: $\beta$ = `r round(summary(switching_condition_acc_m)$coefficients[4,1],2)`; SE = `r round(summary(switching_condition_acc_m)$coefficients[4,2],2)`; z = `r round(summary(switching_condition_acc_m)$coefficients[4,3],2)`; p < .001; addition versus un-cued: $\beta$ = `r round(summary(switching_condition_acc_m)$coefficients[5,1],2)`; SE = `r round(summary(switching_condition_acc_m)$coefficients[5,2],2)`; z = `r round(summary(switching_condition_acc_m)$coefficients[5,3],2)`; p < .001). Accuracy did not differ between blocked subtraction (M = 97.7%) and blocked addition (p = .239). More inner speech was not associated with different accuracy (p = .547) and there were no interaction effects between inner speech and block-type (all p > .075). Numerically, verbal score interacted with the un-cued condition and cancelled out the very slight (non-significant) reaction time advantage of a higher verbal score.
+
+Participants responded faster in the blocked addition condition (M = 2300 ms) compared with the subtraction condition (M = 2550 ms) ($\beta$ = `r round(summary(switching_rt_m)$coefficients[2,1],2)`; SE = `r round(summary(switching_rt_m)$coefficients[2,2],2)`; t = `r round(summary(switching_rt_m)$coefficients[2,4],2)`; p < .001;  regression coefficient: $e^{0.09}$ = 1.09), the symbol-cued switch condition (M = 2601 ms) $\beta$ = `r round(summary(switching_rt_m)$coefficients[3,1],2)`; SE = `r round(summary(switching_rt_m)$coefficients[3,2],2)`; t = `r round(summary(switching_rt_m)$coefficients[3,4],2)`; p < .001;  regression coefficient: $e^{0.12}$ = 1.13), the color-cued switch condition (M = 2778 ms)  ($\beta$ = `r round(summary(switching_rt_m)$coefficients[4,1],2)`; SE = `r round(summary(switching_rt_m)$coefficients[4,2],2)`; t = `r round(summary(switching_rt_m)$coefficients[4,4],2)`; p < .001;  regression coefficient: $e^{0.19}$ = 1.21), and the un-cued switch condition  (M = 2694 ms)  ($\beta$ = `r round(summary(switching_rt_m)$coefficients[5,1],2)`; SE = `r round(summary(switching_rt_m)$coefficients[5,2],2)`; t = `r round(summary(switching_rt_m)$coefficients[5,4],2)`; p < .001;  regression coefficient: $e^{0.15}$ = 1.16). More reported inner speech did not predict reaction times (p = .810), and there were no interaction effects (all p > .516).
+
+### Strategies: Task switching
+```{r, include=FALSE}
+talk_out_loud_TS <- task_switch_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+tol_task_switch <- talk_out_loud_TS %>%
+  group_by(high_low_verbal,talk_out_loud)
+table(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)
+chisq.test(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)
+```
+
+There was no significant difference between how many participants with more inner speech (20 out of 47) and how many participants with less inner speech (13 out of 46) reported that they had talked to themselves out loud during the task switching experiment ($\chi^2$(1) = `r round(chisq.test(tol_task_switch$high_low_verbal, tol_task_switch$talk_out_loud)$statistic, 2)`, p = .318). There were not any obvious differences between the effects that talking out loud had on these two groups (see accuracy and reaction time Figure \@ref(fig:task-switch-TOL)).
+
+```{r task-switch-TOL,   echo=FALSE, fig.cap='Reaction time (ms) and accuracy in the task switching experiment by whether participants reported talking out loud to remember the correct rule or not.'}
+task_switch_tol_acc <- task_switch_correct_df %>%
+ggplot(aes(condition, switching_is_correct, color=high_low_verbal)) +
+  #geom_sina(data= task_switch_correct_df_individual, aes(condition, switching_is_correct), alpha=0.3)+
+  geom_line(data= task_switch_correct_df_individual, aes(condition, switching_is_correct, group=worker_id), alpha=0.1)+
+  geom_errorbar(aes(ymin=switching_is_correct-ci, ymax=switching_is_correct+ci), width=.2, position= pd,linewidth=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  labs(y ='Accuracy (corrected)', title = '',x='')+
+  facet_wrap(~talk_out_loud, labeller = labeller(talk_out_loud = c('No' = 'Reported not talking out loud', 'Yes'='Reported talking out loud'))) +
+  scale_x_discrete('',labels =c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch'))+
+  scale_color_manual('',values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech'))+
+  theme(axis.text.x = element_text(angle = 90, size=rel(0.8),hjust=1), legend.position = 'top',strip.text = element_text(size=rel(0.6)),legend.text = element_text(size=14)) 
+
+task_switch_tol_rt <- task_switch_rt_df %>%
+ggplot(aes(condition, rt, color=high_low_verbal)) +
+  #geom_sina(data= task_switch_rt_df_individual, aes(condition, rt), alpha=0.3)+
+  geom_line(data= task_switch_rt_df_individual, aes(condition, rt, group=worker_id), alpha=0.1)+
+  geom_errorbar(aes(ymin=rt-ci, ymax=rt+ci), width=.2, position= pd,linewidth=1.5) +  
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  labs(y ='Reaction time (ms) per problem', title = '', x='')+
+  scale_color_manual('',values = color_palette[c(4,7)],labels=c('More inner speech', 'Less inner speech'))+
+  facet_wrap(~talk_out_loud, labeller = labeller(talk_out_loud = c('No' = 'Reported not talking out loud', 'Yes'='Reported talking out loud'))) +
+  scale_x_discrete(labels =c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch'))+
+  theme(axis.text.x = element_text(angle = 90, size=rel(0.8),hjust=1), legend.position = 'top', strip.text = element_text(size=rel(0.6)), legend.text = element_text(size=14))
+
+ggarrange(task_switch_tol_rt, task_switch_tol_acc,common.legend = T)
+```
+
+## Same/different judgments
+```{r, include=FALSE}
+same_different_trials <- read.csv('../data/processed_data/same_different_trials.csv',row.names = 1)
+same_different_trials$judgment_type_c <- ifelse(same_different_trials$judgment_type == 'categorical_image', -1,
+                                                ifelse(same_different_trials$judgment_type == 'identical_image', 1,
+                                                       same_different_trials$judgment_type))
+same_different_trials$same_category_animal_c <- ifelse(same_different_trials$same_category_animal == 'within_category', -1,                                                 
+                                                       ifelse(same_different_trials$same_category_animal == 'between_category', 1, 
+                                                              same_different_trials$same_category_animal))
+same_different_trials$VerbalScored_c <- scale(same_different_trials$VerbalScored)
+same_different_trials$cat_or_dog_c <- ifelse(same_different_trials$cat_or_dog == 'cat-cat', -1,
+                                                ifelse(same_different_trials$cat_or_dog == 'dog-dog', 0,
+                                                       ifelse(same_different_trials$cat_or_dog == 'cat-dog',1,
+                                                              same_different_trials$cat_or_dog)))
+```
+
+```{r, include=FALSE}
+# how many correct
+SD_correct <- same_different_trials %>%
+  dplyr::summarise(correct = sum(correct)/n())
+SD_correct
+# how many correct by group
+SD_correct_groups <- same_different_trials %>%
+  summarySEwithin2(measurevar = 'correct', betweenvars = 'high_low_verbal',idvar = 'worker_id')
+SD_correct_groups
+```
+We excluded trials above 5 seconds (0.7 %) and below 200 ms (0.07 %). Generally, participants made the correct judgment on `r round(SD_correct[1]*100, 2)` % of trials. This did not differ between the group of participants with more inner speech (`r round(SD_correct_groups$correct[1]*100,2)` %) and the group with less inner speech (`r round(SD_correct_groups$correct[2]*100,2)` %). In subsequent analyses and plots, we only include correct trials. 
+
+### Descriptive statistics by group: Same/different judgments
+See Figure \@ref(fig:judg-verb-score) for reaction times between the groups with more inner speech and less inner speech for category judgments ('do these two animals belong to the same category?') or identity judgments ('are these two animals identical?').
+
+```{r, include=FALSE}
+SD_rt_df <- same_different_trials %>%
+  filter(correct == 1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal'),
+                  withinvars = 'judgment_type',idvar = 'worker_id')
+SD_rt_df_individual <- same_different_trials %>%
+  filter(correct == 1) %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal', 'worker_id'),
+                  withinvars = 'judgment_type',idvar = 'worker_id')
+```
+
+```{r judg-verb-score, echo=FALSE,   fig.cap = "Reaction time in response to category or identity judgments."}
+ggplot(SD_rt_df, aes(judgment_type, rt, color=high_low_verbal)) +
+  #geom_sina(data= SD_rt_df_individual, aes(judgment_type, rt), alpha=0.3)+
+  geom_line(data= SD_rt_df_individual, aes(judgment_type, rt, group=worker_id), alpha=0.2)+
+  geom_errorbar(aes(ymin=rt-ci, ymax=rt+ci), width=.2, position= pd,linewidth=1.5) +
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position=pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5,position=pd)+
+  theme_bw() +
+  theme(legend.position = 'none',axis.text.x = element_text(size=14))+
+  labs(y ='Reaction time (ms)', title = '', x= '')+
+  scale_x_discrete(labels=c('Categorical judgment', 'Identity judgment'))+
+  scale_color_manual(values = color_palette[c(4,7)], labels=c('More inner speech', 'Less inner speech'))+
+  annotate('label',label='More inner speech', x=1.5, y=750, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=1.5, y=1150, color=color_palette[7], fontface=2)
+```
+
+### Statistical models: Same/different judgments
+```{r, include=FALSE, cache = TRUE}
+category_model <- lmer(log(rt) ~ judgment_type_c * VerbalScored_c + (judgment_type_c|worker_id), 
+                        subset(same_different_trials, correct ==1))
+summary(category_model)
+same_different_trials %>%
+  filter(correct ==1) %>%
+  group_by(judgment_type) %>%
+  summarise(rt = mean(rt))
+```
+Identity judgments (M = 832 ms) were faster than category judgments (M = 1010 ms) ($\beta$ = `r round(summary(category_model)$coefficients[2,1],2)`; SE = `r round(summary(category_model)$coefficients[2,2],2)`; t = `r round(summary(category_model)$coefficients[2,4],2)`; p < .001; regression coefficient: $e^{-0.19}$ = `r round(exp(-0.19), 2)`), and a higher verbal score was not associated with faster reaction times ($\beta$ = `r round(summary(category_model)$coefficients[3,1],2)`; SE = `r round(summary(category_model)$coefficients[3,2],2)`; t = `r round(summary(category_model)$coefficients[3,4],2)`; p = .120; regression coefficient: $e^{-0.03}$ = `r round(exp(-0.03), 2)`).
+
+```{r, include=F}
+SD_rt_df_key_comparison <- same_different_trials %>%
+  filter(judgment_type == 'identical_image' & correct ==1 & answer =='different') %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal'),
+                  withinvars = c('judgment_type', 'same_category_animal'),idvar = 'worker_id')
+
+SD_rt_df_key_comparison_individual <- same_different_trials %>%
+  filter(judgment_type == 'identical_image' & correct ==1 & answer =='different') %>%
+  summarySEwithin2(measurevar = 'rt', betweenvars = c('high_low_verbal', 'worker_id'),
+                  withinvars = c('judgment_type', 'same_category_animal'),idvar = 'worker_id')
+```
+
+```{r samediff-key-comp, echo=FALSE, fig.cap = "Reaction time on identity trials where the correct response was 'DIFFERENT' either because the two silhouettes were from different categories or different images from the same category."}
+ggplot(SD_rt_df_key_comparison, aes(same_category_animal, rt, color=high_low_verbal)) +
+  #geom_sina(data= SD_rt_df_key_comparison_individual, aes(same_category_animal, rt), alpha=0.3)+
+  geom_line(data= SD_rt_df_key_comparison_individual, aes(same_category_animal, rt,group=worker_id), alpha=0.2)+
+  geom_errorbar(aes(ymin=rt-ci, ymax=rt+ci), width=.2, position= pd,linewidth=1.5) +
+  stat_summary(fun = mean, geom = 'point', aes(group = high_low_verbal), position= pd,size=1.5) +
+  stat_summary(fun = mean, geom = 'line', aes(group = high_low_verbal), linewidth = 1.5, position= pd)+
+  theme_bw() +
+  theme(legend.position = 'none',axis.text.x = element_text(size=14))+
+  labs(y ='Reaction time (ms)', title = '', x = '') +
+  scale_x_discrete(labels=c('Between-category','Within-category'))+
+  scale_color_manual(values = color_palette[c(4,7)])+
+  annotate('label',label='More inner speech', x=1.5, y=750, color=color_palette[4],fontface=2)+
+  annotate('label',label='Less inner speech', x=1.5, y=1000, color=color_palette[7], fontface=2)
+```
+```{r, include=FALSE, cache = TRUE}
+same_different_trials %>%
+  group_by(same_category_animal) %>%
+  filter(judgment_type == 'identical_image' & correct == 1 & answer == 'different') %>%
+  summarise(rt = mean(rt))
+latency_to_different <- lmer(log(rt) ~ VerbalScored_c * same_category_animal_c + (same_category_animal_c|worker_id),
+                            subset(same_different_trials, judgment_type == 'identical_image' & correct ==1 & answer =='different'))
+summary(latency_to_different)
+```
+
+The key test for this experiment was whether the two groups behaved differently when giving correct 'DIFFERENT' responses on identity trials when the two images belonged to the same category. That is, we expected participants with more inner speech to be slower to make correct 'DIFFERENT' responses when both stimuli where from the same category but physically different (i.e., $dog_1$ versus $dog_2$). See Figure \@ref(fig:samediff-key-comp). However, participants with more inner speech were not specifically adversely affected by the within-category interference (interaction effect: ($\beta$ = `r round(summary(latency_to_different)$coefficients[4,1],3)`; SE = `r round(summary(latency_to_different)$coefficients[4,2],2)`; t = `r round(summary(latency_to_different)$coefficients[4,4],2)`; p = .954). Within-category trials were generally associated with significantly slower reaction times (M = 923 ms) than between-category trials (M = 843 ms) ($\beta$ = `r round(summary(latency_to_different)$coefficients[3,1],2)`; SE = `r round(summary(latency_to_different)$coefficients[3,2],2)`; t = `r round(summary(latency_to_different)$coefficients[3,4],2)`; p < .001; regression coefficient: $e^{-0.08}$ = `r round(exp(-0.08), 2)`). 
+### Strategies: Same/different judgments
+
+```{r, include=FALSE}
+talk_out_loud_SD <- same_different_trials %>%
+  group_by(worker_id, talk_out_loud, high_low_verbal) %>%
+  tally()
+tol_same_different <- talk_out_loud_SD %>%
+  group_by(high_low_verbal,talk_out_loud)
+table(tol_same_different$high_low_verbal, tol_same_different$talk_out_loud)
+chisq.test(tol_same_different$high_low_verbal, tol_same_different$talk_out_loud)
+```
+There was no significant difference between how many participants with more inner speech (9 out of 47) and how many participants with less inner speech (4 out of 46) reported that they had talked to themselves out loud during the task switching experiment ($\chi^2$(1) = `r round(chisq.test(tol_same_different$high_low_verbal, tol_same_different$talk_out_loud)$statistic, 2)`, p = .248). There were not any differences between the effects that talking out loud had on these two groups.
+
+## Intertask correlations
+We were interested in how performance on the different tasks correlated with each other and whether these correlations were different for the two groups.
+```{r, include=FALSE, message=FALSE}
+phonsim_score <- phon_sim_trials %>%
+  group_by(worker_id, original_word_set) %>%
+  dplyr::summarise(phonsim_score = mean(score, na.rm=T), phon_sim_any_pos = mean(score_any_position, na.rm=T))
+phonsim_score <- pivot_wider(phonsim_score, names_from = original_word_set, values_from = c(phonsim_score, phon_sim_any_pos))
+rhyme_score <- rhyming_trials %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_acc = mean(correct, na.rm=T))
+rhyming_rt <- rhyming_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_rt = mean(rt, na.rm=T))
+rhyme_score <- merge(rhyme_score, rhyming_rt, by = c('worker_id', 'type'))
+rhyme_score <- pivot_wider(rhyme_score, names_from = type, values_from = c(rhyming_acc, rhyming_rt))
+# only take rt on correct trials
+same_different_score <- same_different_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, judgment_type, answer) %>%
+  dplyr::summarise(samediff_rt = mean(rt, na.rm=T))
+same_different_score <- pivot_wider(same_different_score, names_from = c(judgment_type, answer), values_from = samediff_rt)
+task_switching_score <- task_switch_trials %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_acc=mean(switching_is_correct, na.rm=T))
+task_switching_rt <- task_switch_trials %>%
+  filter(switching_is_correct ==1) %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_rt=mean(rt, na.rm=T))
+task_switching_score <- merge(task_switching_score, task_switching_rt, 
+                              by = c('worker_id', 'condition'))
+task_switching_score <- pivot_wider(task_switching_score, names_from = condition, values_from = c(task_switch_rt, task_switch_acc))
+
+score_df_list <- list(phonsim_score,rhyme_score,
+                      same_different_score,task_switching_score)
+score_df <- score_df_list %>% reduce(full_join, by='worker_id')
+# put verbal scores in
+score_df <- merge(score_df, irq_scores, by ='worker_id', all.x = T)
+score_df <- distinct(score_df)
+
+score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic set', 'Verbal recall: Phonological set', 'Verbal recall (any position): Control set', 'Verbal recall (any position): Orthographic set', 'Verbal recall (any position): Phonological set', 'Rhyme accuracy: Non-orthographic', 'Rhyme accuracy: No-rhyme', 'Rhyme accuracy: Orthographic', 'Rhyme reaction time: Non-orthographic', 'Rhyme reaction time: No-rhyme',
+                              'Rhyme reaction time: Orthographic', 'Category judgment: Between-category', 'Category judgment: Within-category', 'Identity judgment: Between-category', 'Identity judgment: Within-category', 'Task switch reaction time: Addition', 'Task switch reaction time: Color-cued', 'Task switch reaction time: Subtraction', 'Task switch reaction time: Symbol-cued', 'Task switch reaction time: Uncued','Task switch accuracy: Addition','Task switch accuracy: Color-cued','Task switch accuracy: Subtraction','Task switch accuracy: Symbol-cued','Task switch accuracy: Uncued','Verbal score (IRQ)', 'Visual score (IRQ)')
+
+```
+### Intertask correlations
+See Figure \@ref(fig:total-cor-contrast). On the plot, intertask correlations for both groups (more and less inner speech) are represented - more inner speech in the upper triangle and less inner speech in the lower triangle.
+
+```{r total-cor-contrast, echo=FALSE,out.width='100%', fig.cap='Intertask correlations in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01 and are ordered by hierarchical clustering. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech.'}
+
+# if making the plots again, go to anendophasia_correlation_plots.R file
+# otherwise just read in premade plot:
+
+knitr::include_graphics("../figures/cor_plot_contrast.png")
+
+```
+
+## Questionnaire measures
+
+```{r, include=FALSE}
+t.test(subset(Q_anendophasia_numeric, high_low_verbal == 'high_verbal')$revise_convo, subset(Q_anendophasia_numeric, high_low_verbal == 'low_verbal')$revise_convo)
+t.test(subset(Q_anendophasia_numeric, high_low_verbal == 'high_verbal')$rehearse_convo, subset(Q_anendophasia_numeric, high_low_verbal == 'low_verbal')$rehearse_convo)
+cor.test(Q_anendophasia_numeric$VerbalScored, Q_anendophasia_numeric$visq_dial_4)
+```
+Because of a technical error, we are missing questionnaire data from one participant from the group with less inner speech, so we here report questionnaire data from 47 participants with more inner speech and 45 participants with less inner speech. For most of our custom questions, there were notable differences in how participants from the two groups responded. For reasons of space, however, we only report a few illustrative ones here (see Appendix for plots of all the questions). The questions with the clearest differences concerned rehearsing and revising conversations where the participants with more inner speech reported doing so much more often than the participants with less inner speech did (see Figure \@ref(fig:questionnaire-in-text-1)) (revise past conversation: t(87.95) = 5.93; p < .001; practice future conversation: t(89.33) = 5.33; p < .001). Of the VISQ factors, the IRQ verbal representation score was mostly related to the dialogicality of inner speech (see again Figure \@ref(fig:questionnaire-in-text-1)) (r(90) = .70; p < .001).
+
+```{r, include=FALSE, cache=TRUE}
+
+# revise conva
+likert_order_b <- c('Never', 'Rarely', 'Sometimes', 'Often','Very often')
+revise_convo_p <- ggplot(Q_anendophasia_text, aes(factor(revise_convo, levels=likert_order_b), fill=high_low_verbal)) +
+  geom_bar(position="dodge", aes(y = (..count..)/sum(..count..)), width = 0.5)+
+  theme_bw()+
+  theme(plot.title = element_text(size = 18, face = "bold"), axis.title = element_text(size = 12),legend.text = element_text(size=24),
+        axis.text.x = element_text(size = 12), legend.position = 'top')+
+  labs(title='Do you ever revise past conversations in your mind?', x='', y='')+
+  scale_fill_manual('',values = color_palette[c(4,7)], labels = c('More inner speech','Less inner speech'))
+
+# rehearse convo
+rehearse_convo_p <- ggplot(Q_anendophasia_text, aes(factor(rehearse_convo, levels=likert_order_b), fill=high_low_verbal)) +
+  geom_bar(position="dodge", aes(y = (..count..)/sum(..count..)), width = 0.5)+
+  theme_bw()+
+  theme(plot.title = element_text(size = 18, face = "bold"), axis.title = element_text(size = 12),legend.text = element_text(size=24),
+        axis.text.x = element_text(size = 12), legend.position = 'top')+
+  labs(title='Do you ever rehearse a conversation before you have it in real life\nwhere you simulate what you will say and how the other person will respond?',x='', y='')+
+  scale_fill_manual('',values = color_palette[c(4,7)], labels = c('More inner speech','Less inner speech'))
+
+# VISQ dialogic
+level_order <- c('Strongly disagree', 'Disagree', 'Neither agree nor disagree', 'Agree','Strongly agree')
+visq_dial_p <- ggplot(Q_anendophasia_numeric, aes(factor(visq_dial_4),fill=high_low_verbal)) +
+  geom_bar(position="dodge", aes(y = (..count..)/sum(..count..)), width = 0.5)+
+  theme_bw()+
+  theme(plot.title = element_text(size = 18, face = "bold"), axis.title = element_text(size=12), legend.text = element_text(size=24),
+        axis.text.x = element_text(size = 12), legend.position = 'top')+
+  labs(title="I talk back and forward to myself in my mind about things (VISQ)",x='', y='')+
+  scale_x_discrete(labels=level_order)+
+  scale_fill_manual('',values = color_palette[c(4,7)], labels = c('More inner speech','Less inner speech'))
+
+selected_qs_p <- ggarrange(revise_convo_p, rehearse_convo_p, visq_dial_p, common.legend = T, ncol = 1)
+#ggsave('../figures/selected_qs_p.png',selected_qs_p, width = 10, height = 12)
+```
+
+```{r questionnaire-in-text-1, echo=FALSE, out.width="100%", out.height="100%", fig.cap='Grouped bar plots of proportional answers to selected custom questions concerning inner speech. Dark blue represents participants with more inner speech, and pink represents participants with less inner speech.'}
+knitr::include_graphics("../figures/selected_qs_p.png")
+```
+
+```{r , cache=T, echo=FALSE}
+# what do you think other people's experience is like?
+others_exp_convo_p <- ggplot(Q_anendophasia_numeric, aes(others_experiences_1, VerbalScored)) +
+  geom_point() +
+  geom_smooth(method='lm', color=color_palette[2])+
+  theme_bw()+ 
+  theme(plot.title = element_text(size = 18, face = "bold"), axis.title = element_text(size = 12),
+        axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12),legend.position = 'none')+  
+  labs(title='What percentage of people do you think experience their\nthoughts in the form of a conversation with themselves?',x='')
+  #scale_color_manual('',values = color_palette[c(4,7)], labels = c('More inner speech','Less inner speech'))
+
+others_exp_mindeye_p <- ggplot(Q_anendophasia_numeric, aes(others_experiences_4, VerbalScored)) +
+  geom_point() +
+  geom_smooth(method='lm', color=color_palette[2])+
+  theme_bw()+
+  theme(plot.title = element_text(size = 18, face = "bold"), axis.title = element_text(size = 12),
+        axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12),legend.position = 'none')+  
+  labs(title="What percentage of people do you think\ncan see vivid images in their mind's eye?",x='')
+
+others_exp_mindear_p <- ggplot(Q_anendophasia_numeric, aes(others_experiences_5, VerbalScored)) +
+  geom_point() +
+  geom_smooth(method='lm', color=color_palette[2])+
+  theme_bw()+
+  theme(plot.title = element_text(size = 18, face = "bold"), axis.title = element_text(size = 12),
+        axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12), legend.position = 'none')+  
+  labs(title="What percentage of people do you think hear\nwords in their mind's ear when they silently read?",x='')
+
+others_exp_comb_p <- ggarrange(others_exp_convo_p, others_exp_mindeye_p, others_exp_mindear_p, common.legend = T, nrow=3)
+#ggsave('../figures/others_exp_comb_p.png',others_exp_comb_p, width = 10, height = 12)
+
+```
+
+```{r questionnaire-in-text-2, echo=FALSE, out.width="100%", out.height="100%", fig.cap="Scatter plots showing the correlation between verbal score on the IRQ and participants' estimates of percentages of other people with a given kind of experience."}
+knitr::include_graphics("../figures/others_exp_comb_p.png")
+```
+
+```{r, include=FALSE}
+others_exp_convo_m <- lm(others_experiences_1 ~ VerbalScored, Q_anendophasia_numeric)
+summary(others_exp_convo_m)
+others_exp_mindeye_m <- lm(others_experiences_4 ~ VerbalScored, Q_anendophasia_numeric)
+summary(others_exp_mindeye_m)
+others_exp_mindear_m <- lm(others_experiences_5 ~ VerbalScored, Q_anendophasia_numeric)
+summary(others_exp_mindear_m)
+```
+
+It was also remarkable that participants’ own experience influenced how they thought other people’s experience was (see Figure \@ref(fig:questionnaire-in-text-2)). Participants who reported more inner speech estimated that more people generally experience their thoughts in the form of a conversation with themselves ($\beta$ = `r round(summary(others_exp_convo_m)$coef[2,1], 2)`; SE =  `r round(summary(others_exp_convo_m)$coef[2,2], 2)`; t =  `r round(summary(others_exp_convo_m)$coef[2,3], 2)`; p =  .013) and that more people generally hear words in their "mind's ear" when they read ($\beta$ = `r round(summary(others_exp_mindear_m)$coef[2,1], 2)`; SE =  `r round(summary(others_exp_mindear_m)$coef[2,2], 2)`; t =  `r round(summary(others_exp_mindear_m)$coef[2,3], 2)`; p =  .016). They did not, however, estimate that more people were able to see vivid images in their "mind's eye" ($\beta$ = `r round(summary(others_exp_mindeye_m)$coef[2,1], 2)`; SE =  `r round(summary(others_exp_mindeye_m)$coef[2,2], 2)`; t =  `r round(summary(others_exp_mindeye_m)$coef[2,3], 2)`; p =  .605).
+
+```{r questionnaire-correlation-matrix, echo=FALSE}
+library(corx)
+library(corrtable)
+cortable <- correlation_matrix(Q_anendophasia_numeric %>% select(rehearse_convo,
+                                                     revise_convo, visq_dial_4, earworms, 
+                                                     others_experiences_1,others_experiences_4,
+                                                     others_experiences_5, VerbalScored, VisualScored),
+                   use ='lower')
+colnames(cortable) <- c('Simulate future conversations' ,'Simulate past conversations', 'VISQ dialogic', 'Earworms', 'Others experience conversation', "Others experience mind's eye", "Others experience mind's ear", 'Verbal Score','Visual Score')
+rownames(cortable) <- c('Simulate future conversations' ,'Simulate past conversations', 'VISQ dialogic', 'Earworms', 'Others experience conversation', "Others experience mind's eye", "Others experience mind's ear", 'Verbal Score','Visual Score')
+kable(cortable, booktabs = TRUE,
+  linesep = "",
+  caption = 'Correlation matrix with selected variables from our custom questionnaire correlated with a dialogic item from the VISQ and Verbal and Visual scores from the IRQ.') %>%
+  row_spec(row = 0, bold = T) %>%
+  #column_spec(1, width = "1in") %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 6)
+```
+
+
+# Discussion
+Participants who report experiencing less inner speech (our sample targeted those at < 16%ile of the verbal score on the IRQ) differed in performance on several behavioral tasks. They had a harder time judging whether the names of two images rhymed. The lack of an inner speech by nameability interaction makes it more likely that the effect stemmed from comparing phonological representations in memory rather than naming the images themselves. The same participants also had poorer verbal working memory regardless of the material. There was no indication of a weaker (or stronger) phonological similarity effect as a function of inner speech. Interestingly, in both the rhyming experiment and the verbal working memory experiment, performance differences between the two groups disappeared when participants reported talking out loud to solve the problems, suggesting a kind of compensatory mechanism. Inner speech differences did not predict performance in task switching. Everyone was equally worse on uncued-switch trials. Participants reported using a variety of self-cueing strategies. It is conceivable that despite this null finding, articulatory suppression would have a larger effect on the participants with more inner speech. Lastly, categorical effects on perceptual discrimination were similar for the two groups suggesting either the categorical effects in such tasks are not language-based, or that the speeded nature of such tasks makes the use of inner speech unlikely.
+
+## Anendophasia: A Lack of Inner Speech
+
+When investigating unusual human experiences, it helps to have a label. For example, the coining of “aphantasia” to the lack of visual imagery [@zeman2010] is both helpful for research – providing a useful keyword – and for self-identification; its introduction led to the creation of an online community with over 50,000 members (r/aphantasia). 
+We would therefore like to propose a name for the phenomenon of a lack of inner speech: anendophasia: an (lack) + endo (inner) + phasia (speech). This term was developed in consultation with individuals who identify as lacking inner speech and has the benefit of including the familiar Greek root phasia (aphasia, paraphasia, etc.). Furthermore, “endophasia” has precedent in being used to refer to inner speech [@bergounioux2001; @loevenbruck_isnv]. The term also avoids subsuming inner speech under “aphantasia” [@Monzel2022] because inner speech is both auditory and articulatory in nature (whether it is better termed “inner hearing” or “inner speaking” is subject to debate) and because the linguistic properties of inner speech are not reducible to phonological properties. For these reasons, we also do not believe the previously proposed term “anauralia” is appropriate [@Hinwar2021].
+
+## Relations to Visual Imagery, Auditory Imagery and “Unsymbolized” Thought
+
+Contrary to the popular belief that one is either a “verbal” or “visual” thinker [see @pashler2008learning for a critical review], verbal imagery and visual imagery are in fact positively correlated [@roebuck2020internal]. Although not the focus of the current work, our results are consistent with earlier reports of three “orientations” that all have moderate positive correlations: verbal, object/static imagery, and spatial/dynamic imagery [@blazhenkova2009new; @roebuck2020internal] suggesting a common imagery factor. Can anendophasia therefore be thought of as a lack of auditory imagery? We think not. First, many who lack inner speech report experiencing being able to hear music in their mind’s ear (although they also report significantly fewer instances of “earworms”). Second, inner speech involves both auditory and articulatory-motor imagery. Second, although inner speech is often experienced as having phonological features – one of the reasons people often perceive it as speech [@langlandhassan_isnv] – it also involves an articulatory-motor dimension [@geva_isnv; @perrone2014little]. Paradoxically, some people also claim to experience “wordless” inner speech akin to a series of tip of the tongue states [@Hurlburt2013].
+When asked to reflect on what form their thoughts take, people who score low on both inner speech and visual imagery claim that they “think in concepts”. What it means to “think in concepts” without relying on language is not clear. Beyond informal self-reports, the existence of such non-verbal and non-perceptual phenomenal experiences is supported by Descriptive Experience Sampling (DES) [@hurlburt2006descriptive; @heavey2008phenomena]. When participants are probed at random times and asked to report on their mental states, ~22% of the time their reports are consistent with what Hurlburt has called “unsymbolized thinking”. In such episodes, people feel that they think ‘a particular, definite thought without awareness of that thought being conveyed as words, images, or any other symbols’ [@heavey2008phenomena, p. 802]. Unsymbolized thinking is a slippery construct that tends to be defined in terms of what it is not. For example, @hurlburt2008unsymbolized say that it is experienced as being ‘a thinking, not a feeling, not an intention, not an intimation, not a kinesthetic event, not a bodily event’ (p. 1366). A telling example is a participant wondering if her friend will arrive in a car or pickup truck, but not experiencing any words or images. The question is a single undifferentiated whole.
+It is possible that unsymbolized thinking is subserved by the same verbal and perceptual processes, but with weak or absent conscious imagery [@vicente2016nature]. Alternatively, it may correspond to a genuinely different form of experience in which people entertain more abstract conceptual representations which are less accessible to people with higher levels of inner speech and imagery.
+
+## What have we learned about people with anendophasia?
+
+People’s self-reports cannot always be taken at face value [@heavey2008phenomena; @Hurlburt2011; @Hurlburt2013]. But when people report that their experience rarely takes a verbal format, they are not just confabulating. This is evident both in the consistency of their subjective responses [@roebuck2020internal], and, as we report here, there are some clear behavioral correlates.
+We did find evidence that using other strategies than internal verbalization could reduce the performance differences between our two groups. This was clearest when we examined whether participants reported talking out loud to solve the problems or not. In both the verbal working memory experiment and in the rhyme judgment experiment, performance differences disappeared when participants reported talking out loud. This suggests that participants without anendophasia were already using verbalization strategies internally. One particularly interesting example comes from orthographically similar words in the verbal working memory experiment (“rough”, “cough”, “through”, “dough”, “bough”). Many participants with anendophasia reported a strategy of remembering just the first letters of the words once they were familiar with the set, thus reducing the load on verbal working memory. This is likely to be the reason why there was reduced difference in performance between the two groups for this word set. Another interesting case is the finding that the two groups did not differ in either reaction time or performance on the task switching experiment. This suggests that while the inner voice can be used as a behavioral self-cue, other and equally effective strategies may be available.
+
+##	Limitations
+One limitation of our work is its reliance on wholly subjective questions for measuring inner speech. Considering that our focus is on differences in phenomenology, this is appropriate. At the same time, there is reason to be skeptical of people’s assessments of their inner experiences. People can be wrong about what they think they experience [@hurlburt2011describing]. It would be therefore helpful to supplement subjective assessments with objective ones of the sort becoming possible for differences in visual imagery [@kay2022pupillary]. Another limitation is the remaining possibility that differences we ascribe to inner speech come from something else such as differences in conscientiousness. We believe this is unlikely since we saw examples of specific conditions where there were no differences between the two groups (e.g., no-rhyme pairs, orthographically similar words, and all conditions in the task switching experiment). Lastly, while the term “anendophasia” connotes lack of inner speech, many of the participants in our “low inner speech” group reported having some inner speech. Screening a larger group to identify people who do not endorse having any inner speech would help us see if the cognitive consequences of having less inner speech are continuous with having none.
+
+#	Conclusion
+Not everyone experiences inner speech. We proposed a name for a lack of inner speech: anendophasia. People who experience less inner speech were worse at making rhyme judgments in response to images and remembering a list of words. Task switching performance was not, however, either slower or less accurate. Taken together, our experiments suggest that there are real behavioral consequences of experiencing less or more inner speech, and that these differences may often be masked because people with anendophasia use alternative strategies.
+
+\newpage
+
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
