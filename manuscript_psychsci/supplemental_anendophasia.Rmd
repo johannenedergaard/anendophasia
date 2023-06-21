@@ -1,0 +1,239 @@
+---
+title: "Not everyone has an inner voice: Behavioral consequences of anendophasia"
+author: "Johanne Nedergaard & Gary Lupyan"
+date: "2023-06-21"
+output: pdf_document
+---
+```{r setup, include = FALSE}
+library("papaja")
+library('tidyverse')
+library('tufte')
+library('kableExtra')
+r_refs("r-references.bib")
+knitr::opts_chunk$set(fig.pos = "!ht")
+options(knitr.table.format = "latex")
+```
+
+## Supplemental Materials
+
+### All custom survey questions
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(kableExtra)
+questionnaire_table <- data.frame(
+  Question = c('If you have to ask a question in front of an audience, which of these best describes what you typically do?',
+               'How often do you experience trouble focusing on a face-to-face conversation you are having because of a conflicting conversation happening in your mind at the same time?',
+               'How often do you have songs stuck in your head?',
+               'If you had to recall a short conversation about a specific topic that you had yesterday with a friend, how easily can you recall the exact words your friend said?',
+               "If you had to recall a short conversation about a specific topic that you had yesterday with a friend, how easily can you recall the exact words you said?",
+               'When you recall a conversation like the one you were thinking about for the last 2 questions, do you hear the words in your mind?',
+               'Can you "sing along" to music without singing out loud?',
+               'If you can "sing along" to music without singing out loud, to what extent does this feel like regular thinking?',
+               'If you imagine someone else speaking, how do you experience their voice?',
+               'Many people feel that a lot of their thinking, planning, and decision-making takes place in the form of a conversation with themselves. They describe that when they think, they hear words in their mind. Other people don’t have this experience and instead say that they "think in ideas". Is your experience more like the first or the second?',
+               "To what extent do you agree with this statement: 'It is generally difficult
+and takes effort to express in words how I think and feel'.",
+                'Do you think it is stressful and annoying to have an inner monologue?',
+                'In books and movies, we often see characters talking to themselves at length. How much do you think this reflects real life?',
+                'Have you been diagnosed with dyslexia or another reading disorder?',
+                'Do you ever revise past conversations in your mind (i.e. think of a better comeback,
+a way of phrasing what you wanted to say)?',
+                'Do you ever rehearse a conversation before you have it in real life where you
+simulate what you will say and how the other person will respond?',
+                'Imagine you are lying in bed with your eyes closed trying to fall asleep. Is your inner experience then...',
+                'To what extent do you agree with this statement: "I do not know why I do some of the things that I do."',
+                'To what extent do you agree with this statement: “I am a firm believer in thinking things through.”',
+                'To what extent do you agree with this statement: “I like to act on a whim.”',
+                "For each scale, please indicate what percent of people you know you think have each of these three experiences:\n
+-	Experience their thoughts in the form of a conversation with themselves\n
+-	Can see vivid images in their mind's eye\n
+-	Hear words in their mind's ear when they silently read"
+),
+  Options = c("I rehearse in my mind the exact phrasing of what I am going to ask (5)\n
+	I rehearse in my mind some of what I am going to ask before asking it (4)\n
+	I think of a question I want to ask and just ask it (3)\n
+	Other (2)\n
+	I'm never in a position to ask questions in front of an audience (1)",
+	'Never (1)\n
+	Rarely (2)\n
+	Sometimes (3)\n
+	Often (4)\n
+	Always (5)',
+	'	Multiple times a day (5)\n
+	A few times a week (4)\n
+	A few times a month (3)\n
+	A few times a year (2)\n
+	Never (1)',
+	"I can easily recall it. If I wrote it down and matched to a recording of the conversation,
+there'd be an almost perfect match (5)\n
+	I remember the topic and remember much of what was said. If I matched it to a
+recording of the conversation, a lot would match up. (4)\n
+	I remember the topic, but remember only a few of the specific words/sentences. (3)\n
+	I remember the topic, but can't remember any of the specifics. (2)\n
+	Other (1)",
+  "I can easily recall it. If I wrote it down and matched to a recording of the conversation,
+there'd be an almost perfect match (5)\n
+	I remember the topic and remember much of what was said. If I matched it to a
+recording of the conversation, a lot would match up. (4)\n
+	I remember the topic, but remember only a few of the specific words/sentences. (3)\n
+	I remember the topic, but can't remember any of the specifics. (2)\n
+	Other (1)",
+  "It's just like I'm hearing the conversation again. (4)\n
+	I hear a condensed version (e.g. only some words). (3)\n
+	I hear something but I can't describe it. (2)\n
+	I can't hear it, but I can still recall it. Please briefly say something about how you are
+recalling it. (1)",
+  "Yes - definitely (4)\n
+	Yes - somewhat (3)\n
+	No - but I can imagine how others can do it (2)\n
+	No - I can't imagine how anyone could do this (1)",
+  "Not at all (1)\n
+  Mostly different from regular thinking (2)\n
+	Neutral (3)\n
+	Mostly similar to regular thinking (4)\n
+	Exactly like regular thinking (5)\n
+	I can't sing along without singing out loud (6)",
+  "I hear what they say in their voice. (4)\n
+	I hear what they say but in my own voice. (3)\n
+	I hear the words but I can't tell whose voice it is. (2)\n
+	I don’t “hear” anything, I imagine it by... (please specify) (1)",
+  'More like a conversation (2)\n
+	More like "thinking in ideas". Can you elaborate or give an example of what this means to you? (1)',
+  "Strongly agree (1)\n
+	Agree (2)\n
+	Neither agree nor disagree (3)\n
+	Disagree (4)\n
+	Strongly disagree (5)",
+  "Yes, very (3)\n
+	Maybe a little (2)\n
+	No, I don't think so (1)",
+  "It's just for the viewer/reader's benefit (1)\n
+	It might be like real life but mostly for the viewer's/reader's benefit (2)\n
+	It's exactly like real life (3)",
+  "Yes, officially diagnosed (1)\n
+	Yes, self-diagnosed (2)\n
+	No, never (3)",
+  "Never (1)\n
+	Rarely (2)\n
+	Sometimes (3)\n
+	Often (4)\n
+	Very often (5)",
+  "Never (1)\n
+	Rarely (2)\n
+	Sometimes (3)\n
+	Often (4)\n
+	Very often (5)",
+  'Primarily verbal (you "hear" or "speak" words and sentences in your mind) (1)\n
+	Primarily visual (you "see" situations, objects, people etc. in your mind) (2)\n
+	Primarily about sensory awareness (what you are hearing, smelling, and feeling in the
+  moment) (3)\n
+	Primarily emotional (4)\n
+	An even mix of verbal, visual, sensory, and emotional (5)\n
+	My inner experience in that situation does not have a specific "format" (6)',
+  "Strongly disagree (1)\n
+	Disagree (2)\n
+	Neither agree nor disagree (3)\n
+	Agree (4)\n
+	Strongly agree (5)",
+  "Strongly disagree (1)\n
+	Disagree (2)\n
+	Neither agree nor disagree (3)\n
+	Agree (4)\n
+	Strongly agree (5)",
+  "Strongly disagree (1)\n
+	Disagree (2)\n
+	Neither agree nor disagree (3)\n
+	Agree (4)\n
+	Strongly agree (5)",
+"No one (0%) to Everyone (100%)"
+	)
+)
+kable(questionnaire_table, align='l', booktabs = TRUE,
+  longtable = TRUE, linesep = "") %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+  
+```
+
+\newpage
+
+### Correlations between custom questions and Varieties of Inner Speech Questionnaire (VISQ)
+
+```{r questionnaire-correlation-matrix, echo=FALSE,include=FALSE}
+library(corx)
+library(corrtable)
+library(Hmisc)
+library(corrplot)
+Q_anendophasia_numeric <- read.csv('data/survey_data/qualtrics_numeric_anendophasia.csv')
+Q_anendophasia_numeric <- Q_anendophasia_numeric %>%
+  rename(visq_cond_1 = Q63_95, visq_dial_1 = Q63_96, visq_other_voi_1 = Q63_97, visq_other_voi_2 = Q63_98, visq_other_voi_3 = Q63_100, visq_dial_2 = Q63_101, visq_cond_2_rev = Q63_102, visq_cond_3 = Q63_103, visq_eval_1 = Q63_105, visq_dial_3 = Q63_106, visq_eval_2 = Q63_108, visq_other_voi_4 = Q63_109, visq_dial_4 = Q63_111, visq_cond_4 = Q63_112, visq_cond_5_rev = Q63_115, visq_other_voi_5 = Factor2_1...68, visq_eval_3 = Q63_116, visq_eval_4 = Q63_117)
+irq_scores <- read.csv('manuscript_psychsci/irq_scores_anonymized.csv', row.names = 1)
+Q_anendophasia_numeric <- merge(Q_anendophasia_numeric, irq_scores, by = 'worker_id', all.x = T)
+Q_anendophasia_numeric <- distinct(Q_anendophasia_numeric)
+
+# high inner speech correlations
+survey_colnames <- c('Rehearse public speaking', 'Difficulty focusing on real-life conversation', 
+                     'Earworms', 'Remember friend conversation', 'Remember self conversation', 'Remembering feels like hearing',
+                     'Sing along mentally', 'Sing along feels like thinking', 'Experience of imagined voices', 
+                     'Difficulty expressing inner states', 'Inner speech sounds stressful', 'Inner speech is just a narrative tool',
+                     'Simulate future conversations' ,'Simulate past conversations', 'Impulsiveness - Do not understand own actions',
+                     'Impulsiveness - Thinking things through', 'Impulsiveness - Like acting on whim', 
+                     'Others experience conversation', "Others experience mind's eye", "Others experience mind's ear", 
+                     'VISQ - Brief phrases', 'VISQ - Dialogue with self', 'VISQ - Voice of another person',
+                     'VISQ - Questions from others', 'VISQ - Nagging from others', 'VISQ - Dialogue not monologue',
+                     'VISQ - Full sentences', 'VISQ - Telegraphic inner speech', 'VISQ - Right or wrong actions',
+                     'VISQ - Conversation with self', 'VISQ - Tell self to do things', 'VISQ - Other voices unheard utterances',
+                     'VISQ - Back and forth conversation', 'VISQ - Only content words', 'VISQ - Full grammatical sentences',
+                     'VISQ - Other voices already heard utterances', 'VISQ - Evaluate own behavior', 'VISQ - Tell self not to do things')
+
+
+survey_df_high_verbal <- subset(Q_anendophasia_numeric, high_low_verbal == 'high_verbal')
+survey_df_high_verbal <- survey_df_high_verbal %>% select(rehearse_question, conversation_focus, earworms,
+                                                                           convo_memory_friend, convo_memory_self, hearing_conversation,
+                                                                           sing_along, sing_along_thinking, other_voice_quality,
+                                                                           express_inner_states, stress_IS, narrative_IS, rehearse_convo,
+                                                                           revise_convo, impulsiveness_1, impulsiveness_2,
+                                                                           impulsiveness_3, others_experiences_1, others_experiences_4,
+                                                                           others_experiences_5,
+                                                                           starts_with('visq'))
+correlations_hv_survey <- rcorr(as.matrix(survey_df_high_verbal))
+rownames(correlations_hv_survey$r) <- survey_colnames
+colnames(correlations_hv_survey$r) <- survey_colnames
+ps_hv_survey <- cor.mtest(as.matrix(survey_df_high_verbal))$p
+rownames(ps_hv_survey) <- survey_colnames
+colnames(ps_hv_survey) <- survey_colnames
+
+# low inner speech correlations
+survey_df_low_verbal <- subset(Q_anendophasia_numeric, high_low_verbal == 'low_verbal')
+survey_df_low_verbal <- survey_df_low_verbal %>% select(rehearse_question, conversation_focus, earworms,
+                                                                           convo_memory_friend, convo_memory_self, hearing_conversation,
+                                                                           sing_along, sing_along_thinking, other_voice_quality,
+                                                                           express_inner_states, stress_IS, narrative_IS, rehearse_convo,
+                                                                           revise_convo, impulsiveness_1, impulsiveness_2,
+                                                                           impulsiveness_3, others_experiences_1, others_experiences_4,
+                                                                           others_experiences_5,
+                                                                           starts_with('visq'))
+correlations_lv_survey <- rcorr(as.matrix(survey_df_low_verbal))
+cors_lv_survey <- correlations_lv_survey$r
+ps_lv_survey <- cor.mtest(as.matrix(survey_df_low_verbal))$p
+rownames(correlations_lv_survey$r) <- survey_colnames
+colnames(correlations_lv_survey$r) <- survey_colnames
+rownames(ps_lv_survey) <- survey_colnames
+colnames(ps_lv_survey) <- survey_colnames
+
+# plot both together incl correlation coefficients
+# trick to plot both from: https://rpubs.com/melike/corrplot
+ord=hclust(1-as.dist(correlations_hv_survey$r))$order
+png(height=1800, width=1800, file="survey_cor_contrast.png")
+corrplot(correlations_hv_survey$r[ord,ord], p.mat=ps_hv_survey[ord,ord], sig.level = 0.01,insig='blank',
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
+         cl.cex = 1.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed',addCoef.col = 'white')
+corrplot(correlations_lv_survey$r[ord,ord],p.mat=ps_lv_survey[ord,ord], sig.level = 0.01,insig='blank',
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
+         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd',addCoef.col = 'white')
+dev.off()
+```
+
+```{r survey-cor-plot-contrast, echo=FALSE, out.width="100%", out.height="100%", fig.cap="Correlations between survey measures in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech."}
+knitr::include_graphics("survey_cor_contrast.png")
+```
