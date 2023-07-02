@@ -1,22 +1,89 @@
 ---
-title: "Not everyone has an inner voice: Behavioral consequences of anendophasia"
+title: "Anendophasia (supplemental materials)"
 author: "Johanne Nedergaard & Gary Lupyan"
-date: "2023-06-21"
+date: "2023-07-03"
 output: pdf_document
 ---
 ```{r setup, include = FALSE}
 library("papaja")
 library('tidyverse')
 library('tufte')
+library('lme4')
+library('lmerTest')
 library('kableExtra')
-r_refs("r-references.bib")
+library('ggpubr')
+setwd("/Users/au651723/Library/CloudStorage/OneDrive-AarhusUniversitet/OneDrive_Aarhus_universitet/Aarhus/Writings/Anendophasia/manuscript_psychsci")
+source("summarySEwithin_imp.R")
+irq_scores <- read.csv('irq_scores_anonymized.csv', row.names = 1)
+#r_refs("r-references.bib")
 knitr::opts_chunk$set(fig.pos = "!ht")
 options(knitr.table.format = "latex")
+color_palette <- c('#88CCEE', '#44AA99', '#117733', '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499', '#DDDDDD') # Tol_muted from https://zenodo.org/record/3381072#.Y0_5ilJBw-Q
+
+
+# read in behavioural data
+phon_sim_trials <- read.csv('../data/processed_data/phon_sim_trials.csv',row.names = 1)
+rhyming_trials <- read.csv('../data/processed_data/rhyming_trials.csv',row.names = 1)
+task_switch_trials <- read.csv('../data/processed_data/task_switch_trials.csv',row.names = 1)
+same_different_trials <- read.csv('../data/processed_data/same_different_trials.csv',row.names = 1)
 ```
 
-## Supplemental Materials
+## Intertask correlations
+In addition to finding (or not finding) differences in task performance as a function of inner speech, it is often informative to see whether correlations between tasks and conditions show a different pattern in people with more vs. less inner speech (Keogh, Wicken, & Pearson, 2021).
+```{r, include=FALSE, message=FALSE}
+phonsim_score <- phon_sim_trials %>%
+  group_by(worker_id, original_word_set) %>%
+  dplyr::summarise(phonsim_score = mean(score, na.rm=T), phon_sim_any_pos = mean(score_any_position, na.rm=T))
+phonsim_score <- pivot_wider(phonsim_score, names_from = original_word_set, values_from = c(phonsim_score, phon_sim_any_pos))
+rhyme_score <- rhyming_trials %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_acc = mean(correct, na.rm=T))
+rhyming_rt <- rhyming_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_rt = mean(rt, na.rm=T))
+rhyme_score <- merge(rhyme_score, rhyming_rt, by = c('worker_id', 'type'))
+rhyme_score <- pivot_wider(rhyme_score, names_from = type, values_from = c(rhyming_acc, rhyming_rt))
+# only take rt on correct trials
+same_different_score <- same_different_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, judgment_type, answer) %>%
+  dplyr::summarise(samediff_rt = mean(rt, na.rm=T))
+same_different_score <- pivot_wider(same_different_score, names_from = c(judgment_type, answer), values_from = samediff_rt)
+task_switching_score <- task_switch_trials %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_acc=mean(switching_is_correct, na.rm=T))
+task_switching_rt <- task_switch_trials %>%
+  filter(switching_is_correct ==1) %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_rt=mean(rt, na.rm=T))
+task_switching_score <- merge(task_switching_score, task_switching_rt, 
+                              by = c('worker_id', 'condition'))
+task_switching_score <- pivot_wider(task_switching_score, names_from = condition, values_from = c(task_switch_rt, task_switch_acc))
 
-### All custom survey questions
+score_df_list <- list(phonsim_score,rhyme_score,
+                      same_different_score,task_switching_score)
+score_df <- score_df_list %>% reduce(full_join, by='worker_id')
+# put verbal scores in
+score_df <- merge(score_df, irq_scores, by ='worker_id', all.x = T)
+score_df <- distinct(score_df)
+
+score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic set', 'Verbal recall: Phonological set', 'Verbal recall (any position): Control set', 'Verbal recall (any position): Orthographic set', 'Verbal recall (any position): Phonological set', 'Rhyme accuracy: Non-orthographic', 'Rhyme accuracy: No-rhyme', 'Rhyme accuracy: Orthographic', 'Rhyme reaction time: Non-orthographic', 'Rhyme reaction time: No-rhyme',
+                              'Rhyme reaction time: Orthographic', 'Category judgment: Between-category', 'Category judgment: Within-category', 'Identity judgment: Between-category', 'Identity judgment: Within-category', 'Task switch reaction time: Addition', 'Task switch reaction time: Color-cued', 'Task switch reaction time: Subtraction', 'Task switch reaction time: Symbol-cued', 'Task switch reaction time: Uncued','Task switch accuracy: Addition','Task switch accuracy: Color-cued','Task switch accuracy: Subtraction','Task switch accuracy: Symbol-cued','Task switch accuracy: Uncued')
+```
+
+Figure 1 shows the task correlations for both inner speech groups: more inner speech in the upper triangle and less inner speech in the lower triangle.
+
+```{r total-cor-contrast, echo=FALSE,out.width='100%', fig.cap='Intertask correlations in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech.'}
+
+# if making the plots again, go to anendophasia_correlation_plots.R file
+# otherwise just read in premade plot:
+knitr::include_graphics("../figures/cor_plot_contrast.png")
+```
+
+\newpage
+
+## All custom survey questions
 
 ```{r, echo=FALSE}
 library(tidyverse)
@@ -157,19 +224,21 @@ kable(questionnaire_table, align='l', booktabs = TRUE,
 
 \newpage
 
-### Correlations between custom questions and Varieties of Inner Speech Questionnaire (VISQ)
+## Correlations between custom questions and Varieties of Inner Speech Questionnaire (VISQ)
 
 ```{r questionnaire-correlation-matrix, echo=FALSE,include=FALSE}
 library(corx)
 library(corrtable)
 library(Hmisc)
 library(corrplot)
-Q_anendophasia_numeric <- read.csv('data/survey_data/qualtrics_numeric_anendophasia.csv')
+Q_anendophasia_numeric <- read.csv('../data/survey_data/qualtrics_numeric_anendophasia.csv')
+Q_anendophasia_text <- read.csv('../data/survey_data/qualtrics_text_anendophasia.csv')
 Q_anendophasia_numeric <- Q_anendophasia_numeric %>%
   rename(visq_cond_1 = Q63_95, visq_dial_1 = Q63_96, visq_other_voi_1 = Q63_97, visq_other_voi_2 = Q63_98, visq_other_voi_3 = Q63_100, visq_dial_2 = Q63_101, visq_cond_2_rev = Q63_102, visq_cond_3 = Q63_103, visq_eval_1 = Q63_105, visq_dial_3 = Q63_106, visq_eval_2 = Q63_108, visq_other_voi_4 = Q63_109, visq_dial_4 = Q63_111, visq_cond_4 = Q63_112, visq_cond_5_rev = Q63_115, visq_other_voi_5 = Factor2_1...68, visq_eval_3 = Q63_116, visq_eval_4 = Q63_117)
-irq_scores <- read.csv('manuscript_psychsci/irq_scores_anonymized.csv', row.names = 1)
 Q_anendophasia_numeric <- merge(Q_anendophasia_numeric, irq_scores, by = 'worker_id', all.x = T)
 Q_anendophasia_numeric <- distinct(Q_anendophasia_numeric)
+Q_anendophasia_text <- merge(Q_anendophasia_text, irq_scores, by = 'worker_id', all.x = T)
+Q_anendophasia_text <- distinct(Q_anendophasia_text)
 
 # high inner speech correlations
 survey_colnames <- c('Rehearse public speaking', 'Difficulty focusing on real-life conversation', 
@@ -224,7 +293,7 @@ colnames(ps_lv_survey) <- survey_colnames
 # plot both together incl correlation coefficients
 # trick to plot both from: https://rpubs.com/melike/corrplot
 ord=hclust(1-as.dist(correlations_hv_survey$r))$order
-png(height=1800, width=1800, file="survey_cor_contrast.png")
+png(height=1800, width=1800, file="../figures/survey_cor_contrast.png")
 corrplot(correlations_hv_survey$r[ord,ord], p.mat=ps_hv_survey[ord,ord], sig.level = 0.01,insig='blank',
          outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
          cl.cex = 1.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed',addCoef.col = 'white')
@@ -235,5 +304,6 @@ dev.off()
 ```
 
 ```{r survey-cor-plot-contrast, echo=FALSE, out.width="100%", out.height="100%", fig.cap="Correlations between survey measures in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech."}
-knitr::include_graphics("survey_cor_contrast.png")
+knitr::include_graphics("../figures/survey_cor_contrast.png")
 ```
+
