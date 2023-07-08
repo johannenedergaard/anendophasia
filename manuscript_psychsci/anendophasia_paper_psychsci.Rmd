@@ -2,33 +2,14 @@
 title             : "Not everybody has an inner voice: Behavioral consequences of anendophasia"
 shorttitle        : "Anendophasia"
 
-author: 
-  - name          : "Johanne S. K. Nedergaard"
-    affiliation   : "1"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Emil Holms Kanal 2, 2300 Copenhagen S, Denmark"
-    email         : "jskn@hum.ku.dk"
-  - name          : "Gary Lupyan"
-    affiliation   : "2"
-
-affiliation:
-  - id            : "1"
-    institution   : "Department of Nordic Studies and Linguistics, University of Copenhagen"
-  - id            : "2"
-    institution   : "Department of Psychology, University of Wisconsin-Madison"
-
-authornote: |
-  All experiment data, experiment code, and analysis code are available on GitHub: https://github.com/johannenedergaard/anendophasia. 
-
 abstract: |
-  It is commonly assumed that inner speech – the experience of thought as occurring in a natural language – is both frequent and universal. Recent evidence, however, suggests that similar to other phenomenal experiences like visual imagery, the experience of inner speech varies between people, ranging from constant to non-existent. We propose a name for a lack of the experience of inner speech – anendophasia – and report four studies examining some of its behavioral consequences. We found that people who report low levels of inner speech have lower performance on a verbal working memory task and have more difficulty performing rhyme judgments. Task switching performance, previously linked to endogenous verbal cueing, was unaffected by differences in inner speech. Studies of anendophasia, together with aphantasia, synesthesia, and differences in autobiographical memory are providing glimpses into what may be a large space of hitherto unexplored differences in people’s phenomenal experience.
+  It is commonly assumed that inner speech – the experience of thought as occurring in a natural language – is both frequent and universal. Recent evidence, however, suggests that the experience of inner speech varies between people, ranging from constant to non-existent. We propose a name for a lack of the experience of inner speech – anendophasia – and report four studies examining some of its behavioral consequences. We found that people who report low levels of inner speech (N = 46) have lower performance on a verbal working memory task and have more difficulty performing rhyme judgments compared with people who report high levels of inner speech (N = 47). Task switching performance, previously linked to endogenous verbal cueing, and categorical effects on perceptual judgments were unaffected by differences in inner speech. 
   
   \textbf{Statement of Relevance}
   
   Most people say that they experience an inner voice, and that this inner voice plays an important role in their daily lives. However, a minority of people report that they do not experience such an inner voice. Until now, it has not been systematically investigated whether these self-reported differences have consequences for how people solve problems and act in the world. In this article, we found that people with less inner speech differed from people with more inner speech on some tasks that we thought would involve inner speech, but not others. It is important to understand such individual differences in inner speech use because it has consequences for how we discuss the role of inner speech generally in areas like mental health, social cognition, and self-regulation.
 
 keywords          : "inner speech, rhyme judgments, categorization, task switching, verbal working memory, individual differences"
-wordcount         : "5823"
 
 bibliography      : "r-references.bib"
 floatsintext      : yes
@@ -47,7 +28,7 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 
-classoption       : "man,donotrepeattitle,a4paper"
+classoption       : "man,a4paper"
 output            : papaja::apa6_pdf
 ---
 
@@ -65,7 +46,7 @@ options(knitr.table.format = "latex")
 
 # Introduction
 
-Everyone, it is often said, has an inner voice, and most of our waking hours are claimed to be filled with inner speech: ‘Daily, human beings are engaged in a form of inner dialogue, which enables them to high-level cognition, including self-control, self-attention and self-regulation.’: [@chella2020cognitive, p. 287]; ‘We all hear a voice inside our brain, commonly called “inner voice”, “inner speech” or referred to as “verbal thoughts”’ (@perrone2014little, p. 22). Most people do report experiencing inner speech [@alderson2015inner; @morin2018self; @heavey2008phenomena] and because we often assume that our experiences mirror those of others, the majority experience comes to be viewed as universal [@lupyan2023hidden].
+Everyone, it is often said, has an inner voice, and most of our waking hours are claimed to be filled with inner speech: ‘Daily, human beings are engaged in a form of inner dialogue, which enables them to [engage in] high-level cognition, including self-control, self-attention and self-regulation.’: [@chella2020cognitive, p. 287]; ‘We all hear a voice inside our brain, commonly called “inner voice”, “inner speech” or referred to as “verbal thoughts”’ (@perrone2014little, p. 22). Most people do report experiencing inner speech [@alderson2015inner; @morin2018self; @heavey2008phenomena] and because we often assume that our experiences mirror those of others, the majority experience comes to be viewed as universal [@lupyan2023hidden].
 The assumption that everyone has an inner voice has served as a stepping stone for research into the functions of inner speech – if everyone has it, it must be important. Speculations have ranged from the idea that natural language constitutes (at least some types of) thought [@carruthers2002cognitive;  @gauker2011words; @frankish_isnv; @morin_isnv; @bermudez2007thinking; @clark_magicwords] to investigations of connections between inner speech and specific processes such as cognitive control [@emerson2003role; @cragg2010language; @alderson2015inner; @morin2018self].
 But not everyone experiences inner speech. This is attested by personal narratives such as ‘What it’s like living without an inner voice’ [@soloducha_2020]; ‘People With No Internal Monologue Explain What It’s Like In Their Head’ [@felton_2020], as well as more systematic investigations both targeting variation in inner speech [@alderson2018varieties; @brinthaupt2019individual; @Hurlburt2013] and auditory imagery, which has sometimes been used as a proxy for inner speech [@Hinwar2021; @dawes2020cognitive].
 
@@ -73,8 +54,8 @@ But not everyone experiences inner speech. This is attested by personal narrativ
 
 We recruited participants differing in subjectively reported inner speech and tested them on four behavioral tasks. These tasks were chosen based on prior theoretical claims that suggested performance on them may differ as a function of inner speech. The first is a rhyme judgment task: participants saw pairs of images and needed to indicate whether their names rhyme or not. We reasoned that although participants with low inner speech would have no trouble naming the objects, a lesser reliance on inner speech would make it harder to compare the names in memory – necessary for making a rhyme judgment [@geva2011discrepancy; @langland2015inner]. Just as visual imagery has been predicted (and sometimes found) to be linked to visual memory, we tested whether inner speech predicted memory for verbal material. We focused on memory for sets of words that were either phonologically similar and orthographically different or orthographically similar and phonologically different. Less inner speech was predicted to be associated with poorer overall memory for verbal material, but to the extent that phonological similarity creates memory confusion [@baddeley1966short; @murray1968articulation], less inner speech may be associated with a reduced phonological similarity effect. There is substantial evidence that inner speech is often recruited for behavioral control when participants have to switch between different tasks [@emerson2003role; @miyake2004inner; @baddeley2001working]. For example, when asked to switch between adding and subtracting numbers, participants show a selective impairment if they undergo articulatory suppression, but no such impairment is found if the cues are exogenously provided (e.g., a symbol or color cue is used to inform participants whether they should add or subtract)  [see @nedergaard2022verbal for a systematic review of verbal interference effects]. We reasoned that people who do not habitually use inner speech might be selectively impaired when they have to rely on self-generated cues. On the other hand, it is possible that they have learned to rely on other strategies in which case no difference would be found. Our fourth task involved examining category effects in perception. There is considerable evidence that language induces more categorical representations from basic perception onward [e.g., @winawer2007russian; @perry2014role; @forder2019hearing]. In a study examining the effects of conceptual categories, @lupyan2010conceptual showed that controlling for visual differences, people’s ability to tell whether two stimuli were physically the same was affected by the categorical status of those stimuli. For example, it took longer to distinguish two cats than an equally visually similar cat and dog. We wondered whether such category effects, insofar as they may be in part induced by feedback from verbal labels, may be reduced in people with less inner speech. 
 
-# Open Practices Statements
-The experiment code and materials, data, and analysis scripts for the present study are publicly accessible at https://github.com/johannenedergaard/anendophasia. The present study was not preregistered. 
+# Open Practices Statement
+The experiment code and materials, data, and analysis scripts for the present study are publicly accessible at https://anonymous.4open.science/r/anendophasia-6F15. The present study was not preregistered. 
 
 # Methods
 ## Participants
@@ -212,7 +193,7 @@ knitr::include_graphics("../figures/samedifferent.png")
 After completing the four experiments, participants answered a series of questions about their experience with inner speech (e.g. 'How often do you have songs stuck in your head?' and 'Do you ever rehearse a conversation before you have it in real life where you simulate what you will say and how the other person will respond?') and completed the Varieties of Inner Speech Questionnaire-Revised (VISQ-R) [@alderson2018varieties]. See Supplemental Materials for the full set of custom questions.
 
 ## Data analysis
-All analyses were conducted in R version 4.1.3 [@R-base]. Participants and items (where appropriate) were modeled as random intercepts; random slopes were included for within-subject factors unless it prevented convergence. All predictors were centered. Reaction times were log-transformed to yield a more normal distribution. Accuracies were modeled using logistic regression. For ease of interpretation, the figures show the two inner speech groups as distinct but all the statistical models use verbal score (average score on the verbal representation items on the Internal Representations Questionnaire) as a continuous predictor. Error bars on all figures represent within-participant 95% confidence intervals around the mean (adjusted for repeated measures). All four experiments were conducted using custom-written software with the JavaScript package jsPsych version 6 [@de2015jspsych], and data and code can be found at https://github.com/johannenedergaard/anendophasia.
+All analyses were conducted in R version 4.1.3 [@R-base]. Participants and items (where appropriate) were modeled as random intercepts; random slopes were included for within-subject factors unless it prevented convergence. All predictors were centered. Reaction times were log-transformed to yield a more normal distribution. Accuracies were modeled using logistic regression. For ease of interpretation, the figures show the two inner speech groups as distinct but all the statistical models use verbal score (average score on the verbal representation items on the Internal Representations Questionnaire) as a continuous predictor. Error bars on all figures represent within-participant 95% confidence intervals around the mean (adjusted for repeated measures). All four experiments were conducted using custom-written software with the JavaScript package jsPsych version 6 [@de2015jspsych], and data and code can be found at https://anonymous.4open.science/r/anendophasia-6F15. 
 
 # Results
 ```{r, include=FALSE}
@@ -954,6 +935,61 @@ table(tol_same_different$high_low_verbal, tol_same_different$talk_out_loud)
 chisq.test(tol_same_different$high_low_verbal, tol_same_different$talk_out_loud)
 ```
 There was no significant difference between how many participants with more inner speech (9 out of 47) and how many participants with less inner speech (4 out of 46) reported that they had talked to themselves out loud during the task switching experiment ($\chi^2$(1) = `r round(chisq.test(tol_same_different$high_low_verbal, tol_same_different$talk_out_loud)$statistic, 2)`, p = .25). There were no differences between the effects that talking out loud had on these two groups.
+
+## Intertask correlations
+
+In addition to finding (or not finding) differences in task performance as a function of inner speech, it is often informative to see whether correlations between tasks and conditions show a different pattern in people with more vs. less inner speech [@keogh2021visual]. See Figure \@ref(fig:total-cor-contrast) for a visualization of how performance on the tasks correlated within the participant groups with more or less inner speech.
+
+```{r, include=FALSE, message=FALSE}
+phonsim_score <- phon_sim_trials %>%
+  group_by(worker_id, original_word_set) %>%
+  dplyr::summarise(phonsim_score = mean(score, na.rm=T), phon_sim_any_pos = mean(score_any_position, na.rm=T))
+phonsim_score <- pivot_wider(phonsim_score, names_from = original_word_set, values_from = c(phonsim_score, phon_sim_any_pos))
+rhyme_score <- rhyming_trials %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_acc = mean(correct, na.rm=T))
+rhyming_rt <- rhyming_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, type) %>%
+  dplyr::summarise(rhyming_rt = mean(rt, na.rm=T))
+rhyme_score <- merge(rhyme_score, rhyming_rt, by = c('worker_id', 'type'))
+rhyme_score <- pivot_wider(rhyme_score, names_from = type, values_from = c(rhyming_acc, rhyming_rt))
+# only take rt on correct trials
+same_different_score <- same_different_trials %>%
+  filter(correct ==1) %>%
+  group_by(worker_id, judgment_type, answer) %>%
+  dplyr::summarise(samediff_rt = mean(rt, na.rm=T))
+same_different_score <- pivot_wider(same_different_score, names_from = c(judgment_type, answer), values_from = samediff_rt)
+task_switching_score <- task_switch_trials %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_acc=mean(switching_is_correct, na.rm=T))
+task_switching_rt <- task_switch_trials %>%
+  filter(switching_is_correct ==1) %>%
+  group_by(worker_id,condition) %>%
+  dplyr::summarise(task_switch_rt=mean(rt, na.rm=T))
+task_switching_score <- merge(task_switching_score, task_switching_rt, 
+                              by = c('worker_id', 'condition'))
+task_switching_score <- pivot_wider(task_switching_score, names_from = condition, values_from = c(task_switch_rt, task_switch_acc))
+
+score_df_list <- list(phonsim_score,rhyme_score,
+                      same_different_score,task_switching_score)
+score_df <- score_df_list %>% reduce(full_join, by='worker_id')
+# put verbal scores in
+score_df <- merge(score_df, irq_scores, by ='worker_id', all.x = T)
+score_df <- distinct(score_df)
+
+score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic set', 'Verbal recall: Phonological set', 'Verbal recall (any position): Control set', 'Verbal recall (any position): Orthographic set', 'Verbal recall (any position): Phonological set', 'Rhyme accuracy: Non-orthographic', 'Rhyme accuracy: No-rhyme', 'Rhyme accuracy: Orthographic', 'Rhyme reaction time: Non-orthographic', 'Rhyme reaction time: No-rhyme',
+                              'Rhyme reaction time: Orthographic', 'Category judgment: Between-category', 'Category judgment: Within-category', 'Identity judgment: Between-category', 'Identity judgment: Within-category', 'Task switch reaction time: Addition', 'Task switch reaction time: Color-cued', 'Task switch reaction time: Subtraction', 'Task switch reaction time: Symbol-cued', 'Task switch reaction time: Uncued','Task switch accuracy: Addition','Task switch accuracy: Color-cued','Task switch accuracy: Subtraction','Task switch accuracy: Symbol-cued','Task switch accuracy: Uncued')
+```
+
+```{r total-cor-contrast, echo=FALSE,out.width='100%', fig.cap='Intertask correlations in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01 which with the given sample size (N less inner speech = 45; N more inner speech = 47) is equivalent to a correlation coefficient of at least r = ±.38. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech.'}
+
+# if making the plots again, go to anendophasia_correlation_plots.R file
+# otherwise just read in premade plot:
+knitr::include_graphics("../figures/cor_plot_contrast_v2.png")
+```
+
+Measures within the tasks generally correlated, but we observed different correlations between the tasks for the two participant groups. For example, reaction times on rhyme judgments, task switching, and perceptual discrimination were more intercorrelated for the group with more inner speech than for the group with less inner speech, suggesting that these relied on similar mechanisms for the former group. Participants with less inner speech showed a positive correlation between accuracy on uncued switch trials and (position-indifferent) verbal working memory and rhyming accuracy, suggesting that these tasks relied on similar mechanisms for this participant group.
 
 ## Questionnaire measures
 

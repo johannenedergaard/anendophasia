@@ -1,7 +1,7 @@
 ---
-title: "Anendophasia (supplemental materials)"
-author: "Johanne Nedergaard & Gary Lupyan"
-date: "2023-07-03"
+title: "Anendophasia"
+author: 'Suppemental materials'
+date: "2023-07-07"
 output: pdf_document
 ---
 ```{r setup, include = FALSE}
@@ -27,69 +27,13 @@ task_switch_trials <- read.csv('../data/processed_data/task_switch_trials.csv',r
 same_different_trials <- read.csv('../data/processed_data/same_different_trials.csv',row.names = 1)
 ```
 
-## Intertask correlations
-In addition to finding (or not finding) differences in task performance as a function of inner speech, it is often informative to see whether correlations between tasks and conditions show a different pattern in people with more vs. less inner speech (Keogh, Wicken, & Pearson, 2021).
-```{r, include=FALSE, message=FALSE}
-phonsim_score <- phon_sim_trials %>%
-  group_by(worker_id, original_word_set) %>%
-  dplyr::summarise(phonsim_score = mean(score, na.rm=T), phon_sim_any_pos = mean(score_any_position, na.rm=T))
-phonsim_score <- pivot_wider(phonsim_score, names_from = original_word_set, values_from = c(phonsim_score, phon_sim_any_pos))
-rhyme_score <- rhyming_trials %>%
-  group_by(worker_id, type) %>%
-  dplyr::summarise(rhyming_acc = mean(correct, na.rm=T))
-rhyming_rt <- rhyming_trials %>%
-  filter(correct ==1) %>%
-  group_by(worker_id, type) %>%
-  dplyr::summarise(rhyming_rt = mean(rt, na.rm=T))
-rhyme_score <- merge(rhyme_score, rhyming_rt, by = c('worker_id', 'type'))
-rhyme_score <- pivot_wider(rhyme_score, names_from = type, values_from = c(rhyming_acc, rhyming_rt))
-# only take rt on correct trials
-same_different_score <- same_different_trials %>%
-  filter(correct ==1) %>%
-  group_by(worker_id, judgment_type, answer) %>%
-  dplyr::summarise(samediff_rt = mean(rt, na.rm=T))
-same_different_score <- pivot_wider(same_different_score, names_from = c(judgment_type, answer), values_from = samediff_rt)
-task_switching_score <- task_switch_trials %>%
-  group_by(worker_id,condition) %>%
-  dplyr::summarise(task_switch_acc=mean(switching_is_correct, na.rm=T))
-task_switching_rt <- task_switch_trials %>%
-  filter(switching_is_correct ==1) %>%
-  group_by(worker_id,condition) %>%
-  dplyr::summarise(task_switch_rt=mean(rt, na.rm=T))
-task_switching_score <- merge(task_switching_score, task_switching_rt, 
-                              by = c('worker_id', 'condition'))
-task_switching_score <- pivot_wider(task_switching_score, names_from = condition, values_from = c(task_switch_rt, task_switch_acc))
-
-score_df_list <- list(phonsim_score,rhyme_score,
-                      same_different_score,task_switching_score)
-score_df <- score_df_list %>% reduce(full_join, by='worker_id')
-# put verbal scores in
-score_df <- merge(score_df, irq_scores, by ='worker_id', all.x = T)
-score_df <- distinct(score_df)
-
-score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic set', 'Verbal recall: Phonological set', 'Verbal recall (any position): Control set', 'Verbal recall (any position): Orthographic set', 'Verbal recall (any position): Phonological set', 'Rhyme accuracy: Non-orthographic', 'Rhyme accuracy: No-rhyme', 'Rhyme accuracy: Orthographic', 'Rhyme reaction time: Non-orthographic', 'Rhyme reaction time: No-rhyme',
-                              'Rhyme reaction time: Orthographic', 'Category judgment: Between-category', 'Category judgment: Within-category', 'Identity judgment: Between-category', 'Identity judgment: Within-category', 'Task switch reaction time: Addition', 'Task switch reaction time: Color-cued', 'Task switch reaction time: Subtraction', 'Task switch reaction time: Symbol-cued', 'Task switch reaction time: Uncued','Task switch accuracy: Addition','Task switch accuracy: Color-cued','Task switch accuracy: Subtraction','Task switch accuracy: Symbol-cued','Task switch accuracy: Uncued')
-```
-
-Figure 1 shows the task correlations for both inner speech groups: more inner speech in the upper triangle and less inner speech in the lower triangle.
-
-```{r total-cor-contrast, echo=FALSE,out.width='100%', fig.cap='Intertask correlations in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech.'}
-
-# if making the plots again, go to anendophasia_correlation_plots.R file
-# otherwise just read in premade plot:
-knitr::include_graphics("../figures/cor_plot_contrast.png")
-```
-
-\newpage
-
-## All custom survey questions
+## Ordinal custom survey questions
 
 ```{r, echo=FALSE}
 library(tidyverse)
 library(kableExtra)
-questionnaire_table <- data.frame(
-  Question = c('If you have to ask a question in front of an audience, which of these best describes what you typically do?',
-               'How often do you experience trouble focusing on a face-to-face conversation you are having because of a conflicting conversation happening in your mind at the same time?',
+questionnaire_table_quantitative <- data.frame(
+  Question = c('How often do you experience trouble focusing on a face-to-face conversation you are having because of a conflicting conversation happening in your mind at the same time?',
                'How often do you have songs stuck in your head?',
                'If you had to recall a short conversation about a specific topic that you had yesterday with a friend, how easily can you recall the exact words your friend said?',
                "If you had to recall a short conversation about a specific topic that you had yesterday with a friend, how easily can you recall the exact words you said?",
@@ -97,17 +41,12 @@ questionnaire_table <- data.frame(
                'Can you "sing along" to music without singing out loud?',
                'If you can "sing along" to music without singing out loud, to what extent does this feel like regular thinking?',
                'If you imagine someone else speaking, how do you experience their voice?',
-               'Many people feel that a lot of their thinking, planning, and decision-making takes place in the form of a conversation with themselves. They describe that when they think, they hear words in their mind. Other people don’t have this experience and instead say that they "think in ideas". Is your experience more like the first or the second?',
                "To what extent do you agree with this statement: 'It is generally difficult
 and takes effort to express in words how I think and feel'.",
-                'Do you think it is stressful and annoying to have an inner monologue?',
-                'In books and movies, we often see characters talking to themselves at length. How much do you think this reflects real life?',
-                'Have you been diagnosed with dyslexia or another reading disorder?',
                 'Do you ever revise past conversations in your mind (i.e. think of a better comeback,
 a way of phrasing what you wanted to say)?',
                 'Do you ever rehearse a conversation before you have it in real life where you
 simulate what you will say and how the other person will respond?',
-                'Imagine you are lying in bed with your eyes closed trying to fall asleep. Is your inner experience then...',
                 'To what extent do you agree with this statement: "I do not know why I do some of the things that I do."',
                 'To what extent do you agree with this statement: “I am a firm believer in thinking things through.”',
                 'To what extent do you agree with this statement: “I like to act on a whim.”',
@@ -116,12 +55,7 @@ simulate what you will say and how the other person will respond?',
 -	Can see vivid images in their mind's eye\n
 -	Hear words in their mind's ear when they silently read"
 ),
-  Options = c("I rehearse in my mind the exact phrasing of what I am going to ask (5)\n
-	I rehearse in my mind some of what I am going to ask before asking it (4)\n
-	I think of a question I want to ask and just ask it (3)\n
-	Other (2)\n
-	I'm never in a position to ask questions in front of an audience (1)",
-	'Never (1)\n
+  Options = c('Never (1)\n
 	Rarely (2)\n
 	Sometimes (3)\n
 	Often (4)\n
@@ -164,22 +98,11 @@ recalling it. (1)",
 	I hear what they say but in my own voice. (3)\n
 	I hear the words but I can't tell whose voice it is. (2)\n
 	I don’t “hear” anything, I imagine it by... (please specify) (1)",
-  'More like a conversation (2)\n
-	More like "thinking in ideas". Can you elaborate or give an example of what this means to you? (1)',
   "Strongly agree (1)\n
 	Agree (2)\n
 	Neither agree nor disagree (3)\n
 	Disagree (4)\n
 	Strongly disagree (5)",
-  "Yes, very (3)\n
-	Maybe a little (2)\n
-	No, I don't think so (1)",
-  "It's just for the viewer/reader's benefit (1)\n
-	It might be like real life but mostly for the viewer's/reader's benefit (2)\n
-	It's exactly like real life (3)",
-  "Yes, officially diagnosed (1)\n
-	Yes, self-diagnosed (2)\n
-	No, never (3)",
   "Never (1)\n
 	Rarely (2)\n
 	Sometimes (3)\n
@@ -190,13 +113,6 @@ recalling it. (1)",
 	Sometimes (3)\n
 	Often (4)\n
 	Very often (5)",
-  'Primarily verbal (you "hear" or "speak" words and sentences in your mind) (1)\n
-	Primarily visual (you "see" situations, objects, people etc. in your mind) (2)\n
-	Primarily about sensory awareness (what you are hearing, smelling, and feeling in the
-  moment) (3)\n
-	Primarily emotional (4)\n
-	An even mix of verbal, visual, sensory, and emotional (5)\n
-	My inner experience in that situation does not have a specific "format" (6)',
   "Strongly disagree (1)\n
 	Disagree (2)\n
 	Neither agree nor disagree (3)\n
@@ -213,15 +129,59 @@ recalling it. (1)",
 	Agree (4)\n
 	Strongly agree (5)",
 "No one (0%) to Everyone (100%)"
-	)
+	), Code = c('ConversationFocus', 'EarWorms', 'RecallFriendConvo','RecallSelfConvo','HearConversation', 'SingAlongAbility', 'SingAlongThinking','OtherVoiceQuality','ExpressInnerStates','SimulatePastConvo', 'SimulateFutureConvo', 'ImpulsivenessLackOfInsight','ImpulsivenessThinkThingsThrough', 'ImpulsivenessWhim', 'OthersExperiencesConversation, OthersExperiencesMindsEye, OthersExperiencesMindsEar')
 )
-kable(questionnaire_table, align='l', booktabs = TRUE,
+  
+kable(questionnaire_table_quantitative, align='l', booktabs = TRUE,
   longtable = TRUE, linesep = "") %>%
   kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
   
 ```
 
 \newpage
+
+## Nominal custom survey questions
+
+```{r,echo=FALSE}
+questionnaire_table_qualitative <- data.frame(
+  Question = c('If you have to ask a question in front of an audience, which of these best describes what you typically do?',
+               'Many people feel that a lot of their thinking, planning, and decision-making takes place in the form of a conversation with themselves. They describe that when they think, they hear words in their mind. Other people do not have this experience and instead say that they "think in ideas". Is your experience more like the first or the second?',
+                'Do you think it is stressful and annoying to have an inner monologue?',
+                'In books and movies, we often see characters talking to themselves at length. How much do you think this reflects real life?',
+                'Have you been diagnosed with dyslexia or another reading disorder?',
+                'Imagine you are lying in bed with your eyes closed trying to fall asleep. Is your inner experience then...'
+),
+  Options = c("I rehearse in my mind the exact phrasing of what I am going to ask (5)\n
+	I rehearse in my mind some of what I am going to ask before asking it (4)\n
+	I think of a question I want to ask and just ask it (3)\n
+	Other (2)\n
+	I'm never in a position to ask questions in front of an audience (1)",
+  'More like a conversation (2)\n
+	More like "thinking in ideas". Can you elaborate or give an example of what this means to you? (1)',
+  "Yes, very (3)\n
+	Maybe a little (2)\n
+	No, I don't think so (1)",
+  "It's just for the viewer/reader's benefit (1)\n
+	It might be like real life but mostly for the viewer's/reader's benefit (2)\n
+	It's exactly like real life (3)",
+  "Yes, officially diagnosed (1)\n
+	Yes, self-diagnosed (2)\n
+	No, never (3)",
+  'Primarily verbal (you "hear" or "speak" words and sentences in your mind) (1)\n
+	Primarily visual (you "see" situations, objects, people etc. in your mind) (2)\n
+	Primarily about sensory awareness (what you are hearing, smelling, and feeling in the
+  moment) (3)\n
+	Primarily emotional (4)\n
+	An even mix of verbal, visual, sensory, and emotional (5)\n
+	My inner experience in that situation does not have a specific "format" (6)'
+	), Code = c('RehearseQuestion', 'ThinkingInIdeas','StressfulInnerSpeech','InnerSpeechFiction', 'Dyslexia', 'DriftOffQuality')
+)
+
+kable(questionnaire_table_qualitative, align='l', booktabs = TRUE,
+  longtable = TRUE, linesep = "") %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+```
+
 
 ## Correlations between custom questions and Varieties of Inner Speech Questionnaire (VISQ)
 
@@ -239,70 +199,100 @@ Q_anendophasia_numeric <- distinct(Q_anendophasia_numeric)
 Q_anendophasia_text <- merge(Q_anendophasia_text, irq_scores, by = 'worker_id', all.x = T)
 Q_anendophasia_text <- distinct(Q_anendophasia_text)
 
-# high inner speech correlations
-survey_colnames <- c('Rehearse public speaking', 'Difficulty focusing on real-life conversation', 
-                     'Earworms', 'Remember friend conversation', 'Remember self conversation', 'Remembering feels like hearing',
-                     'Sing along mentally', 'Sing along feels like thinking', 'Experience of imagined voices', 
-                     'Difficulty expressing inner states', 'Inner speech sounds stressful', 'Inner speech is just a narrative tool',
-                     'Simulate future conversations' ,'Simulate past conversations', 'Impulsiveness - Do not understand own actions',
-                     'Impulsiveness - Thinking things through', 'Impulsiveness - Like acting on whim', 
-                     'Others experience conversation', "Others experience mind's eye", "Others experience mind's ear", 
-                     'VISQ - Brief phrases', 'VISQ - Dialogue with self', 'VISQ - Voice of another person',
-                     'VISQ - Questions from others', 'VISQ - Nagging from others', 'VISQ - Dialogue not monologue',
-                     'VISQ - Full sentences', 'VISQ - Telegraphic inner speech', 'VISQ - Right or wrong actions',
-                     'VISQ - Conversation with self', 'VISQ - Tell self to do things', 'VISQ - Other voices unheard utterances',
-                     'VISQ - Back and forth conversation', 'VISQ - Only content words', 'VISQ - Full grammatical sentences',
-                     'VISQ - Other voices already heard utterances', 'VISQ - Evaluate own behavior', 'VISQ - Tell self not to do things')
-
-
-survey_df_high_verbal <- subset(Q_anendophasia_numeric, high_low_verbal == 'high_verbal')
-survey_df_high_verbal <- survey_df_high_verbal %>% select(rehearse_question, conversation_focus, earworms,
-                                                                           convo_memory_friend, convo_memory_self, hearing_conversation,
-                                                                           sing_along, sing_along_thinking, other_voice_quality,
-                                                                           express_inner_states, stress_IS, narrative_IS, rehearse_convo,
-                                                                           revise_convo, impulsiveness_1, impulsiveness_2,
-                                                                           impulsiveness_3, others_experiences_1, others_experiences_4,
-                                                                           others_experiences_5,
-                                                                           starts_with('visq'))
-correlations_hv_survey <- rcorr(as.matrix(survey_df_high_verbal))
-rownames(correlations_hv_survey$r) <- survey_colnames
-colnames(correlations_hv_survey$r) <- survey_colnames
-ps_hv_survey <- cor.mtest(as.matrix(survey_df_high_verbal))$p
-rownames(ps_hv_survey) <- survey_colnames
-colnames(ps_hv_survey) <- survey_colnames
-
-# low inner speech correlations
-survey_df_low_verbal <- subset(Q_anendophasia_numeric, high_low_verbal == 'low_verbal')
-survey_df_low_verbal <- survey_df_low_verbal %>% select(rehearse_question, conversation_focus, earworms,
-                                                                           convo_memory_friend, convo_memory_self, hearing_conversation,
-                                                                           sing_along, sing_along_thinking, other_voice_quality,
-                                                                           express_inner_states, stress_IS, narrative_IS, rehearse_convo,
-                                                                           revise_convo, impulsiveness_1, impulsiveness_2,
-                                                                           impulsiveness_3, others_experiences_1, others_experiences_4,
-                                                                           others_experiences_5,
-                                                                           starts_with('visq'))
-correlations_lv_survey <- rcorr(as.matrix(survey_df_low_verbal))
-cors_lv_survey <- correlations_lv_survey$r
-ps_lv_survey <- cor.mtest(as.matrix(survey_df_low_verbal))$p
-rownames(correlations_lv_survey$r) <- survey_colnames
-colnames(correlations_lv_survey$r) <- survey_colnames
-rownames(ps_lv_survey) <- survey_colnames
-colnames(ps_lv_survey) <- survey_colnames
-
-# plot both together incl correlation coefficients
-# trick to plot both from: https://rpubs.com/melike/corrplot
-ord=hclust(1-as.dist(correlations_hv_survey$r))$order
-png(height=1800, width=1800, file="../figures/survey_cor_contrast.png")
-corrplot(correlations_hv_survey$r[ord,ord], p.mat=ps_hv_survey[ord,ord], sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed',addCoef.col = 'white')
-corrplot(correlations_lv_survey$r[ord,ord],p.mat=ps_lv_survey[ord,ord], sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd',addCoef.col = 'white')
-dev.off()
 ```
 
-```{r survey-cor-plot-contrast, echo=FALSE, out.width="100%", out.height="100%", fig.cap="Correlations between survey measures in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech."}
-knitr::include_graphics("../figures/survey_cor_contrast.png")
+```{r survey-cor-plot-contrast, echo=FALSE, out.width="100%", out.height="100%", fig.cap="Correlations between survey measures in the total sample of participants. Colored squares represent significant correlations at p < .01 which with the given sample size (N = 92) is equivalent to a correlation coefficient of at least r = ±.27."}
+knitr::include_graphics("../figures/survey_cor_total_v2.png")
+```
+
+\newpage
+
+## Nominal questions and their relations with Verbal Score
+
+```{r, echo=FALSE,warning=FALSE}
+# plot nominal questions and their correlations with verbal score
+# c('RehearseQuestion', 'ThinkingInIdeas','StressfulInnerSpeech','InnerSpeechFiction', 'DriftOffQuality')
+rehearse_question_labs <- c('I rehearse in\nmy mind some\nof what I am\ngoing to ask\nbefore asking it', 'I rehearse in\nmy mind the\nexact phrasing of what\nI am going to ask', 'I think of a\nquestion I want\nto ask and\njust ask it', 'Other',"I'm never\nin a position\nto ask questions in\nfront of an audience")
+rehearse_question_p <-
+  Q_anendophasia_text %>% 
+  ggplot(aes(y=VerbalScored,x=rehearse_question))+
+  geom_violin(aes(group = rehearse_question,fill=as.factor(rehearse_question)),scale="width",alpha=.5)+
+  geom_jitter(width=.1,height=.1)+
+  theme_bw()+
+  labs(title='If you have to ask a question in front of an audience,\nwhich of these best describes what you typically do?', x='', y='Propensity for inner speech') +
+  theme(plot.title = element_text(size = 12, face = "bold"), axis.title = element_text(size = 10),
+        axis.text.x = element_text(size = 10, angle = 90, hjust = 1), legend.position = 'none')+
+  scale_x_discrete(labels=rehearse_question_labs)
+rehearse_question_p
+```
+
+
+```{r, echo=FALSE}
+ideas_labs <- c('"Thinking in ideas"', 'Conversation')
+thinking_in_ideas_p <- 
+  Q_anendophasia_text %>% 
+  ggplot(aes(y=VerbalScored,x=thinking_in_ideas))+
+  geom_violin(aes(group = thinking_in_ideas,fill=as.factor(thinking_in_ideas)),scale="width",alpha=.5)+
+  geom_jitter(width=.1,height=.1)+
+  theme_bw()+
+  labs(title ='Many people feel that a lot of their thinking, planning, and\ndecision-making takes place in the form of a conversation with themselves.\nThey describe that when they think, they hear words in\ntheir mind. Other people do not have this experience and\ninstead say that they "think in ideas". Is your\nexperience more like the first or the second?',
+       x='', y='Propensity for inner speech')+
+  theme(plot.title = element_text(size = 12, face = "bold"), axis.title = element_text(size = 10),
+        axis.text.x = element_text(size = 10, angle = 90, hjust = 1), legend.position = 'none')+
+  scale_x_discrete(labels=ideas_labs) 
+thinking_in_ideas_p
+```
+
+
+```{r, echo=FALSE}
+stress_IS_p <- 
+  Q_anendophasia_text %>% 
+  ggplot(aes(y=VerbalScored,x=stress_IS))+  
+  geom_violin(aes(group = stress_IS,fill=as.factor(stress_IS)),scale="width",alpha=.5)+
+  geom_jitter(width=.1,height=.1)+
+  theme_bw()+
+  theme(plot.title = element_text(size = 12, face = "bold"), axis.title = element_text(size = 10),
+        axis.text.x = element_text(size = 10, angle = 90, hjust = 1), legend.position = 'none')+
+  labs(title='Do you think it is stressful and annoying to have an inner monologue?', x='', y='Propensity for inner speech')
+stress_IS_p
+```
+
+```{r, echo=FALSE}
+
+narrative_labs <- c("It might be\nlike real life but\nmostly for the viewer's/\nreader's benefit",
+                    "It's exactly\nlike real life",
+                    "It's just\nfor the viewer/\nreader's benefit")
+narrative_IS_p <-
+  Q_anendophasia_text %>% 
+  ggplot(aes(y=VerbalScored,x=narrative_IS))+  
+  geom_violin(aes(group = narrative_IS,fill=as.factor(narrative_IS)),scale="width",alpha=.5)+
+  geom_jitter(width=.1,height=.1)+
+  theme_bw()+
+  theme(plot.title = element_text(size = 12, face = "bold"), axis.title = element_text(size = 10),
+        axis.text.x = element_text(size = 10, angle = 90, hjust = 1), legend.position= 'none')+
+  labs(title='In books and movies, we often see characters talking\nto themselves at length.\nHow much do you think this reflects real life?',
+       x='', y='Propensity for inner speech')+
+  scale_x_discrete(labels=narrative_labs)
+narrative_IS_p
+```
+
+```{r,echo=FALSE}
+exp_type_levs <- c("An even mix of\nverbal, visual,\nsensory, and emotional",                                  
+                   "My inner experience\nin that situation\ndoesn't have a\nspecific \"format\"",                     
+                   "Primarily about sensory\nawareness (what you\nare hearing, smelling, and \nfeeling in the moment)",
+                   "Primarily emotional",                                                                          
+                   "Primarily verbal\n(you \"hear\" or\n \"speak\" words and\nsentences in your mind)",                
+                   "Primarily visual\n(you \"see\" situations,\n objects, people etc.\nin your mind)")
+exp_type_nodding_off_p <-  
+  Q_anendophasia_text %>% 
+  ggplot(aes(y=VerbalScored,x=exp_type_nodding_off))+  
+  geom_violin(aes(group = exp_type_nodding_off,fill=as.factor(exp_type_nodding_off)),scale="width",alpha=.5)+
+  geom_jitter(width=.1,height=.1)+
+  theme_bw()+
+  theme(plot.title = element_text(size = 12, face = "bold"), axis.title = element_text(size = 10),
+        axis.text.x = element_text(size = 10, angle = 90, hjust = 1), legend.position = 'none')+
+  scale_x_discrete(labels=exp_type_levs)+
+  labs(title='What is your experience like when you are trying to fall asleep?',x='', y='Propensity for inner speech')
+exp_type_nodding_off_p
 ```
 
