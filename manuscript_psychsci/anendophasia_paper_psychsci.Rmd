@@ -940,6 +940,8 @@ There was no significant difference between how many participants with more inne
 
 In addition to finding (or not finding) differences in task performance as a function of inner speech, it is often informative to see whether correlations between tasks and conditions show a different pattern in people with more vs. less inner speech [@keogh2021visual]. See Figure \@ref(fig:total-cor-contrast) for a visualization of how performance on the tasks correlated within the participant groups with more or less inner speech.
 
+In addition to finding (or not finding) differences in task performance as a function of inner speech, it is often informative to see whether correlations between tasks and conditions show a different pattern in people with more vs. less inner speech [@keogh2021visual]. Figure \@ref(fig:total-cor-contrast) visualizes intertask correlations for participants with less vs. more inner speech. The dark-blue clusters near the diagonal show that for both groups performance _within_ tasks (e.g., RTs on the different types of task-switch trials) was strongly correlated, and similarly so for both groups. When it comes to relationships _between_ tasks, however, we found several intriguing differences: Participants with less inner speech showed a positive correlation between verbal recall accuracy and non-orthographic rhyme accuracy (r=.48). This group also showed moderate correlations (r's between .3 and .5) between uncued task-switch accuracy and various measures of verbal recall accuracy. In contrast, participants with more inner speech showed weaker relationships between these measures (r's between .16 and .30). These results suggest, albeit tentatively, that participants with less inner speech are more likely to rely on a common mechanism when performing rhyme-judgments, verbal recall, and task-switching without an extrinsic cue (requiring them to remember what they just did). It is noteworthy that finding stronger intertask correlations for participants with less inner speech is conceptually similar to @keogh2021visual's finding of stronger relationships between different visual working memory tasks in participants with aphantasia compared to those with typical visual imagery.
+
 ```{r, include=FALSE, message=FALSE}
 phonsim_score <- phon_sim_trials %>%
   group_by(worker_id, original_word_set) %>%
@@ -982,14 +984,14 @@ score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic s
                               'Rhyme reaction time: Orthographic', 'Category judgment: Between-category', 'Category judgment: Within-category', 'Identity judgment: Between-category', 'Identity judgment: Within-category', 'Task switch reaction time: Addition', 'Task switch reaction time: Color-cued', 'Task switch reaction time: Subtraction', 'Task switch reaction time: Symbol-cued', 'Task switch reaction time: Uncued','Task switch accuracy: Addition','Task switch accuracy: Color-cued','Task switch accuracy: Subtraction','Task switch accuracy: Symbol-cued','Task switch accuracy: Uncued')
 ```
 
-```{r total-cor-contrast, echo=FALSE,out.width='100%', fig.cap='Intertask correlations in the total sample of participants with more and less inner speech. Colored squares represent significant correlations at p < .01 which with the given sample size (N less inner speech = 45; N more inner speech = 47) is equivalent to a correlation coefficient of at least r = ±.38. The upper triangle represents intertask correlations for the participant group with more inner speech while the lower triangle represents intertask correlations for the participant group with less inner speech.'}
+```{r total-cor-contrast, echo=FALSE,out.width='100%', fig.cap='Intertask correlations. The upper triangle shows correlations for the group with more inner speech; the lower triangle shows correlations for the group with less inner speech.\nColored squares represent significant correlations at p < .01 (|r|>.38 given the sample size).'}
 
 # if making the plots again, go to anendophasia_correlation_plots.R file
 # otherwise just read in premade plot:
 knitr::include_graphics("../figures/cor_plot_contrast_v2.png")
 ```
 
-Measures within the tasks generally correlated, but we observed different correlations between the tasks for the two participant groups. For example, reaction times on rhyme judgments, task switching, and perceptual discrimination were more intercorrelated for the group with more inner speech than for the group with less inner speech, suggesting that these relied on similar mechanisms for the former group. Participants with less inner speech showed a positive correlation between accuracy on uncued switch trials and (position-indifferent) verbal working memory and rhyming accuracy, suggesting that these tasks relied on similar mechanisms for this participant group.
+\newpage
 
 ## Questionnaire measures
 
