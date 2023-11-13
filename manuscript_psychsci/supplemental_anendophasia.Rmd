@@ -1,8 +1,11 @@
 ---
 title: "Anendophasia"
 author: 'Suppemental materials'
-date: "2023-07-07"
+date: "2023-11-09"
 output: pdf_document
+header-includes   :
+  - \usepackage{tabu}
+  - \usepackage{longtable}[=v4.13]%
 ---
 ```{r setup, include = FALSE}
 library("papaja")
@@ -12,6 +15,8 @@ library('lme4')
 library('lmerTest')
 library('kableExtra')
 library('ggpubr')
+library(tidyverse)
+library(kableExtra)
 source("summarySEwithin_imp.R")
 irq_scores <- read.csv('irq_scores_anonymized.csv', row.names = 1)
 #r_refs("r-references.bib")
@@ -27,11 +32,64 @@ task_switch_trials <- read.csv('../data/processed_data/task_switch_trials.csv',r
 same_different_trials <- read.csv('../data/processed_data/same_different_trials.csv',row.names = 1)
 ```
 
+## Internal Verbalizations factor from the Internal Representations Questionnaire (Roebuck & Lupyan, 2020) with factor loadings
+
+```{r, echo=FALSE}
+IRQ_items_table <- data.frame(
+  Item = c('I think about problems in my mind in the form of a conversation with myself',
+           'If I am walking somewhere by myself, I often have a silent conversation with myself',
+           'If I am walking somewhere by myself, I frequently think of conversations that I’ve recently had',
+           'My inner speech helps my imagination',
+           'I tend to think things through verbally when I am relaxing',
+           'When thinking about a social problem, I often talk it through in my head',
+           'I like to give myself some down time to talk through thoughts in my mind',
+           'I hear words in my "mind’s ear" when I think',
+           'I rarely vocalize thoughts in my mind',
+           'I often talk to myself internally while watching TV',
+           'My memories often involve conversations I’ve had',
+           'When I read, I tend to hear a voice in my "mind’s ear"'),
+  'Verbal Factor' = c(0.776,0.719,0.699,0.653,0.650, 0.595,0.583,0.559,0.493,0.486,0.486, 0.467))
+                        
+kable(IRQ_items_table, align='l', booktabs = TRUE,
+  longtable = TRUE, linesep = "") %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+  
+```
+
+## Distribution of Verbal Scores on the IRQ with cut-offs (full sample N = 1037)
+
+```{r,echo=FALSE,warning=FALSE}
+mturk_ids_1 <- read.csv('../data/mturk_irq_distribution.csv')
+sona_ids <- read.csv('../data/sona_irq_distribution.csv')
+mturk_ids_2 <- read.csv('../data/mturk_irq_distribution_additional.csv')
+irq_total_distribution <- bind_rows(mturk_ids_1 %>% select(workerId, VerbalScored) %>%add_column(source = 'mturk_1'),
+                                    mturk_ids_2 %>%select(workerId, VerbalScored) %>% add_column(source = 'mturk_2'),
+                                    sona_ids %>% mutate(workerId = as.character(workerId)) %>% select(workerId, VerbalScored)%>% add_column(source = 'sona')) 
+minmax <- phon_sim_trials %>% group_by(high_low_verbal) %>% summarise_at(vars(VerbalScored),
+               list(min = min, max = max))
+ggplot(irq_total_distribution, aes(VerbalScored)) +
+  geom_histogram(fill='white',color='black',binwidth = 0.1) +
+  theme_bw()+
+  geom_vline(xintercept = minmax$min[1], color='#332288', size=1.5) +
+  geom_vline(xintercept = minmax$max[2], color='#CC6677', size=1.5) +
+  geom_vline(xintercept = quantile(irq_total_distribution$VerbalScored, probs = 0.25), linetype ='dotdash', color='black') +
+  geom_vline(xintercept = quantile(irq_total_distribution$VerbalScored, probs = 0.5), linetype ='dotdash', color='black') +
+  geom_vline(xintercept = quantile(irq_total_distribution$VerbalScored, probs = 0.75), linetype ='dotdash', color='black') +
+  annotate('text', label = '25%-ile', angle=90, x =3.5, y=105)+
+  annotate('text', label = '50%-ile', angle=90, x =3.9, y=105)+
+  annotate('text', label = '75%-ile', angle=90, x =4.25, y=105)
+# attempted recruitment
+#quantile(irq_total_distribution$VerbalScored, probs = c(0.30,0.70))
+
+# actual included participants
+#quantile(irq_total_distribution$VerbalScored, probs = c(0.20,0.71))
+
+```
+\newpage
+
 ## Ordinal custom survey questions
 
 ```{r, echo=FALSE}
-library(tidyverse)
-library(kableExtra)
 questionnaire_table_quantitative <- data.frame(
   Question = c('How often do you experience trouble focusing on a face-to-face conversation you are having because of a conflicting conversation happening in your mind at the same time?',
                'How often do you have songs stuck in your head?',
@@ -182,7 +240,7 @@ kable(questionnaire_table_qualitative, align='l', booktabs = TRUE,
   kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
 ```
 
-
+\newpage
 ## Correlations between custom questions and Varieties of Inner Speech Questionnaire (VISQ)
 
 ```{r questionnaire-correlation-matrix, echo=FALSE,include=FALSE}
@@ -296,3 +354,61 @@ exp_type_nodding_off_p <-
 exp_type_nodding_off_p
 ```
 
+\newpage
+
+## Rhyme judgment items
+
+### Target words characteristics (frequency and name agreement)
+
+```{r name-agreement,echo=FALSE}
+rhyme_subtlex <- read.csv('../data/rhyme_judgments_with_freq.csv',row.names = 1)
+chance_pairs <- c('bin.png','chin.png', 'cab.png', 'crab.png', 'rake.png', 'cake.png', 'wave.png', 'cave.png', 'park.png', 'shark.png')
+rhyme_agreement <- read.csv("../data/rhyming_image_agreement.csv", row.names = 1)
+rhyme_agreement <- rhyme_agreement %>% separate(image, c("visual", "target_word"), "/") %>%
+   select(-visual)
+rhyme_agreement$target_word <- substr(rhyme_agreement$target_word,1,nchar(rhyme_agreement$target_word)-4)
+## change square_rhyme to square
+rhyme_agreement$target_word[71] <- 'square'
+for_merging <- rhyme_subtlex %>%
+  select(image_1, image_2, image_1_wordFreq, image_2_wordFreq) %>%
+  distinct() %>%
+  pivot_longer(c(image_1, image_2), names_to = 'target_word_frequency', values_to = 'target_word') %>%
+  mutate(frequency = if_else(target_word_frequency == 'image_1', image_1_wordFreq, 
+                             if_else(target_word_frequency == 'image_2', image_2_wordFreq, NA))) %>%
+  select(target_word, frequency) %>%
+  distinct()
+rhyme_agreement <- merge(rhyme_agreement, for_merging, by = 'target_word')
+kable(rhyme_agreement, align='l', escape = T, booktabs = TRUE,
+      caption = 'Materials for the rhyme judgment experiment including name agreement (0 to 1) from a separate validation experiment and target word frequency (SUBTLEX log-transformed counts).',
+  linesep = "", col.names = c('Target word', 'Name agreement', 'Target word frequency'),longtable = TRUE) %>%
+  row_spec(row = 0, bold = T) %>%
+  kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+
+```
+
+### Frequency of target words
+
+```{r, include=FALSE}
+
+rhyme_subtlex <- rhyme_subtlex %>% filter(rt > 200)
+rhyme_subtlex$type <- as.factor(rhyme_subtlex$type)
+contrasts(rhyme_subtlex$type) = contr.sum(3) 
+rhyme_subtlex <- rhyme_subtlex %>% mutate(stim_pair = paste(pmax(as.character(image_1),as.character(image_2)),pmin(as.character(image_1), as.character(image_2))))
+
+# test if there were differences in frequency across typ
+rhyme_subtlex %>%
+  pivot_longer(c(image_1_wordFreq, image_2_wordFreq), values_to = 'subtlex_freq', names_to = 'word1_and_2') %>%
+  lmer(subtlex_freq~type + (1|stim_pair),data=.) %>%
+  summary
+# no differences
+
+# check whether frequency difference between the two target words on a given trial differ across conditions
+rhyme_subtlex %>%
+  select(freq_diff, type) %>%
+  distinct() %>%
+  lm(freq_diff ~ type,data=.) %>%
+  summary
+# no differences
+
+```
+Using linear models, we tested whether there were any differences in mean frequency (SUBTLEX log-transformed counts) between the three rhyming conditions (including random intercepts for stimulus pair) and whether the three conditions differed in the absolute difference between the modal name of the first and second picture. Target word frequency did not differ between conditions (both p > .391) and neither did absolute difference in frequency between the two target words in a given stimulus pair (both p > .155).
