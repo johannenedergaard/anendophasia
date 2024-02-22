@@ -31,22 +31,23 @@ colnames(ps_lv) <- score_df_names
 
 # trick to plot both from: https://rpubs.com/melike/corrplot
 ord=hclust(1-as.dist(correlations_hv$r))$order
-png(height=1800, width=1800, file="../figures/cor_plot_contrast_v2.png")
+pdf(height=12, width=12, file="figures/cor_plot_contrast_v2.pdf")
 corrplot(correlations_hv$r[ord,ord], p.mat=ps_hv[ord,ord],sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, 
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed')$corrPos -> p1
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5,
+         cl.cex = 0.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed')$corrPos -> p1
 corrplot(correlations_lv$r[ord,ord],p.mat=ps_lv[ord,ord],sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, 
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd')$corrPos ->p2
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5, 
+         cl.cex = 0.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd')$corrPos ->p2
 corrplot(correlations_hv$r[ord,ord], p.mat=ps_hv[ord,ord],sig.level = 0.01,insig='blank',method='square',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, 
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed')
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5, 
+         cl.cex = 0.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed')
 corrplot(correlations_lv$r[ord,ord],p.mat=ps_lv[ord,ord],sig.level = 0.01,insig='blank',method='square',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, 
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd')
-text(p1$x, p1$y, round(p1$corr, 2))
-text(p2$x, p2$y, round(p2$corr, 2))
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5,
+         cl.cex = 0.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd')
+text(p1$x, p1$y, round(p1$corr, 2),cex=0.3)
+text(p2$x, p2$y, round(p2$corr, 2),cex=0.3)
 dev.off()
+p1
 
 # correlation plot survey
 survey_colnames <- c('IRQ Verbal Score', 'ConversationFocus', 'EarWorms', 'RecallFriendConvo',
