@@ -20,11 +20,11 @@ authornote: |
   All experiment data, experiment code, and analysis code are available on GitHub: https://github.com/johannenedergaard/anendophasia. 
 
 abstract: |
-  It is commonly assumed that inner speech – the experience of thought as occurring in a natural language – is a human universal. Recent evidence, however, suggests that the experience of inner speech in adults varies from near constant to non-existent. We propose a name for a lack of the experience of inner speech – anendophasia – and report four studies examining some of its behavioral consequences. We found that people who report low levels of inner speech (N = 46) have lower performance on a verbal working memory task and have more difficulty performing rhyme judgments compared to people who report high levels of inner speech (N = 47). Task switching performance - previously linked to endogenous verbal cueing - and categorical effects on perceptual judgments were unrelated to differences in inner speech. 
+  It is commonly assumed that inner speech – the experience of thought as occurring in a natural language – is a human universal. Recent evidence, however, suggests that the experience of inner speech in adults varies from near constant to non-existent. We propose a name for a lack of the experience of inner speech – anendophasia – and report four studies examining some of its behavioral consequences. We found that adults who report low levels of inner speech (N = 46) have lower performance on a verbal working memory task and have more difficulty performing rhyme judgments compared to adults who report high levels of inner speech (N = 47). Task switching performance - previously linked to endogenous verbal cueing - and categorical effects on perceptual judgments were unrelated to differences in inner speech. 
   
   \textbf{Statement of Relevance}
   
-  Most people report experiencing an inner voice, and believe that it plays an important role in their daily lives. However, others report that they do not experience such an inner voice. Although these differences are stable, we do not know whether they have any consequences for how people solve problems and act in the world. In this article, we found that people with less inner speech differed from people with more inner speech on some tasks that we thought would involve inner speech, but not others. It is important to understand such individual differences in inner speech use because it has consequences for how we discuss the role of inner speech generally in human life.
+  Most adults report experiencing an inner voice, and believe that it plays an important role in their daily lives. However, others report that they do not experience such an inner voice. Although these differences are stable, we do not know whether they have any consequences for how people solve problems and act in the world. In this article, we found that adults with less inner speech differed from adults with more inner speech on some tasks that we thought would involve inner speech, but not others. It is important to understand such individual differences in inner speech use because it has consequences for how we discuss the role of inner speech generally in human life.
   
 keywords          : "inner speech, rhyme judgments, categorization, task switching, verbal working memory, individual differences"
 
@@ -152,7 +152,7 @@ table(subset(edu_test, high_low_verbal == 'low_verbal')$education_level)
 t.test(subset(edu_test, high_low_verbal == 'high_verbal')$education_level, subset(edu_test, high_low_verbal == 'low_verbal')$education_level)
 
 ```
-We recruited participants online who had previously completed the IRQ as part of unrelated studies, contacting participants with verbal factor scores <= 3.5 (bottom 30%-ile) or >= 4.25 (top 20%-ile) on the Verbal factor of the questionnaire which is largely centered on propensity to experience and rely on inner speech. For example, one item with a high loading on the Verbal factor was ‘I think about problems in my mind in the form of a conversation with myself’. One item with a high loading on the Visual factor was ‘I often enjoy the use of mental pictures to reminisce’ (see Supplemental Materials for all verbal factor items). The percentile cut-offs were asymmetric because the distribution in verbal scores on the IRQ is negatively skewed. Recruiting for example the top and bottom quartiles would have resulted in a “low inner speech” group who had moderate amounts of reported inner speech. The final sample included participants from the bottom 20%-ile and the top 29%-ile (see histogram with cutoff values in Supplemental Materials).^[Due to a recruiting error, three participants recruited for the more inner speech group had verbal scores slightly below 4.25 (4.17).] We received ethical approval from the Institutional Review Board at the University of Wisconsin-Madison. Ten participants were excluded for responding randomly, missing at least one experiment, or clearly not complying with task instructions. Our final sample included 47 participants with relatively high verbal factor scores on the IRQ and 46 participants with relatively low verbal factor scores. The two groups were balanced in terms of age, gender, education level, dyslexia, and first language. See Table \@ref(tab:demographics). Due to a technical error, demographic data for one participant in the low inner speech group was missing. We were interested in detecting medium-to-large effects. Our sample size allows us to detect effect sizes of approximately .6 at 80% power or .7 at 91% power (two-tailed t-test of mean difference between two independent groups). Power is lower for the reported interactions and so we urge caution in interpreting them.
+Prior to beginning the study, we had administered the IRQ to university undergraduates and crowdworkers on Amazon Mechanical Turk as part of unrelated studies. From this original pool of 1037 participants, we contacted participants with scores <= 3.5 (bottom 30%-ile) or >= 4.25 (top 20%-ile) on the Verbal factor of the questionnaire which is largely centered on propensity to experience and rely on inner speech. For example, one item with a high loading on the Verbal factor was ‘I think about problems in my mind in the form of a conversation with myself’. One item with a high loading on the Visual factor was ‘I often enjoy the use of mental pictures to reminisce’ (see Supplemental Materials for all verbal factor items). The percentile cut-offs were asymmetric because the distribution in verbal scores on the IRQ is negatively skewed. Recruiting for example the top and bottom quartiles would have resulted in a “low inner speech” group who had moderate amounts of reported inner speech. The final sample included participants from the bottom 20%-ile and the top 29%-ile (see histogram with cutoff values in Supplemental Materials).^[Due to a recruiting error, three participants recruited for the more inner speech group had verbal scores slightly below 4.25 (4.17).] We received ethical approval from the Institutional Review Board at the University of Wisconsin-Madison. Ten participants were excluded for responding randomly, missing at least one experiment, or clearly not complying with task instructions. Our final sample included 47 participants with relatively high verbal factor scores on the IRQ and 46 participants with relatively low verbal factor scores. The two groups were balanced in terms of age, gender, education level, dyslexia, and first language. See Table \@ref(tab:demographics). Due to a technical error, demographic data for one participant in the low inner speech group was missing. We were interested in detecting medium-to-large effects. Our sample size allows us to detect effect sizes of approximately .6 at 80% power or .7 at 91% power (two-tailed t-test of mean difference between two independent groups). Power is lower for the reported interactions and so we urge caution in interpreting them.
 
 ```{r demographics, echo=FALSE}
 demographics_table <- data.frame(Measure = c('Age', 'Gender', 'Native English-speaker', 'Dyslexia', 'Education level'),
@@ -173,12 +173,14 @@ demographics_table <- data.frame(Measure = c('Age', 'Gender', 'Native English-sp
                                                          paste0('$\\chi^{2}$', '(1) < 0.01; p > .99'),
                                                          't(84.46) = -0.23; p = .82'
                                  ))
-kable(demographics_table, align='l', escape = F, booktabs = TRUE,
+demographics_table <- kable(demographics_table, align='l', escape = F, booktabs = TRUE,
   linesep = "", 
   col.names = c('Measure', 'More inner speech', 'Less inner speech', 'Test for difference'),
   caption = 'Comparisons of demographic characteristics of the group with more inner speech and the group with less inner speech.') %>%
   row_spec(row = 0, bold = T) %>%
   kable_styling(full_width = T, latex_options = c("hold_position", 'repeat_header'),font_size = 8)
+#save_kable(demographics_table,'demographics_table.tex')
+demographics_table
 ```
 
 ## Method: Verbal working memory
@@ -313,7 +315,7 @@ Participants with more inner speech recalled more words correctly. This advantag
 ```{r phonsim-desc-table, echo=FALSE}
 levels(phonsim_desc_df$high_low_verbal) <- c('More inner speech', 'Less inner speech')
 levels(phonsim_desc_df$original_word_set) <- c('Control set', 'Orthographic similarity set', 'Phonological similarity set')
-phonsim_desc_df %>%
+phonsim_desc_table <- phonsim_desc_df %>%
   mutate(ci_score = paste0('±', round(ci_score,2)), ci_score_any_position = paste0('±', round(ci_score_any_position,2))) %>%
   kable(digits=2, booktabs = TRUE,
         caption = 'Descriptive statistics by group in the verbal working memory experiment.',
@@ -334,6 +336,8 @@ phonsim_desc_df %>%
 # phonsim_desc_df %>%
 #   group_by(original_word_set) %>%
 #   summarise(score = mean(score))
+phonsim_desc_table
+#save_kable(phonsim_desc_table,'phonsim_desc_table.tex')
 ```
 
 ```{r phonsim-score-desc, echo=FALSE, fig.cap='Score on the verbal working memory task by word set.'}
@@ -541,7 +545,7 @@ Participants who reported having more inner speech were numerically both faster 
 ```{r rhyme-desc-table, echo=FALSE}
 levels(rhyme_desc_df$high_low_verbal) <- c('More inner speech', 'Less inner speech')
 levels(rhyme_desc_df$type) <- c('Non-orthographic rhyme', 'No rhyme','Orthographic rhyme')
-rhyme_desc_df %>%
+rhyme_desc_table <- rhyme_desc_df %>%
   dplyr::mutate(correct = correct * 100, ci_accuracy = ci_accuracy*100, rt = round(rt), ci_rt = round(ci_rt)) %>%
   mutate(ci_accuracy = paste0('±', round(ci_accuracy,2)), ci_rt = paste0('±', ci_rt)) %>%
   kable(digits=2, caption = 'Descriptive statistics on rhyming accuracy and reaction time by group and by rhyme type.', booktabs=T,
@@ -559,6 +563,8 @@ rhyme_desc_df %>%
   column_spec(5, width = '5em') %>%
   column_spec(6, width = '5em') %>%
   kable_styling(font_size = 8)
+rhyme_desc_table
+#save_kable(rhyme_desc_table, 'rhyme_desc_table.tex')
 
 ```
 
@@ -797,7 +803,7 @@ task_switch_desc_df <- task_switch_desc_df %>%
             "colorcue", "uncued")) 
 levels(task_switch_desc_df$high_low_verbal)<- c('More inner speech','Less inner speech')
 levels(task_switch_desc_df$condition) <- c('Blocked\naddition', 'Blocked\nsubtraction', 'Symbol-cued\nswitch', 'Color-cued\nswitch', 'Un-cued\nswitch')
-task_switch_desc_df %>%
+task_switch_desc_table <- task_switch_desc_df %>%
   dplyr::mutate(switching_is_correct = switching_is_correct*100, ci_accuracy=ci_accuracy*100, rt = round(rt), ci_rt = round(ci_rt)) %>%
   mutate(ci_accuracy = paste0('±', round(ci_accuracy,2)), ci_rt = paste0('±', ci_rt)) %>%
   kable(digits=2, caption = 'Descriptive statistics of reaction time and accuracy on the task switching experiment.',booktabs=T,
@@ -815,6 +821,8 @@ task_switch_desc_df %>%
   column_spec(5, width = '5em') %>%
   column_spec(6, width = '5em') %>%
   kable_styling(latex_options = c("hold_position"),font_size = 8)
+task_switch_desc_table
+#save_kable(task_switch_desc_table, 'task_switch_desc_table.tex')
 ```
 
 ```{r task-switch-desc-fig, echo=FALSE, fig.cap='Reaction time and accuracy across conditions in the task switching experiment.'}
@@ -1084,7 +1092,7 @@ score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic s
 
 # if making the plots again, go to anendophasia_correlation_plots.R file
 # otherwise just read in premade plot:
-knitr::include_graphics("../figures/cor_plot_contrast_v2.png")
+knitr::include_graphics("../figures/cor_plot_contrast_v2.jpeg")
 ```
 
 \newpage
