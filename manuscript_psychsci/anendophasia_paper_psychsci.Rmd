@@ -95,26 +95,16 @@ We measured subjectively experienced inner speech using a previously developed a
 ## Participants
 ```{r, include=FALSE}
 library(xtable)
-Q_anendophasia_numeric <- read.csv('../data/survey_data/qualtrics_numeric_anendophasia.csv')
-Q_anendophasia_text <- read.csv('../data/survey_data/qualtrics_text_anendophasia.csv')
-browser_interactions <- read.csv('../data/raw_data/browser_df_anendophasia_anonymized.csv',row.names = 1)
+Q_anendophasia_numeric <- read.csv('../data/survey_data/q_anendophasia_numeric.csv', row.names =1)
+Q_anendophasia_text <- read.csv('../data/survey_data/q_anendophasia_text.csv', row.names =1)
 irq_scores <- read.csv('irq_scores_anonymized.csv', row.names = 1)
 phon_sim_trials <- read.csv('../data/processed_data/phon_sim_trials.csv',row.names = 1)
-
-Q_anendophasia_numeric <- Q_anendophasia_numeric %>%
-  rename(visq_cond_1 = Q63_95, visq_dial_1 = Q63_96, visq_other_voi_1 = Q63_97, visq_other_voi_2 = Q63_98, visq_other_voi_3 = Q63_100, visq_dial_2 = Q63_101, visq_cond_2_rev = Q63_102, visq_cond_3 = Q63_103, visq_eval_1 = Q63_105, visq_dial_3 = Q63_106, visq_eval_2 = Q63_108, visq_other_voi_4 = Q63_109, visq_dial_4 = Q63_111, visq_cond_4 = Q63_112, visq_cond_5_rev = Q63_115, visq_other_voi_5 = Factor2_1...68, visq_eval_3 = Q63_116, visq_eval_4 = Q63_117)
 
 ptcpts_exp <- unique(phon_sim_trials$worker_id)
 ptcpts_q <- unique(Q_anendophasia_numeric$worker_id)
 length(intersect(ptcpts_exp,ptcpts_q))
 
-ptcpts_exp[which(!ptcpts_exp %in% ptcpts_q)] # A3KVKK1XLBTSN3 is missing from the questionnaire data? --> Ny0Ml3uz
-
-Q_anendophasia_numeric <- merge(Q_anendophasia_numeric, irq_scores, by = 'worker_id', all.x = T)
-Q_anendophasia_text <- merge(Q_anendophasia_text, irq_scores, by = 'worker_id', all.x = T)
-Q_anendophasia_numeric <- distinct(Q_anendophasia_numeric)
-Q_anendophasia_text <- distinct(Q_anendophasia_text)
-table(Q_anendophasia_numeric$high_low_verbal)
+ptcpts_exp[which(!ptcpts_exp %in% ptcpts_q)] # Ny0Ml3uz is missing from the questionnaire data? 
 
 # TEST FOR DYSLEXIA
 dyslexia_test <- Q_anendophasia_text %>%
@@ -123,26 +113,26 @@ table(dyslexia_test$high_low_verbal, dyslexia_test$dyslexia)
 chisq.test(dyslexia_test$high_low_verbal, dyslexia_test$dyslexia)
 # TEST FOR GENDER
 gender_test <- Q_anendophasia_text %>%
-  group_by(high_low_verbal,Q319)
-table(gender_test$high_low_verbal, gender_test$Q319)
-chisq.test(gender_test$high_low_verbal, gender_test$Q319) #no difference in gender
+  group_by(high_low_verbal,gender)
+table(gender_test$high_low_verbal, gender_test$gender)
+chisq.test(gender_test$high_low_verbal, gender_test$gender) #no difference in gender
 # TEST FOR FIRST LANGUAGE
 firstlang_test <- Q_anendophasia_text %>%
-  group_by(high_low_verbal,Q320)
-table(firstlang_test$high_low_verbal, firstlang_test$Q320)
-chisq.test(firstlang_test$high_low_verbal, firstlang_test$Q320) #no difference in first language english -
+  group_by(high_low_verbal,first_lang)
+table(firstlang_test$high_low_verbal, firstlang_test$first_lang)
+chisq.test(firstlang_test$high_low_verbal, firstlang_test$first_lang) #no difference in first language english -
 # although 0 in high-verbal group and 4 in low verbal group
 # samoan, mandarin, chinese, gujarati & hindi - who are they?
 non_native_speakers <- Q_anendophasia_numeric %>%
-  filter(Q320 == 0) %>%
+  filter(first_lang == 0) %>%
   select(worker_id) 
 # try to exclude them from later analyses...
 # TEST FOR AGE/REPORT AGE
 age_test <- Q_anendophasia_text %>%
-  group_by(high_low_verbal,Q323)
-summary(subset(age_test, high_low_verbal == 'high_verbal')$Q323)
-summary(subset(age_test, high_low_verbal == 'low_verbal')$Q323)
-t.test(subset(age_test, high_low_verbal == 'high_verbal')$Q323, subset(age_test, high_low_verbal == 'low_verbal')$Q323)
+  group_by(high_low_verbal,age)
+summary(subset(age_test, high_low_verbal == 'high_verbal')$age)
+summary(subset(age_test, high_low_verbal == 'low_verbal')$age)
+t.test(subset(age_test, high_low_verbal == 'high_verbal')$age, subset(age_test, high_low_verbal == 'low_verbal')$age)
 # no difference in age
 #  TEST FOR EDUCATION LEVEL
 edu_test <- Q_anendophasia_numeric %>%
