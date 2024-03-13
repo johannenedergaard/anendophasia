@@ -1,6 +1,13 @@
 # correlation plots
 library(Hmisc)
 
+# read in data
+score_df <- read.csv('data/collected_scores_df.csv', row.names = 1)
+score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic set', 'Verbal recall: Phonological set', 'Verbal recall (any position): Control set', 'Verbal recall (any position): Orthographic set', 'Verbal recall (any position): Phonological set', 'Rhyme accuracy: Non-orthographic', 'Rhyme accuracy: No-rhyme', 'Rhyme accuracy: Orthographic', 'Rhyme reaction time: Non-orthographic', 'Rhyme reaction time: No-rhyme',
+                    'Rhyme reaction time: Orthographic', 'Category judgment: Between-category', 'Category judgment: Within-category', 'Identity judgment: Between-category', 'Identity judgment: Within-category', 'Task switch reaction time: Addition', 'Task switch reaction time: Color-cued', 'Task switch reaction time: Subtraction', 'Task switch reaction time: Symbol-cued', 'Task switch reaction time: Uncued','Task switch accuracy: Addition','Task switch accuracy: Color-cued','Task switch accuracy: Subtraction','Task switch accuracy: Symbol-cued','Task switch accuracy: Uncued')
+Q_anendophasia_numeric <- read.csv('data/survey_data/q_anendophasia_numeric.csv', row.names =1)
+Q_anendophasia_text <- read.csv('data/survey_data/q_anendophasia_text.csv', row.names =1)
+
 # high inner speech
 score_df_high_verbal <- subset(score_df, high_low_verbal =='high_verbal')
 correlations_hv <- rcorr(as.matrix(score_df_high_verbal %>% select(!c(worker_id,VerbalScored, VisualScored,high_low_verbal))))
@@ -47,7 +54,7 @@ corrplot(correlations_lv$r[ord,ord],p.mat=ps_lv[ord,ord],sig.level = 0.01,insig=
 text(p1$x, p1$y, round(p1$corr, 2),cex=0.3)
 text(p2$x, p2$y, round(p2$corr, 2),cex=0.3)
 dev.off()
-p1
+#p1
 
 # correlation plot survey
 survey_colnames <- c('IRQ Verbal Score', 'ConversationFocus', 'EarWorms', 'RecallFriendConvo',
@@ -89,7 +96,7 @@ colnames(ps_survey) <- survey_colnames
 # plot both together incl correlation coefficients
 # trick to plot both from: https://rpubs.com/melike/corrplot
 #ord=hclust(1-as.dist(correlations_hv_survey$r))$order
-png(height=2300, width=2300, file="../figures/survey_cor_total_v2.png")
+png(height=2300, width=2300, file="figures/survey_cor_total_v2.png")
 corrplot(survey_df_total_cors$r, p.mat=ps_survey, sig.level = 0.01,insig='blank',
          outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
          cl.cex = 1.5, mar = c(4,0,4,0), type = "lower")$corrPos -> p3
