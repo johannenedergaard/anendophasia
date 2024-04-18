@@ -191,6 +191,11 @@ rhyme_strategies <- rhyming_trials %>%
   tally()
 rhyme_strategies$experiment <- 'rhyme'
 
+# filter trials below 200 ms and NA
+rhyming_trials <- subset(rhyming_trials, rt > 200)
+# 4929 rows to 4861 rows = 1.4 %
+(4929-4861)/4929
+
 # save csv
 write.csv(rhyming_trials, 'processed_data/rhyming_trials.csv')
 
