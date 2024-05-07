@@ -1087,7 +1087,7 @@ score_df_names <- c('Verbal recall: Control set', 'Verbal recall: Orthographic s
 
 # if making the plots again, go to anendophasia_correlation_plots.R file
 # otherwise just read in premade plot:
-knitr::include_graphics("../figures/cor_plot_contrast_v2.jpeg")
+knitr::include_graphics("../figures/nedergaard_fig12.png")
 ```
 
 \newpage
