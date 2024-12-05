@@ -1,5 +1,7 @@
 # correlation plots
 library(Hmisc)
+library(tidyverse)
+library(corrplot)
 
 # read in data
 score_df <- read.csv('data/collected_scores_df.csv', row.names = 1)
@@ -38,19 +40,13 @@ colnames(ps_lv) <- score_df_names
 
 # trick to plot both from: https://rpubs.com/melike/corrplot
 ord=hclust(1-as.dist(correlations_hv$r))$order
-pdf(height=12, width=12, file="figures/cor_plot_contrast_v2.pdf")
-corrplot(correlations_hv$r[ord,ord], p.mat=ps_hv[ord,ord],sig.level = 0.01,insig='blank',
+pdf(height=12, width=12, file="figures/cor_plot_contrast_fig12.pdf")
+corrplot(correlations_hv$r[ord,ord], method='square', p.mat=ps_hv[ord,ord],sig.level = 0.01,insig='blank',
          outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5,
          cl.cex = 0.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed')$corrPos -> p1
-corrplot(correlations_lv$r[ord,ord],p.mat=ps_lv[ord,ord],sig.level = 0.01,insig='blank',
+corrplot(correlations_lv$r[ord,ord],method='square',p.mat=ps_lv[ord,ord],sig.level = 0.01,insig='blank',
          outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5, 
          cl.cex = 0.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd')$corrPos ->p2
-corrplot(correlations_hv$r[ord,ord], p.mat=ps_hv[ord,ord],sig.level = 0.01,insig='blank',method='square',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5, 
-         cl.cex = 0.5, mar = c(4,0,4,0), type = "upper", tl.pos = "tl", bg = '#e1deed')
-corrplot(correlations_lv$r[ord,ord],p.mat=ps_lv[ord,ord],sig.level = 0.01,insig='blank',method='square',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5,
-         cl.cex = 0.5, mar = c(4,0,4,0), type = "lower", tl.pos = "tl", add=T,bg = '#f2d9dd')
 text(p1$x, p1$y, round(p1$corr, 2),cex=0.3)
 text(p2$x, p2$y, round(p2$corr, 2),cex=0.3)
 dev.off()
@@ -96,14 +92,14 @@ colnames(ps_survey) <- survey_colnames
 # plot both together incl correlation coefficients
 # trick to plot both from: https://rpubs.com/melike/corrplot
 #ord=hclust(1-as.dist(correlations_hv_survey$r))$order
-png(height=2300, width=2300, file="figures/survey_cor_total_v2.png")
+pdf(height=12, width=12, file="figures/survey_cor_total_v2.pdf")
 corrplot(survey_df_total_cors$r, p.mat=ps_survey, sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower")$corrPos -> p3
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 0.5, method='square',
+         cl.cex = 0.5, mar = c(4,0,4,0), type = "lower")$corrPos -> p3
 corrplot(survey_df_total_cors$r, p.mat=ps_survey, sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "lightgrey",tl.col='black',cl.pos = "r", tl.cex = 1.5, method='square',
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower")
-text(p3$x, p3$y, round(p3$corr, 2))
+         outline = T, addgrid.col = "lightgrey",tl.col='black',cl.pos = "r", tl.cex = 0.5, method='square',
+         cl.cex = 0.5, mar = c(4,0,4,0), type = "lower",add=T)
+text(p3$x, p3$y, round(p3$corr, 2),cex=0.3)
 dev.off()
 
 # make corgram of selected questions (full participant sample)
@@ -128,9 +124,9 @@ rownames(ps_survey) <- c('Simulate future conversations' ,'Simulate past convers
 colnames(ps_survey) <- c('Simulate future conversations' ,'Simulate past conversations', 'VISQ dialogic', 
                          'Earworms', 'Others experience conversation', "Others experience mind's eye", 
                          "Others experience mind's ear", 'IRQ Verbal Score')
-png(height=1800, width=1800, file="figures/survey_selected_total.png")
+pdf(height=12, width=12, file="figures/survey_selected_total.pdf")
 corrplot(cors_survey, p.mat=ps_survey, sig.level = 0.01,insig='blank',
-         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 3, method='square',
-         cl.cex = 1.5, mar = c(4,0,4,0), type = "lower",addCoef.col = 'white', number.cex = 3)
+         outline = T, addgrid.col = "white",tl.col='black',cl.pos = "r", tl.cex = 2, method='square',
+         cl.cex = 1, mar = c(4,0,4,0), type = "lower",addCoef.col = 'white', number.cex = 1)
 dev.off()
 
